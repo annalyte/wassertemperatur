@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.1.3
-Build: a22dcd
+Version: 0.2
+Build: 763622
 Datum: 23.08.2011
 */
 
-$versioning = 'Version: 0.1.3 (a22dcd)'; 
+$versioning = 'Version: 0.2 (763622)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -58,7 +58,7 @@ $space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buch
 
 $temperatur = (int)$space_temp; // Wandelt Zahl in Integer um
 
-// $temperatur = 20; // zum debuggen
+// $temperatur = 21; // zum debuggen
 
 /*
 Die xml Datei heißt database.xml. In sie werden alle Temperaturen bei jedem Aufruf gespeichert. Die xml Datei ist als RSS-Feed in die Website eingebunden.
@@ -81,27 +81,35 @@ $sxe->asXML("database.xml");
 switch ($temperatur) {
     case 26:
         $description = 'Viel zu warm!';
+        $color = '#ff0033';
         break;
     case 25:
         $description = 'Sehr warm!';
+        $color = '#ff3000';
         break;
     case 24:
         $description = 'Sehr warm!';
+        $color = '#ff3000';
         break;
     case 23:
         $description = 'Warm';
+        $color = '#ff5202';
         break;
     case 22:
         $description = 'Angenehm';
+        $color = '#ffa600';
         break;
     case 21:
         $description = 'Noch okay';
+        $color = '#ffdd00';
         break;
     case 20:
         $description = 'Geht so';
+        $color = '#dfff00';
         break;
     case 19:
         $description = 'Kalt';
+        $color = '#00c3ff';
         break;        
 }
 
@@ -113,10 +121,11 @@ switch ($temperatur) {
 <meta name="viewport" content="width = 500px, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
+<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 <style type="text/css">
 body {
-    font-family: Helvetica, Arial, sans-serif;
+    font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
     background: url(whitey.png) repeat;
     color: #333;
 }
@@ -132,6 +141,7 @@ body {
 
 h1 {
     font-size: 90pt;
+    color: <?php echo $color; ?>;
 }
 
 h2 {
