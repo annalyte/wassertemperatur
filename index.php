@@ -1,17 +1,18 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.1.1
-Build: 7ec9c6
+Version: 0.1.2
+Build: 2d4f52
 Datum: 23.08.2011
 */
 
-$versioning = 'Version: 0.1.1 (7ec9c6)'; 
+$versioning = 'Version: 0.1.2 (2d4f52)'; 
 
 // Hier den Ort eintragen
-$directory = 'http://twitter.futuretune.de';
+$directory = 'http://wasser.aaronbauer.org';
 
-$date = date('D, d M Y');
+// $date wird für das Datum im XML verwendet
+$date = date('D, d M Y H:i:s');
 $time = date(H.i.s);
 
 /*    
