@@ -1,9 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 1.0 
-Datum: 22.08.2011
-*/ 
+Version: 0.1
+Build: 4473a8
+Datum: 23.08.2011
+*/
+
+$versioning = 'Version: 0.1 (4473a8)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://twitter.futuretune.de';
@@ -138,10 +141,10 @@ h2 {
 </head>
 <body>
 <div id="wrap">
+<?php echo $versioning; ?>
 <h1><?php echo $temperatur; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
 Gemessen um <?php echo $timestamp; ?>.
-
 </div>
 </body>
 
