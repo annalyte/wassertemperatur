@@ -2,11 +2,11 @@
 /*
 Freibad Wassertemperatur
 Version: 0.2
-Build: 763622
+Build: db24f7
 Datum: 23.08.2011
 */
 
-$versioning = 'Version: 0.2 (763622)'; 
+$versioning = 'Version: 0.2 (db24f7)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -120,6 +120,7 @@ switch ($temperatur) {
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = 500px, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+<link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
