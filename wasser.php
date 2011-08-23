@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.1
-Build: 4473a8
+Version: 0.1.1
+Build: 7ec9c6
 Datum: 23.08.2011
 */
 
-$versioning = 'Version: 0.1 (4473a8)'; 
+$versioning = 'Version: 0.1.1 (7ec9c6)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://twitter.futuretune.de';
@@ -46,18 +46,16 @@ fclose($fh);
 Aus dem Array kommt eine Temperatur (Zahl) mit Buchstaben und einem <div> dabei.  Das Array wird in die Variable alphanumeric_temp gegossen. Mit strip_tags wird der <div> entfernt. Danach heißt die Variable stripped_temp. Mit preg_replace werden dann noch die Buchstaben entfernt. Mit trim werden nun noch die Leerstellen gefiltert und es bleibt die endliche Temperatur.
 Mit int wird der Wert in einen integer umgewandelt.
 */
-$timestamp = strip_tags($lines[407]); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML
+$timestamp = trim(strip_tags($lines[407])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
 
-$alphanumeric_temp = $lines[409]; // Wandelt das Array in eine Variable
+$alphanumeric_temp = trim(strip_tags($lines[409])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
-$stripped_temp = strip_tags($alphanumeric_temp); // Entfernt HTML
+$space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buchstaben
 
-$space_temp = preg_replace('/[a-zA-Z]/','',$stripped_temp); // Entfernt Buchstaben
+//$final_temp = trim($space_temp); // Entfernt Leerstellen
 
-$final_temp = trim($space_temp); // Entfernt Leerstellen
-
-$temperatur = (int)$final_temp; // Wandelt Zahl in Integer um
+$temperatur = (int)$space_temp; // Wandelt Zahl in Integer um
 
 // $temperatur = 20; // zum debuggen
 
@@ -77,6 +75,7 @@ $tmp_value->addChild("pubDate", $date);
 //This next line will overwrite the original XML file with new data added 
 $sxe->asXML("database.xml"); 
 
+// Die Bezeichnungen von 19-26
 
 switch ($temperatur) {
     case 26:
@@ -126,7 +125,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    margin-top: 40%;
+    margin-top: 25%;
     text-shadow: 0px 1px 1px #fff;
 }
 
