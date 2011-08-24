@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.3
-Build: 25c0d3
-Datum: 23.08.2011
+Version: 0.3.1
+Build: 06b7e2
+Datum: 24.08.2011
 */
 
-$versioning = 'Version: 0.3 (25c0d3)'; 
+$versioning = 'Version: 0.3.1 (06b7e2)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -77,15 +77,65 @@ $tmp_value->addChild("pubDate", $date);
 //This next line will overwrite the original XML file with new data added 
 $sxe->asXML("database.xml"); 
 
-// Die Bezeichnungen von 19-26
+// Die Bezeichnungen von 19-26. Wenn $_GET auf en steht wird die englische Version ausgegeben. Ansonsten die normale.
 
-switch ($temperatur) {
+if($_GET[lang] == 'en') {
+// Englische Lokalisierung
+
+$lang_link = '<a href="'.$directory.'/">Deutsch</a>';
+
+
+    switch ($temperatur) {
+    case 26:
+        $description = 'Too warm!';
+        $color = '#ff0033';
+        break;
+    case 25:
+        $description = 'Very warm!';
+        $color = '#ff3000';
+        break;
+    case 24:
+        $description = 'Warm!';
+        $color = '#ff3000';
+        break;
+    case 23:
+        $description = 'Warm enough';
+        $color = '#ff5202';
+        break;
+    case 22:
+        $description = 'Comfortable';
+        $color = '#ffa600';
+        break;
+    case 21:
+        $description = 'Sufficient';
+        $color = '#ffdd00';
+        break;
+    case 20:
+        $description = 'Okay';
+        $color = '#dfff00';
+        break;
+    case 19:
+        $description = 'Cold';
+        $color = '#00c3ff';
+        break;
+    case 18:
+        $description = 'Too Cold';
+        $color = '#00c3ff';
+        break;        
+};
+
+} else {
+// Deutsche Lokalisierung
+
+$lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
+
+    switch ($temperatur) {
     case 26:
         $description = 'Viel zu warm!';
         $color = '#ff0033';
         break;
     case 25:
-        $description = 'Stark warm!';
+        $description = 'Sehr warm!';
         $color = '#ff3000';
         break;
     case 24:
@@ -116,7 +166,9 @@ switch ($temperatur) {
         $description = 'Zu Kalt';
         $color = '#00c3ff';
         break;        
-}
+};
+ 
+};
 
 ?>
 <html>
@@ -161,6 +213,9 @@ h2 {
 <h1><?php echo $temperatur; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
 Gemessen um <?php echo $timestamp; ?>.
+
+<p><?php echo $lang_link; ?></p>
+
 </div>
 </body>
 
