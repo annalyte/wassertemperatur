@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.3.1
-Build: 06b7e2
+Version: 0.4
+Build: 48b3b3
 Datum: 24.08.2011
 */
 
-$versioning = 'Version: 0.3.1 (06b7e2)'; 
+$versioning = 'Version: 0.4 (48b3b3)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -77,9 +77,13 @@ $tmp_value->addChild("pubDate", $date);
 //This next line will overwrite the original XML file with new data added 
 $sxe->asXML("database.xml"); 
 
-// Die Bezeichnungen von 19-26. Wenn $_GET auf en steht wird die englische Version ausgegeben. Ansonsten die normale.
+/* 
+Die Bezeichnungen von 18-26. Wenn $_GET auf "en" steht wird die englische Version ausgegeben. Ansonsten die normale.
+$lang_link ist einfach nur der passende Link für die Website (damit das HTML sauber bleibt). 
+*/
 
 if($_GET[lang] == 'en') {
+
 // Englische Lokalisierung
 
 $lang_link = '<a href="'.$directory.'/">Deutsch</a>';
@@ -125,6 +129,7 @@ $lang_link = '<a href="'.$directory.'/">Deutsch</a>';
 };
 
 } else {
+
 // Deutsche Lokalisierung
 
 $lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
@@ -171,16 +176,21 @@ $lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
 };
 
 ?>
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>Wassertemperatur</title>
+<!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = 500px, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 
+<!-- Google Font -->
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+<!-- RSS Database.xml integration -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
+
 <style type="text/css">
 body {
     font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
@@ -198,14 +208,17 @@ body {
 }
 
 h1 {
-    font-size: 90pt;
+    font-size: 120pt;
     color: <?php echo $color; ?>;
+    padding:50px 0px 0px 0px;
+    margin:25px 0px 0px 0px;
 }
 
 h2 {
     font-size: 50pt;
 }
 </style>
+
 </head>
 <body>
 <div id="wrap">
@@ -213,11 +226,7 @@ h2 {
 <h1><?php echo $temperatur; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
 Gemessen um <?php echo $timestamp; ?>.
-
 <p><?php echo $lang_link; ?></p>
-
 </div>
 </body>
-
-
 </html>
