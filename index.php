@@ -1,18 +1,19 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.2
-Build: db24f7
+Version: 0.3
+Build: 25c0d3
 Datum: 23.08.2011
 */
 
-$versioning = 'Version: 0.2 (db24f7)'; 
+$versioning = 'Version: 0.3 (25c0d3)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
 
 // $date wird für das Datum im XML verwendet
 $date = date('D, d M Y H:i:s T');
+// $time is deprecated 
 $time = date(H.i.s);
 
 /*    
@@ -84,15 +85,15 @@ switch ($temperatur) {
         $color = '#ff0033';
         break;
     case 25:
-        $description = 'Sehr warm!';
+        $description = 'Stark warm!';
         $color = '#ff3000';
         break;
     case 24:
-        $description = 'Sehr warm!';
+        $description = 'Warm!';
         $color = '#ff3000';
         break;
     case 23:
-        $description = 'Warm';
+        $description = 'Warm genug';
         $color = '#ff5202';
         break;
     case 22:
@@ -104,11 +105,15 @@ switch ($temperatur) {
         $color = '#ffdd00';
         break;
     case 20:
-        $description = 'Geht so';
+        $description = 'Noch erträglich';
         $color = '#dfff00';
         break;
     case 19:
         $description = 'Kalt';
+        $color = '#00c3ff';
+        break;
+    case 18:
+        $description = 'Zu Kalt';
         $color = '#00c3ff';
         break;        
 }
