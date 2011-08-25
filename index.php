@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.4
-Build: 48b3b3
+Version: 0.4.1
+Build: 18183c
 Datum: 24.08.2011
 */
 
-$versioning = 'Version: 0.4 (48b3b3)'; 
+$versioning = 'Version: 0.4.1 (18183c)'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -182,51 +182,49 @@ $lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
 <title>Wassertemperatur</title>
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
-<meta name="viewport" content="width = 500px, user-scalable=no">
+<meta name="viewport" content="width = device-width, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
+<link rel="apple-touch-icon-precomposed" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
+<link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
 
 <!-- Google Font -->
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 <!-- RSS Database.xml integration -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
+<!-- iPad Stylesheet -->
+<link rel="stylesheet" media="only screen and (min-device-width: 768px)
+and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
+
+<!-- iPhone Stylesheet -->
+<link rel="stylesheet" media="only screen and (min-device-width: 320px)
+and (max-device-width: 460px)" href="iphone.css" type="text/css" />
+
 <style type="text/css">
-body {
-    font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
-    background: url(whitey.png) repeat;
-    color: #333;
-}
-
-#wrap {
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    margin-top: 25%;
-    text-shadow: 0px 1px 1px #fff;
-}
-
 h1 {
-    font-size: 120pt;
+    font-size: 60pt;
     color: <?php echo $color; ?>;
     padding:50px 0px 0px 0px;
-    margin:25px 0px 0px 0px;
+    opacity: 1;
+    margin:0;
 }
 
 h2 {
-    font-size: 50pt;
+    font-size: 20pt;
+    opacity: 1;
 }
 </style>
 
 </head>
 <body>
 <div id="wrap">
-<?php echo $versioning; ?>
+<div id="layer">
 <h1><?php echo $temperatur; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
 Gemessen um <?php echo $timestamp; ?>.
 <p><?php echo $lang_link; ?></p>
+<p class="version"><?php echo $versioning; ?></p>
+</div>
 </div>
 </body>
 </html>
