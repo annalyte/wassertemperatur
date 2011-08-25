@@ -1,12 +1,13 @@
 <?php
 /*
 Freibad Wassertemperatur
-Version: 0.4.1
-Build: 18183c
-Datum: 24.08.2011
+Datum: 25.08.2011
 */
 
-$versioning = 'Version: 0.4.1 (18183c)'; 
+$version = '0.5';
+$build = '037b8a';
+
+$versioning = 'Version: '.$version.' ('.$build.')'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org';
@@ -194,11 +195,14 @@ $lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
 
 <!-- iPad Stylesheet -->
 <link rel="stylesheet" media="only screen and (min-device-width: 768px)
-and (max-device-width: 1024px)" href="ipad.css" type="text/css" />
+and (max-device-width: 1024px)" href="<?php echo $directory; ?>/ipad.css" type="text/css" />
 
 <!-- iPhone Stylesheet -->
 <link rel="stylesheet" media="only screen and (min-device-width: 320px)
-and (max-device-width: 460px)" href="iphone.css" type="text/css" />
+and (max-device-width: 460px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
+
+<!-- Computer Stylesheet -->
+<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
 
 <style type="text/css">
 h1 {
