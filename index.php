@@ -1,11 +1,11 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 25.08.2011
+Datum: 26.08.2011
 */
 
-$version = '0.5.2';
-$build = '71e7f8';
+$version = '0.5.3';
+$build = 'b30a05';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -14,8 +14,6 @@ $directory = 'http://wasser.aaronbauer.org';
 
 // $date wird für das Datum im XML verwendet
 $date = date('D, d M Y H:i:s T');
-// $time is deprecated 
-$time = date(H.i.s);
 
 /*    
 file_get_contents scraped die URL
@@ -49,8 +47,15 @@ fclose($fh);
 Aus dem Array kommt eine Temperatur (Zahl) mit Buchstaben und einem <div> dabei.  Das Array wird in die Variable alphanumeric_temp gegossen. Mit strip_tags wird der <div> entfernt. Danach heißt die Variable stripped_temp. Mit preg_replace werden dann noch die Buchstaben entfernt. Mit trim werden nun noch die Leerstellen gefiltert und es bleibt die endliche Temperatur.
 Mit int wird der Wert in einen integer umgewandelt.
 */
+
+//Überprüft, ob überhaupt eine Zeit angegeben wurde
+if($lines[407] == '') {
+    echo 'Keine Zeit angegeben.';
+} else {
+
 $timestamp = trim(strip_tags($lines[407])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
+};
 
 $alphanumeric_temp = trim(strip_tags($lines[409])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
@@ -139,6 +144,7 @@ if($temperatur == '00') {
 <html>
 <head>
 <title>Wassertemperatur</title>
+
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = device-width, user-scalable=no">
@@ -148,6 +154,7 @@ if($temperatur == '00') {
 
 <!-- Google Font -->
 <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
 <!-- RSS Database.xml integration -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
@@ -160,7 +167,7 @@ and (max-device-width: 1024px)" href="<?php echo $directory; ?>/ipad.css" type="
 and (max-device-width: 460px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
 
 <!-- Computer Stylesheet -->
-<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
+<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/ipad.css" type="text/css" />
 
 <style type="text/css">
 h1 {
