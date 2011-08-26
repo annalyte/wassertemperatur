@@ -4,8 +4,8 @@ Freibad Wassertemperatur
 Datum: 25.08.2011
 */
 
-$version = '0.5.1';
-$build = 'ce4f0d';
+$version = '0.5.2';
+$build = '71e7f8';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
