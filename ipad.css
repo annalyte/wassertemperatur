@@ -30,7 +30,3 @@ body {
 p{
     opacity: 1;
 }
-
-p.version {
-    font-size: 10pt;
-}

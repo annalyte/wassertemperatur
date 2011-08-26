@@ -4,8 +4,8 @@ Freibad Wassertemperatur
 Datum: 25.08.2011
 */
 
-$version = '0.5';
-$build = '037b8a';
+$version = '0.5.1';
+$build = 'ce4f0d';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -58,9 +58,16 @@ $space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buch
 
 //$final_temp = trim($space_temp); // Entfernt Leerstellen
 
+//Überprüft, ob überhaupt eine Temperatur vorhanden ist
+if($space_temp == '') {
+    $temperatur = '00';
+} else {
+
 $temperatur = (int)$space_temp; // Wandelt Zahl in Integer um
 
-// $temperatur = 21; // zum debuggen
+};
+
+// $temperatur = 21; // nur zum debuggen
 
 /*
 Die xml Datei heißt database.xml. In sie werden alle Temperaturen bei jedem Aufruf gespeichert. Die xml Datei ist als RSS-Feed in die Website eingebunden.
@@ -82,59 +89,9 @@ $sxe->asXML("database.xml");
 Die Bezeichnungen von 18-26. Wenn $_GET auf "en" steht wird die englische Version ausgegeben. Ansonsten die normale.
 $lang_link ist einfach nur der passende Link für die Website (damit das HTML sauber bleibt). 
 */
-
-if($_GET[lang] == 'en') {
-
-// Englische Lokalisierung
-
-$lang_link = '<a href="'.$directory.'/">Deutsch</a>';
-
-
-    switch ($temperatur) {
-    case 26:
-        $description = 'Too warm!';
-        $color = '#ff0033';
-        break;
-    case 25:
-        $description = 'Very warm!';
-        $color = '#ff3000';
-        break;
-    case 24:
-        $description = 'Warm!';
-        $color = '#ff3000';
-        break;
-    case 23:
-        $description = 'Warm enough';
-        $color = '#ff5202';
-        break;
-    case 22:
-        $description = 'Comfortable';
-        $color = '#ffa600';
-        break;
-    case 21:
-        $description = 'Sufficient';
-        $color = '#ffdd00';
-        break;
-    case 20:
-        $description = 'Okay';
-        $color = '#dfff00';
-        break;
-    case 19:
-        $description = 'Cold';
-        $color = '#00c3ff';
-        break;
-    case 18:
-        $description = 'Too Cold';
-        $color = '#00c3ff';
-        break;        
-};
-
+if($temperatur == '00') {
+    echo 'Keine Daten.';
 } else {
-
-// Deutsche Lokalisierung
-
-$lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
-
     switch ($temperatur) {
     case 26:
         $description = 'Viel zu warm!';
@@ -173,8 +130,9 @@ $lang_link = '<a href="'.$directory.'/?lang=en">English</a>';
         $color = '#00c3ff';
         break;        
 };
- 
 };
+ 
+
 
 ?>
 <!DOCTYPE HTML>
@@ -217,6 +175,11 @@ h2 {
     font-size: 20pt;
     opacity: 1;
 }
+
+p.version {
+    font-size: 10pt;
+    padding-top: 20px;
+}
 </style>
 
 </head>
@@ -226,7 +189,6 @@ h2 {
 <h1><?php echo $temperatur; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
 Gemessen um <?php echo $timestamp; ?>.
-<p><?php echo $lang_link; ?></p>
 <p class="version"><?php echo $versioning; ?></p>
 </div>
 </div>
