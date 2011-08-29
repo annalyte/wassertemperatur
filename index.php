@@ -1,12 +1,12 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 28.08.2011
+Datum: 29.08.2011
 Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 */
 
 $version = '0.7';
-$build = 'xxxxxx';
+$build = '1c6ca3';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -123,7 +123,7 @@ and (max-device-width: 1024px)" href="<?php echo $directory; ?>/ipad.css" type="
 and (max-device-width: 460px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
 
 <!-- Computer Stylesheet -->
-<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/ipad.css" type="text/css" />
+<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/standard.css" type="text/css" />
 
 <style type="text/css">
 h1 {
