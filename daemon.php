@@ -41,11 +41,16 @@ Sucht die Zeile in der die Temperatur steht. $x ist dabei die Zeile. $lines ist 
 
 $lines = file($myfile);
 $l_count = count($lines);
+// Die Temperatur
 for($x = 409; $x< $l_count; $x++)
 {
 }
-
+// Die Zeit
 for($y = 407; $y< $l_count; $y++)
+{
+}
+// Das Datum
+for($z = 406; $y< $l_count; $y++)
 {
 }
 
@@ -56,13 +61,21 @@ Aus dem Array kommt eine Temperatur (Zahl) mit Buchstaben und einem <div> dabei.
 Mit int wird der Wert in einen integer umgewandelt.
 */
 
-//Überprüft, ob überhaupt eine Zeit angegeben wurde
+//ZEIT: Überprüft, ob überhaupt eine Zeit angegeben wurde
 if($lines[407] == '') {
     echo 'Keine Zeit angegeben.';
 } else {
 
 $timestamp = trim(strip_tags($lines[407])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
+};
+
+//DATUM: Überprüft, ob überhaupt ein Datum angegeben wurde
+if($lines[406] == '') {
+    echo 'Kein Datum angegeben.';
+} else {
+
+$site_date = trim(strip_tags($lines[406])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 };
 
 $alphanumeric_temp = trim(strip_tags($lines[409])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
@@ -88,9 +101,9 @@ if(!$db_selected) {
     die ('Kann Datenbank nicht nutzen: ' .mysql_error());
 } else {
        
-    $write_query = 'INSERT INTO wasser (temperature, site_time) VALUES ('.$temperatur.', "'.$timestamp.'");';
+    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'");';
     $exec_write = mysql_query($write_query) or die(mysql_error());
-    echo 'Neue Temperatur geschrieben. ';
+    echo 'Neue Temperatur geschrieben: ';
     /*
     $row = mysql_fetch_array($result) or die(mysql_error());
     echo $row['temperature'];
@@ -101,9 +114,7 @@ if(!$db_selected) {
     $read_query = 'SELECT * FROM wasser ORDER BY id DESC';
     $exec_read = mysql_query($read_query) or die(mysql_error());
     
-    $data = mysql_fetch_array($exec_read) or die(mysql_error());
-    
-    $data['temperature'] = $temperature;    
+    $data = mysql_fetch_array($exec_read) or die(mysql_error());   
     
     echo 'Temperatur gelesen.';
     
@@ -121,7 +132,6 @@ $sxe = new SimpleXMLElement($xml->asXML()); //In this line it create a SimpleXML
 $tmp_value = $sxe->addChild("item"); 
 $tmp_value->addChild("title", $temperatur.' Grad'); 
 $tmp_value->addChild("description", $temperatur.' Grad');
-// $tmp_value->addChild("link", "linkhier"); deprecated for 0.6
 $tmp_value->addChild("pubDate", $date);
 //This next line will overwrite the original XML file with new data added 
 $sxe->asXML("database.xml"); 

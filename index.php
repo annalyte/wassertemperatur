@@ -5,7 +5,7 @@ Datum: 28.08.2011
 Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 */
 
-$version = '0.6';
+$version = '0.7';
 $build = 'xxxxxx';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -99,7 +99,7 @@ if($data['temperature'] == '00') {
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>Wassertemperatur</title>
+<title>Wasser</title>
 
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
@@ -127,11 +127,14 @@ and (max-device-width: 460px)" href="<?php echo $directory; ?>/iphone.css" type=
 
 <style type="text/css">
 h1 {
-    font-size: 60pt;
+    font-size: 65pt;
     color: <?php echo $color; ?>;
     padding:50px 0px 0px 0px;
     opacity: 1;
     margin:0;
+    
+    -webkit-mask-image: -webkit-gradient(linear, left top,
+    left bottom, from(rgba(0,0,0,0.5)), to(rgba(0,0,0,1)));
 }
 
 h2 {
@@ -140,8 +143,12 @@ h2 {
 }
 
 p.version {
-    font-size: 10pt;
-    padding-top: 20px;
+    font-size: 8pt;
+    padding-top: 10px;
+}
+
+p{
+    line-height: 21px;
 }
 </style>
 
@@ -151,7 +158,7 @@ p.version {
 <div id="layer">
 <h1><?php echo $data['temperature']; ?>&deg;C</h1>
 <h2><?php echo $description; ?></h2>
-Gemessen um <?php echo $data['site_time']; ?>.
+<p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p>
 <p class="version"><?php echo $versioning; ?></p>
 <!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
 </div>
