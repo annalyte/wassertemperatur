@@ -5,8 +5,8 @@ Datum: 29.08.2011
 Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 */
 
-$version = '0.7';
-$build = '1c6ca3';
+$version = '0.7.1';
+$build = '64eac5';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -79,7 +79,7 @@ if($data['temperature'] == '00') {
         $color = '#ffdd00';
         break;
     case 20:
-        $description = 'Noch erträglich';
+        $description = 'Etwas k&uuml;hl';
         $color = '#dfff00';
         break;
     case 19:

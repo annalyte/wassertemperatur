@@ -86,7 +86,7 @@ $space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buch
 
 //Überprüft, ob überhaupt eine Temperatur vorhanden ist
 if($space_temp == '') {
-    $temperatur = '00';
+    $temperatur = '--';
 } else {
 
 $temperatur = (int)$space_temp; // Wandelt Zahl in Integer um
@@ -138,7 +138,7 @@ $sxe->asXML("database.xml");
 
 //for debug: shows the absolute path of the script
 
-echo ' Script in:<b>' .$_SERVER['SCRIPT_FILENAME'].'</b>';
+echo ' Script in: <b>' .$_SERVER['SCRIPT_FILENAME'].'</b>';
 
 
 ?>
