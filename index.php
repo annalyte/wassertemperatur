@@ -6,7 +6,7 @@ Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 */
 
 $version = '0.8';
-$build = 'xxxxxx';
+$build = '23c589';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -227,13 +227,12 @@ function slide_left()
 <style type="text/css">
 h1 {
     font-size: 65pt;
-    color: <?php echo $color; ?>;
     padding:50px 0px 0px 0px;
     opacity: 1;
     margin:0;
-    
+   
     -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,0.5)), to(rgba(0,0,0,1)));
+    left bottom, from(rgba(0,0,0,0.5)), to(rgba(0,0,0,1))); 
 }
 
 h2 {
@@ -258,15 +257,15 @@ p{
         <div id="slider" style="height: 460px; width: 640px;">
         <!-- Temperatur von heute -->
             <div id="slide1" style="height: 460px; width: 320px; float:left;">
-                <div id="layer">
-                    <h1><?php echo $data['temperature']; ?>&deg;C</h1>
+                <div class="layer">
+                    <h1 style="color:<?php echo $color; ?>;"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
                     <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p>
                 </div>
             </div>
         <!-- Temperatur von gestern -->
             <div id="slide2" style="height: 460px; width: 320px; float: left;">
-                <div id="layer">
+                <div class="layer">
                     <h1 style="color:<?php echo $previous_color; ?>;"><?php echo $previous_data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $previous_description; ?></h2>
                     <p>Gemessen am <b><?php echo $previous_data['site_date']; ?></b> <br /> um <b><?php echo $previous_data['site_time']; ?></b>.</p>

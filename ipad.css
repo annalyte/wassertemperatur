@@ -17,7 +17,7 @@ body {
     color: #333;
 }
 
-#layer {
+.layer {
     width: 280px;
     height: 320px;
     border-radius: 5px;

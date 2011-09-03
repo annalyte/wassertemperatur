@@ -16,7 +16,7 @@ body {
     text-shadow: 0px 1px 1px #fff;
 }
 
-#layer {
+.layer {
     width: 280px;
     height: 320px;
     border-radius: 5px;
