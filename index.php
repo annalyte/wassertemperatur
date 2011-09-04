@@ -1,23 +1,20 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 29.08.2011
+Datum: 04.09.2011
 Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
+Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
-$version = '0.8';
-$build = '23c589';
+$version = '0.8.1';
+$build = '8c4e99';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org/';
 
-// $date wird für das Datum im XML verwendet
-$date = date('D, d M Y H:i:s T');
-
-// Verbindung zur MySQL Datenbank
-
+// Verbindungsdaten zur MySQL Datenbank stehen in mysql.php in der Variable $link
 require('mysql.php');
 
 if(!$link) {
@@ -25,7 +22,6 @@ if(!$link) {
 };
 
 // Auswählen der Datenbank
-
 $db_selected = mysql_select_db('d011c151', $link);
 
 if(!$db_selected) {
@@ -38,7 +34,7 @@ if(!$db_selected) {
     
     $data = mysql_fetch_array($result) or die(mysql_error());
     
-    // Holt die Temperatur vom Vortag
+    // Holt die Temperatur vom Vortag, in dem der letzte Eintrag der nicht dem aktuellen Datum entspricht ausgegeben wird
     $previous_query = 'SELECT * FROM wasser
 WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
 
@@ -50,15 +46,13 @@ WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
 };
 
 /* 
-Wichtige Syntax
+Wichtige SQL Syntax
 INSERT INTO wasser (site_time, temperature) VALUES('18:00', '25');
 SELECT * FROM 'wasser'
 */
 
-/* 
-Die Bezeichnungen von 18-26. Wenn $_GET auf "en" steht wird die englische Version ausgegeben. Ansonsten die normale.
-$lang_link ist einfach nur der passende Link für die Website (damit das HTML sauber bleibt). 
-*/
+
+// Beschreibung für die aktuelle Temperatur
 if($data['temperature'] == '--') {
     echo 'Keine Daten.';
 } else {
@@ -102,6 +96,9 @@ if($data['temperature'] == '--') {
 };
 };
 
+if($previous_data['temperature'] == '--') {
+    echo 'Keine Daten.';
+} else {
 // Beschreibung für die Temperatur vom Vortag
 switch ($previous_data['temperature']) {
     case 26:
@@ -141,8 +138,7 @@ switch ($previous_data['temperature']) {
         $previous_color = '#00c3ff';
         break;  
 }; 
-
-
+};
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -153,7 +149,7 @@ switch ($previous_data['temperature']) {
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = device-width, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<link rel="apple-touch-icon-precomposed" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
+<link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 <link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
 
 <!-- Google Font -->
@@ -225,19 +221,29 @@ function slide_left()
 
 
 <style type="text/css">
-h1 {
+h1.today {
     font-size: 65pt;
     padding:50px 0px 0px 0px;
-    opacity: 1;
+    opacity: 0.9;
     margin:0;
-   
+    color:<?php echo $color; ?>;
     -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,0.5)), to(rgba(0,0,0,1))); 
+    left bottom, from(rgba(0,0,0,0.1)), to(rgba(0,0,0,1))); 
+}
+
+h1.yesterday {
+    font-size: 65pt;
+    padding:50px 0px 0px 0px;
+    opacity: 0.9;
+    margin:0;
+    color:<?php echo $previous_color; ?>;
+    -webkit-mask-image: -webkit-gradient(linear, left top,
+    left bottom, from(rgba(0,0,0,0.1)), to(rgba(0,0,0,1)));
 }
 
 h2 {
     font-size: 20pt;
-    opacity: 1;
+    opacity: 0.9;
 }
 
 p.version {
@@ -247,6 +253,7 @@ p.version {
 
 p{
     line-height: 21px;
+    opacity: 0.9;
 }
 </style>
 
@@ -258,19 +265,22 @@ p{
         <!-- Temperatur von heute -->
             <div id="slide1" style="height: 460px; width: 320px; float:left;">
                 <div class="layer">
-                    <h1 style="color:<?php echo $color; ?>;"><?php echo $data['temperature']; ?>&deg;C</h1>
+                    <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
                     <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p>
+                    <p class="version"><?php echo $versioning; ?></p>
                 </div>
             </div>
+        <!-- /heute -->
         <!-- Temperatur von gestern -->
             <div id="slide2" style="height: 460px; width: 320px; float: left;">
                 <div class="layer">
-                    <h1 style="color:<?php echo $previous_color; ?>;"><?php echo $previous_data['temperature']; ?>&deg;C</h1>
+                    <h1 class="yesterday"><?php echo $previous_data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $previous_description; ?></h2>
                     <p>Gemessen am <b><?php echo $previous_data['site_date']; ?></b> <br /> um <b><?php echo $previous_data['site_time']; ?></b>.</p>
                 </div>
             </div>
+        <!-- /gestern -->
         </div>
     </div>
 </div>

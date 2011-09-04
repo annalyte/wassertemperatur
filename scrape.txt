@@ -404,10 +404,10 @@ So   08:30 - 20:00 Uhr      </div>
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        03.09.2011<br />
-12:00 Uhr<br />
+        04.09.2011<br />
+08:30 Uhr<br />
 <br />
-21,5 Grad<br />
+22,5 Grad<br />
       </div>
     </div>
     <div id="oeffn3">
