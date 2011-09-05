@@ -1,5 +1,11 @@
 <?php
 /*
+Daemon 1.0.1
+Build: 49ce28ee
+
+The heart and soul of this app.
+*/
+/*
 Daemon which fetches the temperature and the time from the website every hour and writes it into a database.
 */
 
@@ -8,6 +14,14 @@ Daemon which fetches the temperature and the time from the website every hour an
 
 // $date wird für das Datum im XML verwendet
 $date = date('D, d M Y H:i:s T');
+
+// Die Zeilen, woher die Daten genommen werden sollen (wird das geändert, müssen auch noch die Zeilennummern bei den Filtern getauscht werden.
+// Zeile der Temperatur
+$line_temp = 411;
+// Zeile der Zeit
+$line_time = 409;
+// Zeile des Datums
+$line_date = 408;
 
 // Holt die Datenbank Benutzerinformationen
 require('mysql.php');
@@ -35,22 +49,20 @@ $myfile = 'scrape.txt';
 $fh = fopen($myfile, 'w') or die ('Kann Datei nicht öffnen');
 fwrite($fh, $output);
 
-/*
-Sucht die Zeile in der die Temperatur steht. $x ist dabei die Zeile. $lines ist dann das dazugehörige Array. $y ist die Zeile in der der Zeitpunkt der Messung steht. 
-*/
 
+// Sucht den Inhalt der oben angegeben Zeilen
 $lines = file($myfile);
 $l_count = count($lines);
 // Die Temperatur
-for($x = 409; $x< $l_count; $x++)
+for($line_temp; $line_temp< $l_count; $line_temp++)
 {
 }
 // Die Zeit
-for($y = 407; $y< $l_count; $y++)
+for($line_time; $line_time< $l_count; $line_time++)
 {
 }
 // Das Datum
-for($z = 406; $y< $l_count; $y++)
+for($line_date; $line_date< $l_count; $line_date++)
 {
 }
 
@@ -62,23 +74,23 @@ Mit int wird der Wert in einen integer umgewandelt.
 */
 
 //ZEIT: Überprüft, ob überhaupt eine Zeit angegeben wurde
-if($lines[407] == '') {
+if($lines[409] == '') {
     echo 'Keine Zeit angegeben.';
 } else {
 
-$timestamp = trim(strip_tags($lines[407])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
+$timestamp = trim(strip_tags($lines[409])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
 };
 
 //DATUM: Überprüft, ob überhaupt ein Datum angegeben wurde
-if($lines[406] == '') {
+if($lines[408] == '') {
     echo 'Kein Datum angegeben.';
 } else {
 
-$site_date = trim(strip_tags($lines[406])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
+$site_date = trim(strip_tags($lines[408])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 };
 
-$alphanumeric_temp = trim(strip_tags($lines[409])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
+$alphanumeric_temp = trim(strip_tags($lines[411])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
 $space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buchstaben
 

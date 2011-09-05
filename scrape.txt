@@ -400,15 +400,18 @@ Do   08:30 - 20:00 Uhr<br />
 <br />
 Fr   07:30 - 20:00 Uhr<br />
 Sa   08:30 - 20:00 Uhr<br />
-So   08:30 - 20:00 Uhr      </div>
+So   08:30 - 20:00 Uhr<br />
+!!! ACHTUNG!!!<br />
+SAISONENDE AM 18.09.2011      </div>
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        04.09.2011<br />
+        05.09.2011<br />
 08:30 Uhr<br />
 <br />
-22,5 Grad<br />
-      </div>
+22,2 Grad<br />
+!!! ACHTUNG!!!<br />
+SAISONENDE AM 18.09.2011      </div>
     </div>
     <div id="oeffn3">
       <div id="wettinfo">

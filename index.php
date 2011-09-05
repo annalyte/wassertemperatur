@@ -6,8 +6,8 @@ Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
-$version = '0.8.1';
-$build = '8c4e99';
+$version = '0.9';
+$build = '1127db';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
