@@ -1,10 +1,13 @@
 <?php
 /*
 Daemon 1.0.1
-Build: 49ce28ee
-
+Build: bef6b0
 The heart and soul of this app.
 */
+$version = '1.0.1';
+$build = 'bef6b0';
+
+$versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
 Daemon which fetches the temperature and the time from the website every hour and writes it into a database.
 */
@@ -151,6 +154,6 @@ $sxe->asXML("database.xml");
 //for debug: shows the absolute path of the script
 
 echo ' Script in: <b>' .$_SERVER['SCRIPT_FILENAME'].'</b>';
-
+echo '<br />'.$versioning;
 
 ?>

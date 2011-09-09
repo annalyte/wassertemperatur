@@ -406,10 +406,11 @@ SAISONENDE AM 18.09.2011      </div>
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        05.09.2011<br />
-08:30 Uhr<br />
+        09.09.2011<br />
+09:00 Uhr<br />
 <br />
-22,2 Grad<br />
+19,2 Grad<br />
+<br />
 !!! ACHTUNG!!!<br />
 SAISONENDE AM 18.09.2011      </div>
     </div>
