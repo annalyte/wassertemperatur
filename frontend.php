@@ -6,8 +6,8 @@ Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
-$version = '0.9.1';
-$build = 'bef6b0';
+$version = '1.1';
+$build = '28e5fa';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -24,33 +24,39 @@ if(!$link) {
 // Auswählen der Datenbank
 $db_selected = mysql_select_db('d011c151', $link);
 
+
 if(!$db_selected) {
     die ('Kann Datenbank nicht nutzen: ' .mysql_error());
 } else {
      
-    // Holt die aktuelle Wassertemperatur  
-    $query = 'SELECT * FROM wasser ORDER BY id DESC';
-    $result = mysql_query($query) or die(mysql_error());
+        // Holt die aktuelle Wassertemperatur  
+        $query = 'SELECT * FROM wasser ORDER BY id DESC';
+        $result = mysql_query($query) or die(mysql_error());
     
-    $data = mysql_fetch_array($result) or die(mysql_error());
+        $data = mysql_fetch_array($result) or die(mysql_error());
     
-    // Holt die Temperatur vom Vortag, in dem der letzte Eintrag der nicht dem aktuellen Datum entspricht ausgegeben wird
-    $previous_query = 'SELECT * FROM wasser
+        // Holt die Temperatur vom Vortag, in dem der letzte Eintrag der nicht dem aktuellen Datum entspricht ausgegeben wird
+        $previous_query = 'SELECT * FROM wasser
 WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
 
-    $previous_data_result = mysql_query($previous_query) or die(mysql_error());
+        $previous_data_result = mysql_query($previous_query) or die(mysql_error());
     
-    $previous_data = mysql_fetch_array($previous_data_result) or die(mysql_error());
+        $previous_data = mysql_fetch_array($previous_data_result) or die(mysql_error());
     
     mysql_close($link);
 };
+
+
+// Ein Unix-Zeitstempel von der aktuellen Zeit
+$cur_time = strtotime($data['cur_timestamp']);
+// Ein Unix-Zeitstemple wann die App ausgeht
+$end_time = strtotime('18-09-2011 22:00:00');
 
 /* 
 Wichtige SQL Syntax
 INSERT INTO wasser (site_time, temperature) VALUES('18:00', '25');
 SELECT * FROM 'wasser'
 */
-
 
 // Beschreibung für die aktuelle Temperatur
 if($data['temperature'] == '--') {
@@ -139,4 +145,20 @@ switch ($previous_data['temperature']) {
         break;  
 }; 
 };
+// Das was angezeigt wird, wenn die Saison vorbei ist.
+$end_html = '
+<div id="wrap">
+    <div id="slider_content" style="width: 320px; height: 460px; overflow: hidden;">
+        <div id="slider" style="height: 460px; width: 640px;">
+        <!-- Temperatur von heute -->
+            <div id="slide1" style="height: 460px; width: 320px; float:left;">
+                <div class="layer">
+                    <h1 class="today" style="color: red;">:(</h1>
+                    <h2>Saison vorbei.</h2>
+                    <p>Es ist nun zu kalt zum Schwimmen.</p>
+                    <p class="version">'.$versioning.'</p>
+                </div>
+            </div>
+            </div>
+            </div>';
 ?>

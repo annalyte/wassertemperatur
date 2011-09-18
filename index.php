@@ -8,6 +8,7 @@ $description = Beschreibung der Temperatur
 $color = Farbe die zur Temperatur passt
 $comparison = Vergleichstext zwischen gestern und heute
 $versioning = Versionierungsschema für ganz unten
+$end_time und $cur_time sind die Zeitstempel
 */
 ?>
 <!DOCTYPE HTML>
@@ -129,6 +130,12 @@ p{
 
 </head>
 <body>
+<?php
+// Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
+if($end_time < $cur_time) {
+    echo $end_html;
+    exit();
+} else { ?>
 <div id="wrap">
     <div id="slider_content" style="width: 320px; height: 460px; overflow: hidden;">
         <div id="slider" style="height: 460px; width: 640px;">
@@ -157,3 +164,4 @@ p{
 <!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
 </body>
 </html>
+<?php }; ?>
