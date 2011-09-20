@@ -2,12 +2,12 @@
 /*
 Freibad Wassertemperatur
 Datum: 04.09.2011
-Setzt voraus, dass das daemon.php stündlich ausgeführt wird.
+Setzt voraus, dass das daemon.php stündlich ausgeführt wird. (Daemon läuft gerade NICHT. Abgeschaltet am 20.09.2012)
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
 $version = '1.1';
-$build = '28e5fa';
+$build = 'bfca4c';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -50,7 +50,30 @@ WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
 // Ein Unix-Zeitstempel von der aktuellen Zeit
 $cur_time = strtotime($data['cur_timestamp']);
 // Ein Unix-Zeitstemple wann die App ausgeht
-$end_time = strtotime('18-09-2011 22:00:00');
+$end_time = strtotime('14-05-2012 22:00:00');
+
+// Script für den Countdown, von hier http://elouai.com/countdown-clock.php
+$the_countdown_date = $end_time -1;
+
+// make a unix timestamp for the given date
+ // $the_countdown_date = mktime(23, 23, 0, 5, 18, 2012, -1); brauch ich nicht weil ich meine eigene Zeit schon habe ($end_time).
+
+  // get current unix timestamp
+  $today = time();
+
+  $difference = $the_countdown_date - $today;
+  if ($difference < 0) $difference = 0;
+
+  $days_left = floor($difference/60/60/24);
+  $hours_left = floor(($difference - $days_left*60*60*24)/60/60);
+  $minutes_left = floor(($difference - $days_left*60*60*24 - $hours_left*60*60)/60);
+  
+  // OUTPUT wird unten schon gemacht
+  /*
+  echo "Today's date ".date("F j, Y, g:i a")."<br/>";
+  echo "Countdown date ".date("F j, Y, g:i a",$the_countdown_date)."<br/>";
+  echo "Countdown ".$days_left." days ".$hours_left." hours ".$minutes_left." minutes left";
+*/
 
 /* 
 Wichtige SQL Syntax
@@ -145,20 +168,24 @@ switch ($previous_data['temperature']) {
         break;  
 }; 
 };
+
 // Das was angezeigt wird, wenn die Saison vorbei ist.
 $end_html = '
 <div id="wrap">
     <div id="slider_content" style="width: 320px; height: 460px; overflow: hidden;">
-        <div id="slider" style="height: 460px; width: 640px;">
+        
         <!-- Temperatur von heute -->
             <div id="slide1" style="height: 460px; width: 320px; float:left;">
                 <div class="layer">
-                    <h1 class="today" style="color: red;">:(</h1>
+                    <h1 class="today" style="color: blue;">:(</h1>
                     <h2>Saison vorbei.</h2>
-                    <p>Es ist nun zu kalt zum Schwimmen.</p>
+                    <p>
+                    Noch '.$days_left.' Tage und '.$hours_left.' Stunden, dann geht es wieder los.</p>
                     <p class="version">'.$versioning.'</p>
                 </div>
             </div>
             </div>
-            </div>';
+            
+            <!-- Daemon war zuletzt da: '.$data['cur_timestamp'].' -->
+            ';
 ?>

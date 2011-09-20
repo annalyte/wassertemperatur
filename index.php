@@ -132,7 +132,7 @@ p{
 <body>
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($end_time < $cur_time) {
+if($end_time > $cur_time) {
     echo $end_html;
     exit();
 } else { ?>
