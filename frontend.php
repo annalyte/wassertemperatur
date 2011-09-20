@@ -6,9 +6,18 @@ Setzt voraus, dass das daemon.php stündlich ausgeführt wird. (Daemon läuft ge
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
-$version = '1.1';
-$build = 'bfca4c';
+#################
+# EINSTELLUNGEN #
+#################
 
+// Version und Build-Nummer
+$version = '1.2';
+$build = '665ac6';
+
+// Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
+$season_time = '14-05-2012 22:00:00';
+
+// Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
 // Hier den Ort eintragen
@@ -16,6 +25,8 @@ $directory = 'http://wasser.aaronbauer.org/';
 
 // Verbindungsdaten zur MySQL Datenbank stehen in mysql.php in der Variable $link
 require('mysql.php');
+
+######################
 
 if(!$link) {
     die('Keine Verbindung: '.mysql_error());
@@ -50,7 +61,7 @@ WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
 // Ein Unix-Zeitstempel von der aktuellen Zeit
 $cur_time = strtotime($data['cur_timestamp']);
 // Ein Unix-Zeitstemple wann die App ausgeht
-$end_time = strtotime('14-05-2012 22:00:00');
+$end_time = strtotime($season_time);
 
 // Script für den Countdown, von hier http://elouai.com/countdown-clock.php
 $the_countdown_date = $end_time -1;
