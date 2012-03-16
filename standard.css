@@ -1,6 +1,8 @@
 body {
     font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
-    background: url(standard.jpeg) repeat;
+    background: url(bg.png) repeat #231301;
+    background-position: top;
+    background-size: 100%;
     color: #333;
     padding:0;
     margin:0;
@@ -8,7 +10,7 @@ body {
 
 #wrap {
     width: 320px;
-    height: 460px;
+    
     margin-left: auto;
     margin-right: auto;
     text-align: center;
@@ -20,16 +22,74 @@ body {
 
 
 .layer {
-    width: 280px;
-    height: 320px;
+    
     border-radius: 5px;
     background: rgba(255,255,255,0.8);
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 50px;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     box-shadow: 1px 1px 20px #333;
+
 }
 
 p{
     opacity: 1;
+}
+
+
+
+
+
+/* Countdown Kram. Übernommen von hier: http://zombocalyp.se/ */
+
+.hasCountdown {
+    border: none;
+}
+.countdown_holding span {
+}
+.countdown_row {
+    clear: both;
+    width: 100%;
+    padding: 0px 2px;
+    text-align: center;
+}
+.countdown_show1 .countdown_section {
+    width: 98%;
+}
+.countdown_show2 .countdown_section {
+    width: 48%;
+}
+.countdown_show3 .countdown_section {
+    width: 32.5%;
+}
+.countdown_show4 .countdown_section {
+    width: 24.5%;
+}
+.countdown_show5 .countdown_section {
+    width: 19.5%;
+}
+.countdown_show6 .countdown_section {
+    width: 16.25%;
+}
+.countdown_show7 .countdown_section {
+    width: 14%;
+}
+.countdown_section {
+    display: block;
+    float: left;
+    font-size: 12pt;
+    text-align: center;
+}
+.countdown_amount {
+    font-size: 34pt;
+}
+.countdown_descr {
+    display: block;
+    width: 100%;
+}
+
+#defaultCountdown {
+    margin-bottom: 25px;
+    
 }

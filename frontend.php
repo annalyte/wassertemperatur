@@ -11,11 +11,12 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.2';
-$build = '665ac6';
+$version = '1.3';
+$build = 'xxxxxx';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
-$season_time = '14-05-2012 22:00:00';
+// Auch das Ändern in der Index.php nicht vergessen!
+$season_time = '14-05-2012 07:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -53,6 +54,22 @@ WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
         $previous_data_result = mysql_query($previous_query) or die(mysql_error());
     
         $previous_data = mysql_fetch_array($previous_data_result) or die(mysql_error());
+        
+        
+    // Query für die Darstellung als Graph mit der Google Graph API 
+        
+            $graph_query = 'SELECT *
+                                FROM 
+                                   (
+                                    SELECT * 
+                                        FROM wasser 
+                                        ORDER BY id DESC LIMIT 1000000
+                                    ) 
+                                AS tbl ORDER BY cur_timestamp';
+        
+            $graph_result = mysql_query($graph_query) or die (mysql_error());
+        
+        
     
     mysql_close($link);
 };
@@ -188,14 +205,16 @@ $end_html = '
         <!-- Temperatur von heute -->
             <div id="slide1" style="height: 460px; width: 320px; float:left;">
                 <div class="layer">
-                    <h1 class="today" style="color: blue;">:(</h1>
-                    <h2>Saison vorbei.</h2>
-                    <p>
-                    Noch '.$days_left.' Tage und '.$hours_left.' Stunden, dann geht es wieder los.</p>
+                    <h1 class="today" style="color: red;">&#3232;_&#3232;</h1>
+                    <h2>Es wird ernst!</h2>
+                    <p><div id="defaultCountdown"></div></p>
+                    
                     <p class="version">'.$versioning.'</p>
                 </div>
             </div>
             </div>
+            
+          
             
             <!-- Daemon war zuletzt da: '.$data['cur_timestamp'].' -->
             ';

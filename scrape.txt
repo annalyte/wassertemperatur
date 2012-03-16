@@ -393,25 +393,12 @@ function MM_nbGroup(event, grpName) { //v6.0
     <div id="twitt"><a href="http://twitter.com/fischach" target="_blank" onfocus="if(this.blur)this.blur()"><img src="pix/kont_log_twit.png" alt="FreibadTwitter" width="133" height="100" border="0" /></a></div>
     <div id="oeffn">
       <div id="oeffdat">
-        Mo   08:30 - 20:00 Uhr<br />
-Di   08:30 - 20:00 Uhr<br />
-Mi   07:30 - 20:00 Uhr<br />
-Do   08:30 - 20:00 Uhr<br />
-<br />
-Fr   07:30 - 20:00 Uhr<br />
-Sa   08:30 - 20:00 Uhr<br />
-So   08:30 - 20:00 Uhr<br />
-!!! ACHTUNG!!!<br />
+            !!! ACHTUNG!!!<br />
 SAISONENDE AM 18.09.2011      </div>
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        17.09.2011<br />
-12:30 Uhr<br />
-<br />
-21,5 Grad<br />
-<br />
-!!! ACHTUNG!!!<br />
+             !!! ACHTUNG!!!<br />
 SAISONENDE AM 18.09.2011      </div>
     </div>
     <div id="oeffn3">

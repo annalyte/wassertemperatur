@@ -18,7 +18,7 @@ $end_time und $cur_time sind die Zeitstempel
 
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
-<meta name="viewport" content="width = device-width, user-scalable=no">
+<meta name="viewport" content="width = 480px, user-scalable=no">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 <link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
@@ -29,65 +29,48 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- RSS Database.xml integration -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
-<!-- iPad Stylesheet -->
-<link rel="stylesheet" media="only screen and (min-device-width: 768px)
-and (max-device-width: 1024px)" href="<?php echo $directory; ?>/ipad.css" type="text/css" />
-
-<!-- iPhone Stylesheet -->
-<link rel="stylesheet" media="only screen and (min-device-width: 320px)
-and (max-device-width: 460px)" href="<?php echo $directory; ?>/iphone.css" type="text/css" />
-
 <!-- Computer Stylesheet -->
-<link rel="stylesheet" media="only screen and (min-device-width: 1025px)" href="<?php echo $directory; ?>/standard.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $directory; ?>/standard.css" type="text/css" />
 
-<!-- jQuery -->
-<script type="text/javascript" src="<?php echo $directory; ?>/jquery-1.6.2.js"></script>
 
-<!-- Tolles Touch script von hier: http://james.lin.net.nz/2010/09/27/javascript-swipe-demo-works-both-with-finger-ipad-and-mouse-pc/ -->
-<script type="text/javascript">// <![CDATA[
-var $j = jQuery.noConflict();
-var down_x = null;
-var up_x = null;
-$j().ready(function(){
-  $j("#slider > div").mousedown(function(e){
-    e.preventDefault();
-    down_x = e.pageX;
-  });
-  $j("#slider > div").mouseup(function(e){
-    up_x = e.pageX;
-    do_work();
-  });
-  $j("#slider > div").bind('touchstart', function(e){
-    down_x = e.originalEvent.touches[0].pageX;
-  });
-  $j("#slider > div").bind('touchmove', function(e){
-    e.preventDefault();
-    up_x = e.originalEvent.touches[0].pageX;
-  });
-  $j("#slider > div").bind('touchend', function(e){
-    do_work();
-  });
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+  google.load("visualization", "1", {packages:["corechart"]});
+  google.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Zeit');
+    data.addColumn('number', 'in &deg;C');
+    data.addRows([
+    <?php
+    
+    while ($graph = mysql_fetch_assoc($graph_result)) {
+echo '["'.$graph['cur_timestamp'].'", '.$graph['temperature'].'],';	
+
+ 
+};?>
+      
+    ]);
+
+    var options = {
+      width: 300, height: 300, fontName: 'Helvetica Neue', fontSize: 10, curveType: 'function', backgroundColor: 'none', legend: 'none', 
+      title: 'Verlauf der Wassertemperatur'
+    };
+
+    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+  }
+</script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
+<script type="text/javascript">
+$(function () {
+    var openingDay = new Date(2012, 05-1, 14);
+    $('#defaultCountdown').countdown({until: openingDay});
 });
-function do_work()
-{
-  if ((down_x - up_x) > 50)
-    {
-        slide_right();
-    }
-    if ((up_x - down_x) > 50)
-    {
-        slide_left();
-    }
-}
-function slide_right()
-{
-  $j("#slider_content").animate({scrollLeft:'+=320'},1000);
-}
-function slide_left()
-{
-  $j("#slider_content").animate({scrollLeft:'-=320'},1000);
-}
-// ]]></script>
+</script>
 
 
 
@@ -119,7 +102,7 @@ h2 {
 
 p.version {
     font-size: 8pt;
-    padding-top: 10px;
+    margin-top: 110px;
 }
 
 p{
@@ -132,34 +115,22 @@ p{
 <body>
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($end_time > $cur_time) {
+if($days_left and $hours_left != 0) {
     echo $end_html;
     exit();
 } else { ?>
-<div id="wrap">
-    <div id="slider_content" style="width: 320px; height: 460px; overflow: hidden;">
-        <div id="slider" style="height: 460px; width: 640px;">
-        <!-- Temperatur von heute -->
-            <div id="slide1" style="height: 460px; width: 320px; float:left;">
+<div id="wrap">           
                 <div class="layer">
                     <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
                     <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p>
                     <p class="version"><?php echo $versioning; ?></p>
                 </div>
-            </div>
-        <!-- /heute -->
-        <!-- Temperatur von gestern -->
-            <div id="slide2" style="height: 460px; width: 320px; float: left;">
-                <div class="layer">
-                    <h1 class="yesterday"><?php echo $previous_data['temperature']; ?>&deg;C</h1>
-                    <h2><?php echo $previous_description; ?></h2>
-                    <p>Gemessen am <b><?php echo $previous_data['site_date']; ?></b> <br /> um <b><?php echo $previous_data['site_time']; ?></b>.</p>
-                </div>
-            </div>
-        <!-- /gestern -->
-        </div>
-    </div>
+                <div class="layer"><br />
+                    <h2>R&uuml;ckblick</h2>
+                    <p><div id="chart_div"></div></p>
+                 </div>
+                 <div style="height:50px;"></div>       
 </div>
 <!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
 </body>
