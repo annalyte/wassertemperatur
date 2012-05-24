@@ -1,6 +1,6 @@
 <?php
 /*
-Daemon 1.0.1
+Daemon 1.1
 Build: bef6b0
 The heart and soul of this app.
 */
