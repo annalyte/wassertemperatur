@@ -12,11 +12,11 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 
 // Version und Build-Nummer
 $version = '1.3';
-$build = 'xxxxxx';
+$build = 'f88f8d';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern in der Index.php nicht vergessen!
-$season_time = '14-05-2012 07:00:00';
+$season_time = '24-05-2012 07:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -197,6 +197,8 @@ switch ($previous_data['temperature']) {
 }; 
 };
 
+//$random_temp = rand(50,100);
+
 // Das was angezeigt wird, wenn die Saison vorbei ist.
 $end_html = '
 <div id="wrap">
@@ -205,7 +207,7 @@ $end_html = '
         <!-- Temperatur von heute -->
             <div id="slide1" style="height: 460px; width: 320px; float:left;">
                 <div class="layer">
-                    <h1 class="today" style="color: red;">&#3232;_&#3232;</h1>
+                    <h1 class="today" style="color: red;">15&deg;C</h1>
                     <h2>Es wird ernst!</h2>
                     <p><div id="defaultCountdown"></div></p>
                     

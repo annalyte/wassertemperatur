@@ -4,7 +4,7 @@ Daemon 1.0.1
 Build: bef6b0
 The heart and soul of this app.
 */
-$version = '1.0.1';
+$version = '1.1';
 $build = 'bef6b0';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -19,12 +19,12 @@ Daemon which fetches the temperature and the time from the website every hour an
 $date = date('D, d M Y H:i:s T');
 
 // Die Zeilen, woher die Daten genommen werden sollen (wird das geändert, müssen auch noch die Zeilennummern bei den Filtern getauscht werden.
-// Zeile der Temperatur
-$line_temp = 411;
+// Zeile der Temperatur (immer eins weniger wie die tatsächliche Position der Daten)
+$line_temp = 408;
 // Zeile der Zeit
-$line_time = 409;
+$line_time = 402;
 // Zeile des Datums
-$line_date = 408;
+$line_date = 406;
 
 // Holt die Datenbank Benutzerinformationen
 require('mysql.php');
@@ -77,37 +77,59 @@ Mit int wird der Wert in einen integer umgewandelt.
 */
 
 //ZEIT: Überprüft, ob überhaupt eine Zeit angegeben wurde
-if($lines[409] == '') {
+if($lines[402] == '') {
     echo 'Keine Zeit angegeben.';
 } else {
 
-$timestamp = trim(strip_tags($lines[409])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
+//$timestamp = trim(strip_tags($lines[402])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 
 };
 
 //DATUM: Überprüft, ob überhaupt ein Datum angegeben wurde
-if($lines[408] == '') {
+if($lines[406] == '') {
     echo 'Kein Datum angegeben.';
 } else {
 
-$site_date = trim(strip_tags($lines[408])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
+//$site_date = trim(strip_tags($lines[403])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
 };
 
-$alphanumeric_temp = trim(strip_tags($lines[411])); // Wandelt das Array in eine Variable und entfernt HTML (strip_tags) sowie Leerstellen (trim).
-
-$space_temp = preg_replace('/[a-zA-Z]/','',$alphanumeric_temp); // Entfernt Buchstaben
-
-//$final_temp = trim($space_temp); // Entfernt Leerstellen
-
-//Überprüft, ob überhaupt eine Temperatur vorhanden ist
-if($space_temp == '') {
-    $temperatur = '--';
+//TEMPERATUR: Überprüft, ob Temperatur angegeben wurde
+if($lines[408] == '') {
+	echo 'Keine Temperatur angegeben.';
 } else {
-
-$temperatur = (int)$space_temp; // Wandelt Zahl in Integer um
-
+	
 };
 
+$arr1 = str_split(strip_tags($lines[408])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
+
+echo '<h1>Daemon Information</h1>';
+
+$site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[406]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+
+//Nur zum Anzeigen
+echo 'Date 406:'.$lines[406].'<br />';
+echo 'Time 402:'.$lines[402].'<br />';
+echo 'Temp 408:'.$lines[408].'<br />';
+        
+$temp_implode = implode(range($arr1[11], $arr1[12])); //Der 11. und 12. Teil des Arrays ist die Temperatur
+    
+$temperatur = (int)$temp_implode; //Macht Integer aus String
+
+$time_range = array_slice($arr1, 0, 9); //Bei 0 wird begonnen, nach 9 Teilen wird abgeschnitten
+
+$timestamp = implode($time_range); // Aus dem Array wird ein String
+
+//Nur zum Anzeigen
+echo '<h2>Submitted Data</h2>';
+    
+echo 'Temp: '.$temperatur;
+echo '<br />Date: '.$site_date;
+echo '<br />Time: '.$timestamp;
+
+echo '<br /><br />';
+
+
+   
 // Auswählen der Datenbank
 
 $db_selected = mysql_select_db('d011c151', $link);

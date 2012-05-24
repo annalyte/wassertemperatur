@@ -67,7 +67,7 @@ echo '["'.$graph['cur_timestamp'].'", '.$graph['temperature'].'],';
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2012, 05-1, 14);
+    var openingDay = new Date(2012, 05-1, 24);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
