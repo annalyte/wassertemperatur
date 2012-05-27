@@ -1,11 +1,11 @@
 <?php
 /*
-Daemon 1.1
-Build: bef6b0
+Daemon 1.1.1
+Build: 90369a
 The heart and soul of this app.
 */
-$version = '1.1';
-$build = 'bef6b0';
+$version = '1.1.1';
+$build = '90369a';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
@@ -72,46 +72,25 @@ for($line_date; $line_date< $l_count; $line_date++)
 fclose($fh);
 
 /*
-Aus dem Array kommt eine Temperatur (Zahl) mit Buchstaben und einem <div> dabei.  Das Array wird in die Variable alphanumeric_temp gegossen. Mit strip_tags wird der <div> entfernt. Danach heißt die Variable stripped_temp. Mit preg_replace werden dann noch die Buchstaben entfernt. Mit trim werden nun noch die Leerstellen gefiltert und es bleibt die endliche Temperatur.
-Mit int wird der Wert in einen integer umgewandelt.
+Aus allen Zeichen der Linie mit Wassertemp und Uhrzeit wird ein Array (arr1) gemacht anhand dessen wir dann abzählen können, welche Teile wir daraus benötigen. array_slice schneidet dabei das richtige heraus. 
 */
 
-//ZEIT: Überprüft, ob überhaupt eine Zeit angegeben wurde
-if($lines[402] == '') {
-    echo 'Keine Zeit angegeben.';
-} else {
-
-//$timestamp = trim(strip_tags($lines[402])); // Wandelt das Array der Uhrzeit in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
-
-};
-
-//DATUM: Überprüft, ob überhaupt ein Datum angegeben wurde
-if($lines[406] == '') {
-    echo 'Kein Datum angegeben.';
-} else {
-
-//$site_date = trim(strip_tags($lines[403])); // Wandelt das Array des Datums in eine Variable um und entfernt HTML (strip_tags) sowie Leerstellen (trim).
-};
-
-//TEMPERATUR: Überprüft, ob Temperatur angegeben wurde
-if($lines[408] == '') {
-	echo 'Keine Temperatur angegeben.';
-} else {
-	
-};
 
 $arr1 = str_split(strip_tags($lines[408])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
 
-echo '<h1>Daemon Information</h1>';
+echo '<h1>Daemon Information - '.$versioning.'</h1>';
+
+print_r($arr1);
 
 $site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[406]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
 //Nur zum Anzeigen
+echo '<br />';
 echo 'Date 406:'.$lines[406].'<br />';
 echo 'Time 402:'.$lines[402].'<br />';
 echo 'Temp 408:'.$lines[408].'<br />';
         
-$temp_implode = implode(range($arr1[11], $arr1[12])); //Der 11. und 12. Teil des Arrays ist die Temperatur
+$temp_implode = implode(array_slice($arr1, 11, 2)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
 $temperatur = (int)$temp_implode; //Macht Integer aus String
 
@@ -128,6 +107,13 @@ echo '<br />Time: '.$timestamp;
 
 echo '<br /><br />';
 
+//Debug Modus beendet das Script hier. Es werden keine Daten geschrieben.
+if($_GET['debug'] == 'yes') {
+	echo 'Debug On';
+	exit;
+} else {
+	echo '<a href="http://wasser.aaronbauer.org/daemon.php?debug=yes">Switch Debug On</a><br /><br />';	
+};
 
    
 // Auswählen der Datenbank
