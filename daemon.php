@@ -1,11 +1,11 @@
 <?php
 /*
 Daemon 1.1.1
-Build: 90369a
+Build: bc001b
 The heart and soul of this app.
 */
 $version = '1.1.1';
-$build = '90369a';
+$build = 'bc001b';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*

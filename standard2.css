@@ -1,0 +1,127 @@
+body {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  /*  background: url(bg_summer.png) center top no-repeat #231301;
+    background-size: 100%; */
+    color: #333;
+    padding:0;
+    margin:0;
+    
+    background: url(bg_summer.png) no-repeat center center fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+
+#wrap {
+    width: 100%;
+    height: 100%;
+    
+    
+    text-align: center;
+    
+    text-shadow: 1px 1px 20px #fff;
+    color: #333;
+}
+
+#status_bar {
+	background: rgba(41,198,255,0.5);
+	font-weight: lighter;
+	height: 70px;
+	font-size: 25pt;
+	color: white;
+	text-shadow: 1px 1px 1px black;
+	border-bottom: 1px solid #c6edff;
+}
+
+p.date {
+	float: left;
+	padding:20px 0px 0px 22px;
+	margin:0;
+}
+
+p.time {
+	float: right;
+	padding: 20px 22px 0px 0px;
+	margin:0;
+}
+
+
+
+.layer {
+    width: 100%;
+    
+  /*  background: rgba(255,255,255,0.8); */
+    vertical-align: middle;
+    
+
+}
+
+p{
+    opacity: 1;
+}
+
+
+
+#img.source-image {
+	width: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+
+
+/* Countdown Kram. Übernommen von hier: http://zombocalyp.se/ */
+
+.hasCountdown {
+    border: none;
+}
+.countdown_holding span {
+}
+.countdown_row {
+    clear: both;
+    width: 100%;
+    padding: 0px 2px;
+    text-align: center;
+}
+.countdown_show1 .countdown_section {
+    width: 98%;
+}
+.countdown_show2 .countdown_section {
+    width: 48%;
+}
+.countdown_show3 .countdown_section {
+    width: 32.5%;
+}
+.countdown_show4 .countdown_section {
+    width: 24.5%;
+}
+.countdown_show5 .countdown_section {
+    width: 19.5%;
+}
+.countdown_show6 .countdown_section {
+    width: 16.25%;
+}
+.countdown_show7 .countdown_section {
+    width: 14%;
+}
+.countdown_section {
+    display: block;
+    float: left;
+    font-size: 12pt;
+    text-align: center;
+}
+.countdown_amount {
+    font-size: 34pt;
+}
+.countdown_descr {
+    display: block;
+    width: 100%;
+}
+
+#defaultCountdown {
+    margin-bottom: 25px;
+    
+}

@@ -2,7 +2,7 @@
 /*
 Freibad Wassertemperatur
 Datum: 04.09.2011
-Setzt voraus, dass das daemon.php stündlich ausgeführt wird. (Daemon läuft gerade NICHT. Abgeschaltet am 20.09.2012)
+Setzt voraus, dass das daemon.php 30min ausgeführt wird. (Daemon läuft gerade NICHT. Abgeschaltet am 20.09.2011. Eingeschaltet am 25.05.2012)
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
@@ -11,7 +11,7 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.3';
+$version = '1.4';
 $build = 'f88f8d';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)

@@ -404,9 +404,9 @@ Sonntags: 08:30-20:00Uhr<br />
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        24.05.2012<br />
+        Sonntag 27.05.2012<br />
 <br />
-11:00 Uhr: 21,0C.      </div>
+12:30 Uhr: 21,0C.      </div>
     </div>
     <div id="oeffn3">
       <div id="wettinfo">

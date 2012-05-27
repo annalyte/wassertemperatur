@@ -7,7 +7,7 @@ $previous_data = Array mit den Daten von gestern
 $description = Beschreibung der Temperatur
 $color = Farbe die zur Temperatur passt
 $comparison = Vergleichstext zwischen gestern und heute
-$versioning = Versionierungsschema fÃ¼r ganz unten
+$versioning = Versionierungsschema fŸr ganz unten
 $end_time und $cur_time sind die Zeitstempel
 */
 ?>
@@ -18,8 +18,8 @@ $end_time und $cur_time sind die Zeitstempel
 
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
-<meta name="viewport" content="width = 480px, user-scalable=no">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="viewport" content="width = 480px, inital-scale = 1.0, user-scalable=no"> 
+<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 <link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
 
@@ -30,38 +30,8 @@ $end_time und $cur_time sind die Zeitstempel
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
 <!-- Computer Stylesheet -->
-<link rel="stylesheet" href="<?php echo $directory; ?>/standard.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo $directory; ?>/standard2.css" type="text/css" />
 
-
-
-<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-<script type="text/javascript">
-  google.load("visualization", "1", {packages:["corechart"]});
-  google.setOnLoadCallback(drawChart);
-  function drawChart() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', 'Zeit');
-    data.addColumn('number', 'in &deg;C');
-    data.addRows([
-    <?php
-    
-    while ($graph = mysql_fetch_assoc($graph_result)) {
-echo '["'.$graph['cur_timestamp'].'", '.$graph['temperature'].'],';	
-
- 
-};?>
-      
-    ]);
-
-    var options = {
-      width: 300, height: 300, fontName: 'Helvetica Neue', fontSize: 10, curveType: 'function', backgroundColor: 'none', legend: 'none', 
-      title: 'Verlauf der Wassertemperatur'
-    };
-
-    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
-  }
-</script>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
@@ -76,13 +46,16 @@ $(function () {
 
 <style type="text/css">
 h1.today {
-    font-size: 65pt;
+    font-size: 100pt;
     padding:50px 0px 0px 0px;
+    font-weight: lighter;
+    text-shadow: 1px 1px 5px grey;
+    
     opacity: 0.9;
     margin:0;
     color:<?php echo $color; ?>;
     -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,0.1)), to(rgba(0,0,0,1))); 
+    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.8))); 
 }
 
 h1.yesterday {
@@ -96,8 +69,9 @@ h1.yesterday {
 }
 
 h2 {
-    font-size: 20pt;
+    font-size: 30pt;
     opacity: 0.9;
+    font-weight: lighter;
 }
 
 p.version {
@@ -113,24 +87,28 @@ p{
 
 </head>
 <body>
+
+
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
 if($days_left and $hours_left != 0) {
     echo $end_html;
     exit();
 } else { ?>
-<div id="wrap">           
+<div id="wrap">        
                 <div class="layer">
+                <div id="status_bar"> <p class="date"><?php echo $data['site_date']; ?></p> <p class="time"><?php echo $data['site_time']; ?></p> </div> 
                     <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
-                    <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p>
+                   <!-- <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p> -->
                     <p class="version"><?php echo $versioning; ?></p>
                 </div>
-                <div class="layer"><br />
+
+            <!--     <div class="layer"><br />
                     <h2>R&uuml;ckblick</h2>
                     <p><div id="chart_div"></div></p>
-                 </div>
-                 <div style="height:50px;"></div>       
+                 </div> -->
+               <!--   <div style="height:50px;"></div>   -->     
 </div>
 <!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
 </body>
