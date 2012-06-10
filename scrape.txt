@@ -53,7 +53,7 @@ body {
 	position:absolute;
 	width:980px;
 	height:679px;
-	z-index:4;
+	z-index:6;
 	left: 0px;
 	top: 480px;
 	text-align: center;
@@ -177,7 +177,7 @@ a:active {
 #textmitte {
 	position:absolute;
 	width:867px;
-	height:161px;
+	height:311px;
 	z-index:10;
 	left: 50px;
 	top: 470px;
@@ -388,8 +388,12 @@ function MM_nbGroup(event, grpName) { //v6.0
     <div id="willkomm"></div>
     <div id="textmitte"><span class="orange"><span class="uebergruen"><img src="pix/ueber_veran.jpg" width="296" height="27" /></span><br />
       </span><br />
-      <span class="orange">18. August 2011 - &quot;ANTENNE BAYERN – Alles frei... sei dabei!&quot;</span><br />
-      Fun und Action – kostenlos für alle in Bayern! Heute soll der schönste Tag der Woche werden mit Temperaturen über 30°C! Perfekt für einen Tag im Schwimmbad. Deshalb laden wir alle Hörer den ganzen Tag ins Naturfreibad Fischach bei Augsburg ein! Natürlich for free!</div>
+      <span class="orange"><img src="pix/schwimmkurs_maskottchen.png" width="213" height="250" align="right" />16. Juni 2012       Nachtschwimmen<br />
+      <br />
+ 30.Juni 2012 Theaterstück mit Eukitea<br />
+ <br />
+ <img src="pix/volley100.png" width="50" height="100" hspace="20" align="left" />29.Juli 2012  Sommerfest<br />
+ mit Beachvolleyballturnier  &amp; Arschbombencontest</span></div>
     <div id="twitt"><a href="http://twitter.com/fischach" target="_blank" onfocus="if(this.blur)this.blur()"><img src="pix/kont_log_twit.png" alt="FreibadTwitter" width="133" height="100" border="0" /></a></div>
     <div id="oeffn">
       <div id="oeffdat">
@@ -404,9 +408,9 @@ Sonntags: 08:30-20:00Uhr<br />
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        Sonntag 27.05.2012<br />
+        Sonntag 10.06.2012<br />
 <br />
-12:30 Uhr: 21,0C.      </div>
+11:00 Uhr 17°C      </div>
     </div>
     <div id="oeffn3">
       <div id="wettinfo">
@@ -428,7 +432,6 @@ Sonntags: 08:30-20:00Uhr<br />
     <div id="impress"><a href="impressum.html" onfocus="if(this.blur)this.blur()"><img src="pix/impress.jpg" width="112" height="72" border="0" /></a></div>
     <div id="schloss">
       <a href='/webyep-system/programm/webyep-logon-de.php' onclick='window.open("/webyep-system/programm/logon.php?LOGON_PAGE_URL=%2Findex.php", "WebYepLogon", "toolbar=no,location=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=400,height=300"); return false;' title='WebYep Anmeldung'><img src='/webyep-system/programm/images/logon-button.gif' width='16' height='16' alt='Anmeldung' style='border: none' /></a>    </div>
-    <div id="info"><a href="http://www.antenne.de/alles_frei_sei_dabei/Kostenlos-Ein-Tag-im-Naturfreibad-Fischach-bei-Augsburg__aktionen_411675_radio.html" target="_blank"><img src="pix/2011/aktion_antennby.jpg" width="472" height="260" border="0" /></a></div>
   </div>
 </div>
 <body>

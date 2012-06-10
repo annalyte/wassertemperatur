@@ -19,7 +19,7 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = 480px, inital-scale = 1.0, user-scalable=no"> 
-<meta name="apple-mobile-web-app-status-bar-style" content="transparent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
 <link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
 
@@ -72,6 +72,7 @@ h2 {
     font-size: 30pt;
     opacity: 0.9;
     font-weight: lighter;
+    text-shadow: 1px 1px 20px #fff;
 }
 
 p.version {
@@ -79,10 +80,7 @@ p.version {
     margin-top: 110px;
 }
 
-p{
-    line-height: 21px;
-    opacity: 0.9;
-}
+
 </style>
 
 </head>
@@ -100,15 +98,41 @@ if($days_left and $hours_left != 0) {
                 <div id="status_bar"> <p class="date"><?php echo $data['site_date']; ?></p> <p class="time"><?php echo $data['site_time']; ?></p> </div> 
                     <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
-                   <!-- <p>Gemessen am <b><?php echo $data['site_date']; ?></b> <br /> um <b><?php echo $data['site_time']; ?></b>.</p> -->
+                    <div id="the_past">
+                    	<div id="past_entry">
+                    		<div class="past_date">
+                    		<?php $one_date = date_create($one_day_data['cur_timestamp']);
+	                    		echo date_format($one_date, 'l')
+	                    	?>  </div>
+                    	
+                    		<div class="past_temp">
+                    			<?php echo $one_day_data['temperature']; ?>&deg;C
+                    		</div>
+                    	</div>
+                    	<div style="clear:both;"></div>
+                    	<div id="past_entry">
+                    		<div class="past_date">
+                    		<?php $two_date = date_create($two_day_data['cur_timestamp']);
+	                    		echo date_format($two_date, 'l')
+	                    	?>  </div>
+	                    	<div class="past_temp">
+                    		<?php echo $two_day_data['temperature']; ?>&deg;C
+                    		</div>
+                    	</div>
+                    	<div style="clear:both;"></div>
+                    	<div id="past_entry">
+                    		<div class="past_date">
+                    		<?php $three_date = date_create($three_day_data['cur_timestamp']);
+	                    		echo date_format($three_date, 'l')
+	                    	?>  </div>
+	                    	<div class="past_temp">
+                    		<?php echo $three_day_data['temperature']; ?>&deg;C
+                    		</div>
+                    	</div> 
+ 
+                    </div>
                     <p class="version"><?php echo $versioning; ?></p>
-                </div>
-
-            <!--     <div class="layer"><br />
-                    <h2>R&uuml;ckblick</h2>
-                    <p><div id="chart_div"></div></p>
-                 </div> -->
-               <!--   <div style="height:50px;"></div>   -->     
+                </div> 
 </div>
 <!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
 </body>

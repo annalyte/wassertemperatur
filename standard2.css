@@ -11,6 +11,8 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+	
+	display: block;
 }
 
 
@@ -21,29 +23,31 @@ body {
     
     text-align: center;
     
-    text-shadow: 1px 1px 20px #fff;
+    
     color: #333;
 }
 
+
+
 #status_bar {
-	background: rgba(41,198,255,0.5);
+	background: rgba(41,198,255,0.3);
 	font-weight: lighter;
-	height: 70px;
-	font-size: 25pt;
+	height: 65px;
+	font-size: 23pt;
 	color: white;
-	text-shadow: 1px 1px 1px black;
-	border-bottom: 1px solid #c6edff;
+	
+	
 }
 
 p.date {
 	float: left;
-	padding:20px 0px 0px 22px;
+	padding:10px 0px 0px 22px;
 	margin:0;
 }
 
 p.time {
 	float: right;
-	padding: 20px 22px 0px 0px;
+	padding: 10px 22px 0px 0px;
 	margin:0;
 }
 
@@ -58,9 +62,7 @@ p.time {
 
 }
 
-p{
-    opacity: 1;
-}
+
 
 
 
@@ -69,6 +71,37 @@ p{
 	position: absolute;
 	top: 0;
 	left: 0;
+}
+
+div#the_past {
+	background: rgba(255,255,255,0.3);
+	overflow: auto;
+	border-radius:10px;	
+	padding: 25px 10px 25px 10px;
+	width: 200px;
+	font-weight: lighter;
+	font-size: 17pt;
+	margin-left: auto;
+	margin-right: auto;
+	display:block;
+	
+}
+
+div#past_entry {
+	border-bottom: 1px dotted #333;
+    margin-bottom: 10px;
+	overflow: auto;
+	display: block;
+}
+
+div.past_date {
+	float: left;
+	
+	
+}
+
+div.past_temp {
+	float: right;
 }
 
 

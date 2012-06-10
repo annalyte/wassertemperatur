@@ -1,7 +1,7 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 04.09.2011
+Datum: 10.06.2012
 Setzt voraus, dass das daemon.php 30min ausgeführt wird. (Daemon läuft gerade NICHT. Abgeschaltet am 20.09.2011. Eingeschaltet am 25.05.2012)
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
@@ -11,8 +11,8 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.4';
-$build = 'f88f8d';
+$version = '1.5';
+$build = 'xxxxxx';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern in der Index.php nicht vergessen!
@@ -23,6 +23,8 @@ $versioning = 'Version: '.$version.' ('.$build.')';
 
 // Hier den Ort eintragen
 $directory = 'http://wasser.aaronbauer.org/';
+
+setlocale (LC_ALL, 'de_DE');
 
 // Verbindungsdaten zur MySQL Datenbank stehen in mysql.php in der Variable $link
 require('mysql.php');
@@ -46,14 +48,36 @@ if(!$db_selected) {
         $result = mysql_query($query) or die(mysql_error());
     
         $data = mysql_fetch_array($result) or die(mysql_error());
+        
+        $one_day_id = $data['id'] - 48; //Errechnet die Temperatur vom Vortag, also 48 mal die ID zurück
+        
     
-        // Holt die Temperatur vom Vortag, in dem der letzte Eintrag der nicht dem aktuellen Datum entspricht ausgegeben wird
-        $previous_query = 'SELECT * FROM wasser
-WHERE site_date <> "'.$data['site_date'].'" ORDER BY id DESC';
+        // Holt die Temperatur vom Vortag, in dem die zurückgezählte ID als Marker benutzt wird. 
+        $one_day_query = 'SELECT * FROM wasser WHERE id = "'.$one_day_id.'" ORDER BY id DESC';
 
-        $previous_data_result = mysql_query($previous_query) or die(mysql_error());
+        $one_day_data_result = mysql_query($one_day_query) or die(mysql_error());
     
-        $previous_data = mysql_fetch_array($previous_data_result) or die(mysql_error());
+        $one_day_data = mysql_fetch_array($one_day_data_result) or die(mysql_error());
+        
+       // Holt die Temperatur von vorgestern (also ID 96 mal zurückrechnen)
+       
+       $two_day_id = $data['id'] - 96;
+       
+       $two_day_query = 'SELECT * FROM wasser WHERE ID = "'.$two_day_id.'" ORDER BY id DESC';
+       
+       $two_day_data_result = mysql_query($two_day_query) or die(mysql_error());
+       
+       $two_day_data = mysql_fetch_array($two_day_data_result) or die(mysql_error());
+       
+       // Holt die Temperatur von vorvorgestern (also ID 144 mal zurück)
+       
+       $three_day_id = $data['id'] - 144;
+       
+       $three_day_query = 'SELECT * FROM wasser WHERE ID = "'.$three_day_id.'" ORDER BY id DESC';
+       
+       $three_day_data_result = mysql_query($three_day_query) or die(mysql_error());
+       
+       $three_day_data = mysql_fetch_array($three_day_data_result) or die(mysql_error());
         
         
     // Query für die Darstellung als Graph mit der Google Graph API 
@@ -114,6 +138,10 @@ if($data['temperature'] == '--') {
     echo 'Keine Daten.';
 } else {
     switch ($data['temperature']) {
+	case 27:
+		$description = 'Grill';
+		$color = '#ff0033';
+		break;
     case 26:
         $description = 'Viel zu warm!';
         $color = '#ff0033';
@@ -149,52 +177,16 @@ if($data['temperature'] == '--') {
     case 18:
         $description = 'Zu Kalt';
         $color = '#00c3ff';
-        break;        
+        break;       
+	case 17:
+		$description = 'Brrr';
+		$color = '#00c3ff';
+		break;
+	case 16:
+		$description = 'Ihhh';
+		$color = '#00c3ff';
+		break; 
 };
-};
-
-if($previous_data['temperature'] == '--') {
-    echo 'Keine Daten.';
-} else {
-// Beschreibung für die Temperatur vom Vortag
-switch ($previous_data['temperature']) {
-    case 26:
-        $previous_description = 'Viel zu warm!';
-        $previous_color = '#ff0033';
-        break;
-    case 25:
-        $previous_description = 'Sehr warm!';
-        $previous_color = '#ff3000';
-        break;
-    case 24:
-        $previous_description = 'Warm!';
-        $previous_color = '#ff3000';
-        break;
-    case 23:
-        $previous_description = 'Warm genug';
-        $previous_color = '#ff5202';
-        break;
-    case 22:
-        $previous_description = 'Angenehm';
-        $previous_color = '#ffa600';
-        break;
-    case 21:
-        $previous_description = 'Noch okay';
-        $previous_color = '#ffdd00';
-        break;
-    case 20:
-        $previous_description = 'Etwas k&uuml;hl';
-        $previous_color = '#dfff00';
-        break;
-    case 19:
-        $previous_description = 'Kalt';
-        $previous_color = '#00c3ff';
-        break;
-    case 18:
-        $previous_description = 'Zu Kalt';
-        $previous_color = '#00c3ff';
-        break;  
-}; 
 };
 
 //$random_temp = rand(50,100);

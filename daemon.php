@@ -76,13 +76,13 @@ Aus allen Zeichen der Linie mit Wassertemp und Uhrzeit wird ein Array (arr1) gem
 */
 
 
-$arr1 = str_split(strip_tags($lines[408])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
+$arr1 = str_split(strip_tags($lines[412])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
 
 echo '<h1>Daemon Information - '.$versioning.'</h1>';
 
 print_r($arr1);
 
-$site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[406]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[410]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
 //Nur zum Anzeigen
 echo '<br />';
@@ -90,7 +90,7 @@ echo 'Date 406:'.$lines[406].'<br />';
 echo 'Time 402:'.$lines[402].'<br />';
 echo 'Temp 408:'.$lines[408].'<br />';
         
-$temp_implode = implode(array_slice($arr1, 11, 2)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
+$temp_implode = implode(array_slice($arr1, 10, 11)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
 $temperatur = (int)$temp_implode; //Macht Integer aus String
 
