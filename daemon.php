@@ -4,7 +4,7 @@ Daemon 1.1.1
 Build: bc001b
 The heart and soul of this app.
 */
-$version = '1.1.1';
+$version = '1.1.2';
 $build = 'bc001b';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -80,7 +80,15 @@ $arr1 = str_split(strip_tags($lines[412])); // Macht aus Zeile 408 wo Zeit und T
 
 echo '<h1>Daemon Information - '.$versioning.'</h1>';
 
-print_r($arr1);
+// Macht, dass das Array übersichtlicher dargestellt wird
+function print_r_html ($arr) {
+        ?><pre><?
+        print_r($arr);
+        ?></pre><?
+}
+//Benutzt die funktion print_r_html statt print_r, wegen besserer Darstellung
+print_r_html($arr1);
+
 
 $site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[410]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
