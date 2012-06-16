@@ -12,7 +12,7 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 
 // Version und Build-Nummer
 $version = '1.5';
-$build = 'xxxxxx';
+$build = 'a6334e';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern in der Index.php nicht vergessen!

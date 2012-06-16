@@ -388,7 +388,7 @@ function MM_nbGroup(event, grpName) { //v6.0
     <div id="willkomm"></div>
     <div id="textmitte"><span class="orange"><span class="uebergruen"><img src="pix/ueber_veran.jpg" width="296" height="27" /></span><br />
       </span><br />
-      <span class="orange"><img src="pix/schwimmkurs_maskottchen.png" width="213" height="250" align="right" />16. Juni 2012       Nachtschwimmen<br />
+      <span class="orange"><img src="pix/schwimmkurs_maskottchen.png" width="213" height="250" align="right" />16. Juni 2012       <s>Nachtschwimmen</s> - wetterbedingte Absage: neuer Termin folgt<br />
       <br />
  30.Juni 2012 Theaterstück mit Eukitea<br />
  <br />
@@ -408,9 +408,11 @@ Sonntags: 08:30-20:00Uhr<br />
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        Sonntag 10.06.2012<br />
+        Samstag  16.06.2012<br />
 <br />
-11:00 Uhr 17°C      </div>
+13:00 Uhr<br />
+<br />
+Wassertemp. 22,0°C      </div>
     </div>
     <div id="oeffn3">
       <div id="wettinfo">

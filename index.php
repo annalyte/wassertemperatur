@@ -134,7 +134,7 @@ if($days_left and $hours_left != 0) {
                     <p class="version"><?php echo $versioning; ?></p>
                 </div> 
 </div>
-<!-- Daemon war zuletzt da: <?php echo $data['cur_timestamp']; ?> -->
+<!-- Core Process ran on <?php echo $data['cur_timestamp']; ?> -->
 </body>
 </html>
 <?php }; ?>
