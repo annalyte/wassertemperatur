@@ -1,19 +1,19 @@
 <?php
 /*
 Core 1.2
-Build: xxxxxx
+Build: 0a3322
 The heart and soul of this app.
 */
-$version = '1.2';
-$build = 'xxxxxx';
+$version = '1.2.1';
+$build = '0a3322';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
 Core which fetches the temperature and the time from the website every hour and writes it into a database.
 */
 
-// Hier den Ort eintragen deprecated for Core
-//$directory = 'http://wasser.aaronbauer.org';
+// Damit in der Titelzeile etwas drinsteht
+echo '<title>Core '.$version.'</title>';
 
 // $date wird für das Datum im XML verwendet
 $date = date('D, d M Y H:i:s T');
@@ -81,30 +81,32 @@ $arr1 = str_split(strip_tags($lines[412])); // Macht aus Zeile 408 wo Zeit und T
 echo '<h1>Core - '.$versioning.'</h1>';
 
 // Macht, dass das Array übersichtlicher dargestellt wird
-function print_r_html ($arr) {
+/* function print_r_html ($arr) {
         ?><pre><?
         print_r($arr);
         ?></pre><?
-}
+} */
 //Benutzt die funktion print_r_html statt print_r, wegen besserer Darstellung
-print_r_html($arr1);
+//print_r_html($arr1);
 
 
-$site_date = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[410]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-]/s','',strip_tags($lines[412]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
         
 //$temp_implode = implode(array_slice($arr1, 7, 8)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
 //$temperatur = (int)$temp_implode; //Macht Integer aus String
 
-$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[414])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[416])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
 $temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
 
-$time_range = array_slice($arr1, 0, 5); //Bei 0 wird begonnen, nach 9 Teilen wird abgeschnitten
+//$time_range = array_slice($arr1, 0, 5); //Bei 0 wird begonnen, nach 9 Teilen wird abgeschnitten
 
-$time_implode = implode($time_range); // Aus dem Array wird ein String
+//$time_implode = implode($time_range); // Aus dem Array wird ein String
 
-$timestamp = $time_implode.' Uhr'; // Das wird wird hardgecoded, weils die Bademeister verbummeln
+$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[414]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
+
+$timestamp = $time_implode.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
 
 //$timestamp = implode($time_range); // Aus dem Array wird ein String
 
@@ -117,13 +119,17 @@ echo '<br />Time: '.$timestamp;
 
 echo '<br /><br />';
 
+if($temperatur and $site_date and $timestamp != '') {
+	echo 'Relax. Everything seems to be okay! &#10003; <br />';
+};
+
 //Debug Modus beendet das Script hier. Es werden keine Daten geschrieben.
 if($_GET['debug'] != '') {
 	echo 'Debug Off <br />';
 	echo '<a href="http://wasser.aaronbauer.org/core.php?debug=yes">Switch Debug On</a><br /><br />';	
 	
 } else {
-	echo 'Debug Mode';
+	echo '<br />Debug Mode';
 	exit;
 };
 
