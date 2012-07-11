@@ -5,7 +5,7 @@ if($data['temperature'] == '--') {
 } else {
     switch ($data['temperature']) {
 	case 27:
-		$description = 'Grill';
+		$description = 'Es grillt dich!';
 		$color = '#ff0033';
 		break;
     case 26:
@@ -33,7 +33,7 @@ if($data['temperature'] == '--') {
         $color = '#ffdd00';
         break;
     case 20:
-        $description = 'Etwas k&uuml;hl.';
+        $description = 'Etwas k&#252;hl.';
         $color = '#dfff00';
         break;
     case 19:
