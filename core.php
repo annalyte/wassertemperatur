@@ -1,11 +1,11 @@
 <?php
 /*
-Core 1.2.1
-Build: 0a3322
+Core 1.2.2
+Build: c94619
 The heart and soul of this app.
 */
-$version = '1.2.1';
-$build = '837b94';
+$version = '1.2.2';
+$build = 'c94619';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
@@ -90,13 +90,13 @@ echo '<h1>Core - '.$versioning.'</h1>';
 //print_r_html($arr1);
 
 
-$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-]/s','',strip_tags($lines[410]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-]/s','',strip_tags($lines[406]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
         
 //$temp_implode = implode(array_slice($arr1, 7, 8)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
 //$temperatur = (int)$temp_implode; //Macht Integer aus String
 
-$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[414])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[410])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
 $temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
 
@@ -104,7 +104,7 @@ $temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
 
 //$time_implode = implode($time_range); // Aus dem Array wird ein String
 
-$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[412]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
+$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[408]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
 
 $timestamp = $time_implode.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
 
@@ -132,6 +132,7 @@ if($_GET['debug'] != '') {
 	echo '<br />Debug Mode';
 	exit;
 };
+
 
 
    

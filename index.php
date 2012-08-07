@@ -1,4 +1,5 @@
 <?php 
+
 require('frontend.php'); 
 /*
 $directory = Ort der im frontend angegeben wurde
@@ -54,8 +55,9 @@ h1.today {
     opacity: 0.9;
     margin:0;
     color:<?php echo $color; ?>;
+    
     -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.8))); 
+    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7))); 
 }
 
 h1.yesterday {

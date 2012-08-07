@@ -2,7 +2,7 @@
 /*
 Freibad Wassertemperatur
 Datum: 10.06.2012
-Setzt voraus, dass das daemon.php 30min ausgeführt wird. (Daemon läuft gerade NICHT. Abgeschaltet am 20.09.2011. Eingeschaltet am 25.05.2012)
+Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird. (Core läuft gerade. Abgeschaltet am 20.09.2011. Eingeschaltet am 25.05.2012)
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
@@ -61,28 +61,37 @@ if(!$db_selected) {
         
        // Holt die Temperatur von vorgestern (also ID 96 mal zurückrechnen)
        
+       
        $two_day_id = $data['id'] - 96;
        
+       
+	        
        $two_day_query = 'SELECT * FROM wasser WHERE ID = "'.$two_day_id.'" ORDER BY id DESC';
        
        $two_day_data_result = mysql_query($two_day_query) or die(mysql_error());
        
        $two_day_data = mysql_fetch_array($two_day_data_result) or die(mysql_error());
        
+       
+       
        // Holt die Temperatur von vorvorgestern (also ID 144 mal zurück)
        
-       $three_day_id = $data['id'] - 144;
+     
+     
+        $three_day_id = $data['id'] - 144;
+       
        
        $three_day_query = 'SELECT * FROM wasser WHERE ID = "'.$three_day_id.'" ORDER BY id DESC';
        
-       $three_day_data_result = mysql_query($three_day_query) or die(mysql_error());
+      $three_day_data_result = mysql_query($three_day_query) or die(mysql_error());
        
-       $three_day_data = mysql_fetch_array($three_day_data_result) or die(mysql_error());
+      $three_day_data = mysql_fetch_array($three_day_data_result) or die(mysql_error());
+      
         
         
     // Query für die Darstellung als Graph mit der Google Graph API 
         
-            $graph_query = 'SELECT *
+        /*    $graph_query = 'SELECT *
                                 FROM 
                                    (
                                     SELECT * 
@@ -91,7 +100,7 @@ if(!$db_selected) {
                                     ) 
                                 AS tbl ORDER BY cur_timestamp';
         
-            $graph_result = mysql_query($graph_query) or die (mysql_error());
+            $graph_result = mysql_query($graph_query) or die (mysql_error());  */
         
         
     
@@ -111,21 +120,21 @@ $the_countdown_date = $end_time -1;
  // $the_countdown_date = mktime(23, 23, 0, 5, 18, 2012, -1); brauch ich nicht weil ich meine eigene Zeit schon habe ($end_time).
 
   // get current unix timestamp
-  $today = time();
+  /* $today = time();
 
   $difference = $the_countdown_date - $today;
   if ($difference < 0) $difference = 0;
 
   $days_left = floor($difference/60/60/24);
   $hours_left = floor(($difference - $days_left*60*60*24)/60/60);
-  $minutes_left = floor(($difference - $days_left*60*60*24 - $hours_left*60*60)/60);
+  $minutes_left = floor(($difference - $days_left*60*60*24 - $hours_left*60*60)/60); */
   
   // OUTPUT wird unten schon gemacht
   /*
   echo "Today's date ".date("F j, Y, g:i a")."<br/>";
   echo "Countdown date ".date("F j, Y, g:i a",$the_countdown_date)."<br/>";
   echo "Countdown ".$days_left." days ".$hours_left." hours ".$minutes_left." minutes left";
-*/
+
 
 /* 
 Wichtige SQL Syntax
@@ -133,74 +142,22 @@ INSERT INTO wasser (site_time, temperature) VALUES('18:00', '25');
 SELECT * FROM 'wasser'
 */
 
-// Beschreibung für die aktuelle Temperatur
-if($data['temperature'] == '--') {
-    echo 'Keine Daten.';
-} else {
-    switch ($data['temperature']) {
-	case 27:
-		$description = 'Grill';
-		$color = '#ff0033';
-		break;
-    case 26:
-        $description = 'Viel zu warm!';
-        $color = '#ff0033';
-        break;
-    case 25:
-        $description = 'Sehr warm!';
-        $color = '#ff3000';
-        break;
-    case 24:
-        $description = 'Warm!';
-        $color = '#ff3000';
-        break;
-    case 23:
-        $description = 'Warm genug';
-        $color = '#ff5202';
-        break;
-    case 22:
-        $description = 'Angenehm';
-        $color = '#ffa600';
-        break;
-    case 21:
-        $description = 'Noch okay';
-        $color = '#ffdd00';
-        break;
-    case 20:
-        $description = 'Etwas k&uuml;hl';
-        $color = '#dfff00';
-        break;
-    case 19:
-        $description = 'Kalt';
-        $color = '#00c3ff';
-        break;
-    case 18:
-        $description = 'Zu Kalt';
-        $color = '#00c3ff';
-        break;       
-	case 17:
-		$description = 'Brrr';
-		$color = '#00c3ff';
-		break;
-	case 16:
-		$description = 'Ihhh';
-		$color = '#00c3ff';
-		break; 
-};
-};
+//Interpretiert die Temperaturen und ordnet Text und Farbe zu
+require('texts.php');
+
 
 //$random_temp = rand(50,100);
 
 // Das was angezeigt wird, wenn die Saison vorbei ist.
 $end_html = '
 <div id="wrap">
-    <div id="slider_content" style="width: 320px; height: 460px; overflow: hidden;">
+    
         
         <!-- Temperatur von heute -->
-            <div id="slide1" style="height: 460px; width: 320px; float:left;">
+            <div style="width: 480px; margin-left: auto; margin-right: auto;">
                 <div class="layer">
-                    <h1 class="today" style="color: red;">15&deg;C</h1>
-                    <h2>Es wird ernst!</h2>
+                    <h1 class="today" style="color: red;">\o/</h1>
+                    <h2>Es ist vorbei!</h2>
                     <p><div id="defaultCountdown"></div></p>
                     
                     <p class="version">'.$versioning.'</p>
@@ -208,8 +165,9 @@ $end_html = '
             </div>
             </div>
             
+            
           
             
-            <!-- Daemon war zuletzt da: '.$data['cur_timestamp'].' -->
+            <!-- core war zuletzt da: '.$data['cur_timestamp'].' -->
             ';
 ?>
