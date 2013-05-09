@@ -54,7 +54,7 @@ while($statistic = mysql_fetch_array($result)) {
   </head>
   <body>
   <h1>Statistics</h1>
-    <div id="chart_div" style="width: 100%; height: 400px;"></div>
+    <div id="chart_div" style="width: 2500px; height: 400px;"></div>
     <p>Average: <?php echo $avg_data['AVG(temperature)']; ?></p>
   </body>
 </html>

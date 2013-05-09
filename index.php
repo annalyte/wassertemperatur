@@ -38,7 +38,7 @@ $end_time und $cur_time sind die Zeitstempel
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2012, 05-1, 24);
+    var openingDay = new Date(2013, 05-1, 25);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
@@ -91,7 +91,7 @@ p.version {
 
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($days_left and $hours_left != 0) {
+if($end_time > $cur_time) {
     echo $end_html;
     exit();
 } else { ?>

@@ -177,7 +177,7 @@ a:active {
 #textmitte {
 	position:absolute;
 	width:867px;
-	height:311px;
+	height:380px;
 	z-index:10;
 	left: 50px;
 	top: 470px;
@@ -386,33 +386,29 @@ function MM_nbGroup(event, grpName) { //v6.0
   </div>
   <div id="main">
     <div id="willkomm"></div>
-    <div id="textmitte"><span class="orange"><span class="uebergruen"><img src="pix/ueber_veran.jpg" width="296" height="27" /></span><br />
+    <div id="textmitte"><span class="orange"><span class="uebergruen"><img src="pix/wasserb_zeitung.jpg" width="233" height="348" hspace="10" vspace="10" border="1" align="right" /><img src="pix/ueber_veran.jpg" width="296" height="27" /></span><br />
       </span><br />
-      <span class="orange"><img src="pix/schwimmkurs_maskottchen.png" width="213" height="250" align="right" />16. Juni 2012       <s>Nachtschwimmen</s> - wetterbedingte Absage: neuer Termin folgt<br />
-      <br />
- 30.Juni 2012 Theaterstück mit Eukitea<br />
- <br />
- <img src="pix/volley100.png" width="50" height="100" hspace="20" align="left" />29.Juli 2012  Sommerfest<br />
- mit Beachvolleyballturnier  &amp; Arschbombencontest</span></div>
+      <span class="orange">2000 Besucher beim Wasserbombenwettbewerb im Naturfreibad<br />
+</span><strong>Nachdem Ende Juli das Familienfest im Naturfreibad Fischach im letzten Moment abgesagt werden musste, gab es am Sonntag, 19.08.2012 einen Nachholtermin für den Wassserbombenkontest.</strong><br />
+<br />
+Mehr als 2000 Besucher waren bei glühender Hitze ins Naturfreibad gekommen, 42 von ihnen hatten sich auch zum Wettbewerb angemeldet. Dabei wird vom drei Metern hohen Sprungturm aus Stein so ins Wasser gesprungen, dass eine möglichst hohe Fontäne entsteht. Die wurde dann von den Schiedsrichtern gemessen und so der Sieger ermittelt. <br />
+<br />
+Gestartet wird in Fischach in drei Kategorien, unter 50 Kilogramm, von 50 bis 80 Kilogramm und über 80 Kilogramm. Michael Schmitt moderierte durch den Wettbewerb. In jeder Gewichtsklasse wurden drei Pokale vergeben, die Bürgermeister Peter Ziegelmeier zusammen mit seinem Stellvertreter Martin Merkle übergab. Außerdem erhielten die Sieger ein Eis. <br />
+<br />
+Und dann wurde es noch eng am Kiosk: Als Trost für das Familiensommerfest, das nicht stattfinden konnte, spendierte Bürgermeister Ziegelmeier spontan jedem Kind ein Eis. (Text/Bild: Augsburger-Allgemeine)<br />
+    </div>
     <div id="twitt"><a href="http://twitter.com/fischach" target="_blank" onfocus="if(this.blur)this.blur()"><img src="pix/kont_log_twit.png" alt="FreibadTwitter" width="133" height="100" border="0" /></a></div>
     <div id="oeffn">
       <div id="oeffdat">
-        Wir haben geöffnet.<br />
-Montags & Dienstags: 08:30-20:00 Uhr<br />
-Mittwochs:07:30-20:00Uhr<br />
-Donnerstags: 08:30- 20:00Uhr<br />
-Freitags: 07:30-21:00Uhr<br />
-Samstags: 08:30-21:00Uhr<br />
-Sonntags: 08:30-20:00Uhr<br />
-       </div>
+        Die Sommersaison 2012 wurde beendet.<br />
+Unser Freibad ist ab 17.09.2012 geschlossen.      </div>
     </div>
     <div id="oeffn2">
       <div id="oeffdat2">
-        Samstag  16.06.2012<br />
+        <br />
 <br />
-13:00 Uhr<br />
 <br />
-Wassertemp. 22,0°C      </div>
+      </div>
     </div>
     <div id="oeffn3">
       <div id="wettinfo">

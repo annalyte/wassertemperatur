@@ -20,11 +20,11 @@ $date = date('D, d M Y H:i:s T');
 
 // Die Zeilen, woher die Daten genommen werden sollen (wird das geändert, müssen auch noch die Zeilennummern bei den Filtern getauscht werden.
 // Zeile der Temperatur (immer eins weniger wie die tatsächliche Position der Daten)
-$line_temp = 415;
+$line_temp = 416;
 // Zeile der Zeit
-$line_time = 402;
+$line_time = 403;
 // Zeile des Datums
-$line_date = 406;
+$line_date = 407;
 
 // Holt die Datenbank Benutzerinformationen
 require('mysql.php');
@@ -76,35 +76,37 @@ Aus allen Zeichen der Linie mit Wassertemp und Uhrzeit wird ein Array (arr1) gem
 */
 
 
-$arr1 = str_split(strip_tags($lines[412])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
+$arr1 = str_split(strip_tags($lines[416])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
 
 echo '<h1>Core - '.$versioning.'</h1>';
 
 // Macht, dass das Array übersichtlicher dargestellt wird
-/* function print_r_html ($arr) {
+function print_r_html ($arr) {
         ?><pre><?
         print_r($arr);
         ?></pre><?
-} */
+} 
 //Benutzt die funktion print_r_html statt print_r, wegen besserer Darstellung
-//print_r_html($arr1);
+print_r_html($arr1);
 
 
-$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-]/s','',strip_tags($lines[406]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-,]/s','',strip_tags($lines[413]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
         
-//$temp_implode = implode(array_slice($arr1, 7, 8)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
+$temp_implode = implode(array_slice($arr1, 12, 2)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
-//$temperatur = (int)$temp_implode; //Macht Integer aus String
+$temperatur = (int)$temp_implode; //Macht Integer aus String
 
-$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[410])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+//$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[416])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
-$temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
+
+
+//$temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
 
 //$time_range = array_slice($arr1, 0, 5); //Bei 0 wird begonnen, nach 9 Teilen wird abgeschnitten
 
 //$time_implode = implode($time_range); // Aus dem Array wird ein String
 
-$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[408]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
+$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[414]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
 
 $timestamp = $time_implode.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
 

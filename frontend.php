@@ -11,12 +11,12 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.5';
+$version = '1.5.1';
 $build = 'a6334e';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern in der Index.php nicht vergessen!
-$season_time = '24-05-2012 07:00:00';
+$season_time = '2013-05-25 10:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -109,7 +109,7 @@ if(!$db_selected) {
 
 
 // Ein Unix-Zeitstempel von der aktuellen Zeit
-$cur_time = strtotime($data['cur_timestamp']);
+$cur_time = strtotime('now');
 // Ein Unix-Zeitstemple wann die App ausgeht
 $end_time = strtotime($season_time);
 
@@ -145,6 +145,8 @@ SELECT * FROM 'wasser'
 //Interpretiert die Temperaturen und ordnet Text und Farbe zu
 require('texts.php');
 
+#echo 'Jetzt'.$cur_time.'<br />';
+#echo 'Ende'.$end_time;
 
 //$random_temp = rand(50,100);
 
@@ -156,10 +158,10 @@ $end_html = '
         <!-- Temperatur von heute -->
             <div style="width: 480px; margin-left: auto; margin-right: auto;">
                 <div class="layer">
-                    <h1 class="today" style="color: red;">\o/</h1>
-                    <h2>Es ist vorbei!</h2>
+                    <h1 class="today" style="color: red;">- -</h1>
+                    <h2>Bald...</h2>
                     <p><div id="defaultCountdown"></div></p>
-                    
+                    <br />
                     <p class="version">'.$versioning.'</p>
                 </div>
             </div>
