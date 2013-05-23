@@ -38,7 +38,7 @@ $end_time und $cur_time sind die Zeitstempel
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2013, 05-1, 25);
+    var openingDay = new Date(2013, 05-1, 24, 10);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
@@ -46,13 +46,30 @@ $(function () {
 
 
 <style type="text/css">
+body {
+    font-family: Avenir, Futura, Helvetica Neue, Helvetica, Arial, sans-serif;
+  /*  background: url(bg_summer.png) center top no-repeat #231301;
+    background-size: 100%; */
+    color: #333;
+    padding:0;
+    margin:0;
+    background: <?php echo $color; ?>;
+      /* background: url(bg_summer.png) no-repeat center center fixed; */
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	
+	display: block;
+}
+
 h1.today {
     font-size: 100pt;
     padding:50px 0px 0px 0px;
     font-weight: lighter;
-    text-shadow: 1px 1px 5px grey;
+    text-shadow: 2px 2px 0px #333333;
     
-    opacity: 0.9;
+    
     margin:0;
     color:<?php echo $color; ?>;
     
@@ -72,9 +89,11 @@ h1.yesterday {
 
 h2 {
     font-size: 30pt;
-    opacity: 0.9;
-    font-weight: lighter;
-    text-shadow: 1px 1px 20px #fff;
+    
+    text-shadow: 2px 2px 0px #333333;
+    font-weight: bold;
+    color: <?php echo $color; ?>;
+    
 }
 
 p.version {
@@ -131,10 +150,14 @@ if($end_time > $cur_time) {
                     		<?php echo $three_day_data['temperature']; ?>&deg;C
                     		</div>
                     	</div> 
+                    	
+                    	
  
                     </div>
+                    <?php echo '<p>Vor einem Jahr hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
                     <p class="version"><?php echo $versioning; ?></p>
-                </div> 
+                </div>
+                
 </div>
 <!-- Core Process ran on <?php echo $data['cur_timestamp']; ?> -->
 </body>

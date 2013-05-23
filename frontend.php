@@ -1,8 +1,8 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 10.06.2012
-Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird. (Core läuft gerade. Abgeschaltet am 20.09.2011. Eingeschaltet am 25.05.2012)
+Datum: 23.05.2013
+Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
 Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 */
 
@@ -11,12 +11,12 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.5.1';
-$build = 'a6334e';
+$version = '1.6';
+$build = '3a0dffc';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern in der Index.php nicht vergessen!
-$season_time = '2013-05-25 10:00:00';
+$season_time = '2013-05-24 10:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -89,6 +89,17 @@ if(!$db_selected) {
       
         
         
+        // Vor einem Jahr (ID 5546 mal zurückspulen)
+        
+        $year_ago_id = $data['id'] - 5545;
+        
+        $year_ago_query = 'SELECT * FROM wasser WHERE ID = "'.$year_ago_id.'" ORDER BY id DESC';
+       
+      $year_ago_data_result = mysql_query($year_ago_query) or die(mysql_error());
+       
+      $year_ago_data = mysql_fetch_array($year_ago_data_result) or die(mysql_error());
+        
+        
     // Query für die Darstellung als Graph mit der Google Graph API 
         
         /*    $graph_query = 'SELECT *
@@ -150,6 +161,15 @@ require('texts.php');
 
 //$random_temp = rand(50,100);
 
+// PARSER DER DIE WEBSITE SCRAPED. KANN WEG
+
+require 'simple_html_dom.php';
+
+$html = file_get_html('http://www.naturfreibad-fischach.de/');
+
+foreach($html->find('div[id=oeffdat2]') as $element) 
+       #echo $element->plaintext . '<br>';
+
 // Das was angezeigt wird, wenn die Saison vorbei ist.
 $end_html = '
 <div id="wrap">
@@ -158,8 +178,8 @@ $end_html = '
         <!-- Temperatur von heute -->
             <div style="width: 480px; margin-left: auto; margin-right: auto;">
                 <div class="layer">
-                    <h1 class="today" style="color: red;">- -</h1>
-                    <h2>Bald...</h2>
+                    <h1 class="today" style="color:#00c3ff;">--&deg;C</h1>
+                    <h2>'.$element.'</h2>
                     <p><div id="defaultCountdown"></div></p>
                     <br />
                     <p class="version">'.$versioning.'</p>

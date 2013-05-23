@@ -1,18 +1,4 @@
-body {
-    font-family: Avenir, Futura, Helvetica Neue, Helvetica, Arial, sans-serif;
-  /*  background: url(bg_summer.png) center top no-repeat #231301;
-    background-size: 100%; */
-    color: #333;
-    padding:0;
-    margin:0;
-    background: url(bg_summer.png) no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	
-	display: block;
-}
+
 
 
 #wrap {
@@ -29,12 +15,12 @@ body {
 
 
 #status_bar {
-	background: rgba(41,198,255,0.3);
+	background: rgba(255,255,255,0.3);
 	font-weight: lighter;
 	height: 65px;
 	font-size: 23pt;
 	color: white;
-	
+	text-shadow: 1px 1px 5px black;
 	
 }
 
@@ -54,12 +40,12 @@ p.time {
 
 .layer {
     width: 100%;
-    
-    background: rgba(255,255,255,0.3); 
+    height: 960px;
+    background: rgba(255,255,255,0.5);
     vertical-align: middle;
     
-    border-bottom-left-radius: 25px;
-    border-bottom-right-radius: 25px;
+    
+    
 
 }
 

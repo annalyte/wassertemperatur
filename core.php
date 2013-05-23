@@ -1,11 +1,11 @@
 <?php
 /*
 Core 1.3
-Build: xxxxxx
+Build: 3a0dffc
 The heart and soul of this app.
 */
 $version = '1.3';
-$build = 'xxxxxx';
+$build = '3a0dffc';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
