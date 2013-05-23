@@ -53,7 +53,7 @@ if($data['temperature'] == '--') {
 		$color = '#00c3ff';
 		break;
 	case 15:
-		$description = 'Unm&ouml;glich';
+		$description = 'Unm&#246;glich';
 		$color = '#00c3ff';
 		break; 
 };
