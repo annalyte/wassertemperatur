@@ -1,11 +1,11 @@
 <?php
 /*
-Core 1.2.2
-Build: c94619
+Core 1.3
+Build: xxxxxx
 The heart and soul of this app.
 */
-$version = '1.2.2';
-$build = 'c94619';
+$version = '1.3';
+$build = 'xxxxxx';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
@@ -18,13 +18,6 @@ echo '<title>Core '.$version.'</title>';
 // $date wird für das Datum im XML verwendet
 $date = date('D, d M Y H:i:s T');
 
-// Die Zeilen, woher die Daten genommen werden sollen (wird das geändert, müssen auch noch die Zeilennummern bei den Filtern getauscht werden.
-// Zeile der Temperatur (immer eins weniger wie die tatsächliche Position der Daten)
-$line_temp = 416;
-// Zeile der Zeit
-$line_time = 403;
-// Zeile des Datums
-$line_date = 407;
 
 // Holt die Datenbank Benutzerinformationen
 require('mysql.php');
@@ -40,47 +33,18 @@ INSERT INTO wasser (site_time, temperature) VALUES('18:00', '25');
 SELECT * FROM 'wasser'
 */
 
-/*    
-file_get_contents scraped die URL
-$myfile öffnet die Datei scrape.txt. Dort wird die gescrpate Website reingeschrieben.
-*/
-
-$url = 'http://www.naturfreibad-fischach.de';
-$output = file_get_contents($url); 
-
-$myfile = 'scrape.txt';
-$fh = fopen($myfile, 'w') or die ('Kann Datei nicht öffnen');
-fwrite($fh, $output);
-
-
-// Sucht den Inhalt der oben angegeben Zeilen
-$lines = file($myfile);
-$l_count = count($lines);
-// Die Temperatur
-for($line_temp; $line_temp< $l_count; $line_temp++)
-{
-}
-// Die Zeit
-for($line_time; $line_time< $l_count; $line_time++)
-{
-}
-// Das Datum
-for($line_date; $line_date< $l_count; $line_date++)
-{
-}
-
-fclose($fh);
-
-/*
-Aus allen Zeichen der Linie mit Wassertemp und Uhrzeit wird ein Array (arr1) gemacht anhand dessen wir dann abzählen können, welche Teile wir daraus benötigen. array_slice schneidet dabei das richtige heraus. 
-*/
-
-
-$arr1 = str_split(strip_tags($lines[416])); // Macht aus Zeile 408 wo Zeit und Temperatur stehen ein Array um die Zeichen auszusortieren
 
 echo '<h1>Core - '.$versioning.'</h1>';
 
-// Macht, dass das Array übersichtlicher dargestellt wird
+require 'simple_html_dom.php';
+
+$html = file_get_html('http://www.naturfreibad-fischach.de/');
+
+foreach($html->find('div[id=oeffdat2]') as $element) 
+       #echo $element->plaintext . '<br>';
+       
+$arr1 = str_split(strip_tags($element));
+
 function print_r_html ($arr) {
         ?><pre><?
         print_r($arr);
@@ -90,29 +54,27 @@ function print_r_html ($arr) {
 print_r_html($arr1);
 
 
-$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-,]/s','',strip_tags($lines[413]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
+$site_date = implode(array_slice($arr1, 0, 10));
+
+$site_time = implode(array_slice($arr1, 11, 5));
+       
+$temperatur = implode(array_slice($arr1, 21, 2));
+
+
+$timestamp = $site_time.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
+
+// Alter Code der die Filter beinhaltet und deshalb zum Nachschauen hier bleibt
+
+#$site_date = trim(preg_replace('/[a-zA-Z_ %\[\]\:\(\)%&-,]/s','',strip_tags($lines[413]))); //Das Datum wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
         
-$temp_implode = implode(array_slice($arr1, 12, 2)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
+#$temp_implode = implode(array_slice($arr1, 12, 2)); //Der 11. und 12. Teil des Arrays ist die Temperatur. Bei 11 wird begonnen, 2 Zeichen werden mitgenomen
     
-$temperatur = (int)$temp_implode; //Macht Integer aus String
+#$temperatur = (int)$temp_implode; //Macht Integer aus String
 
 //$temperatur_slice = trim(preg_replace('/[a-zA-Z_ %\[\]\.\(\)%&-]/s','',$lines[416])); //Die Temperatur wird vom HTML befreit, von Buchstaben und von Leerstellen (trim)
 
 
-
-//$temperatur = (int)$temperatur_slice; //Macht aus der Temperatur einen Integer
-
-//$time_range = array_slice($arr1, 0, 5); //Bei 0 wird begonnen, nach 9 Teilen wird abgeschnitten
-
-//$time_implode = implode($time_range); // Aus dem Array wird ein String
-
-$time_implode = trim(preg_replace('/[a-zA-Z]/','',strip_tags($lines[414]))); //Wenn Temperatur eigene Zeile hat machen wir es so.
-
-$timestamp = $time_implode.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
-
-//$timestamp = implode($time_range); // Aus dem Array wird ein String
-
-//Nur zum Anzeigen
+//Nur zur Ansicht
 echo '<h2>Submitted Data</h2>';
     
 echo 'Temp: '.$temperatur;
@@ -123,6 +85,8 @@ echo '<br /><br />';
 
 if($temperatur and $site_date and $timestamp != '') {
 	echo 'Relax. Everything seems to be okay! &#10003; <br />';
+} else {
+	echo 'It looks like you are in trouble! <br />';	
 };
 
 //Debug Modus beendet das Script hier. Es werden keine Daten geschrieben.
