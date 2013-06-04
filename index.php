@@ -1,6 +1,11 @@
 <?php 
 
+error_reporting(0); // Keine PHP Fehlermeldungen
+
+
+//Frontend mit den MSQL Abfragen und der Winteranzeige
 require('frontend.php'); 
+
 /*
 $directory = Ort der im frontend angegeben wurde
 $data =  Array mit den Daten von heute
@@ -20,14 +25,10 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="width = 480px, inital-scale = 1.0, user-scalable=no"> 
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>/apple-touch-icon.png"/>
-<link rel="apple-touch-startup-image" href="<?php echo $directory; ?>/startup.png">
 
-<!-- Google Font -->
-<link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-
-<!-- RSS Database.xml integration -->
+<!-- RSS Database.xml integration (XML ist nicht valide, funktioniert deshalb nicht) -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
 <!-- Computer Stylesheet -->
@@ -38,7 +39,7 @@ $end_time und $cur_time sind die Zeitstempel
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2013, 05-1, 24, 10);
+    var openingDay = new Date(2014, 05-1, 24, 10);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
@@ -46,7 +47,7 @@ $(function () {
 
 
 <style type="text/css">
-body {
+html, body {
     font-family: Avenir, Futura, Helvetica Neue, Helvetica, Arial, sans-serif;
   /*  background: url(bg_summer.png) center top no-repeat #231301;
     background-size: 100%; */
@@ -59,9 +60,11 @@ body {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	
+	height: 100%;
 	display: block;
 }
+
+
 
 h1.today {
     font-size: 100pt;
@@ -110,12 +113,12 @@ p.version {
 
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($end_time > $cur_time) {
+if($end_time < $cur_time) {
     echo $end_html;
     exit();
 } else { ?>
 <div id="wrap">        
-                <div class="layer">
+                <div id="layer">
                 <div id="status_bar"> <p class="date"><?php echo $data['site_date']; ?></p> <p class="time"><?php echo $data['site_time']; ?></p> </div> 
                     <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
                     <h2><?php echo $description; ?></h2>
@@ -154,7 +157,8 @@ if($end_time > $cur_time) {
                     	
  
                     </div>
-                    <?php echo '<p>Vor einem Jahr hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                    <?php echo '<p>Vor einem Jahr um '.$year_ago_data['site_time'].' hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                    <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
                     <p class="version"><?php echo $versioning; ?></p>
                 </div>
                 

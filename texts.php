@@ -1,6 +1,6 @@
 <?php
-// Beschreibung fŸr die aktuelle Temperatur
-if($data['temperature'] == '--') {
+// Beschreibung fŸr die aktuelle Temperatur. Bei Umlauten immer dan das richtige Unicode Zeichen denken, weil das XML sonst streikt
+if($data['temperature'] == '') {
     echo 'Keine Daten.';
 } else {
     switch ($data['temperature']) {
@@ -53,9 +53,25 @@ if($data['temperature'] == '--') {
 		$color = '#00c3ff';
 		break;
 	case 15:
-		$description = 'Unm&#246;glich';
+		$description = 'Unm&#246;glich!';
 		$color = '#00c3ff';
-		break; 
+		break;
+	case 14:
+		$description = 'Unm&#246;glich!';
+		$color = '#31c9d5';
+		break;
+	case 13:
+		$description = 'Haha!';
+		$color = '#238f98';
+		break;
+	case 12:
+		$description = 'L&#228;cherlich!';
+		$color = '#0073ff';
+		break;
+	case 11:
+		$description = 'Nicht mehr lustig.';
+		$color = '#0055bd';
+		break;    
 };
 };
 ?>

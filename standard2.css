@@ -3,11 +3,11 @@
 
 #wrap {
     width: 100%;
-    height: 100%;
-
+    height: auto;
+	background: rgba(255,255,255,0.5);
     
     text-align: center;
-    
+    min-height: 100%;
     
     color: #333;
 }
@@ -38,10 +38,10 @@ p.time {
 
 
 
-.layer {
+#layer {
     width: 100%;
-    height: 960px;
-    background: rgba(255,255,255,0.5);
+    
+    
     vertical-align: middle;
     
     

@@ -56,9 +56,11 @@ print_r_html($arr1);
 
 $site_date = implode(array_slice($arr1, 0, 10));
 
-$site_time = implode(array_slice($arr1, 11, 5));
+$site_time = trim(implode(array_slice($arr1, 11, 5)));
        
-$temperatur = implode(array_slice($arr1, 21, 2));
+$temperatur_raw = implode(array_slice($arr1, -12, 3));
+
+$temperatur = (int)$temperatur_raw;
 
 
 $timestamp = $site_time.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
@@ -86,7 +88,8 @@ echo '<br /><br />';
 if($temperatur and $site_date and $timestamp != '') {
 	echo 'Relax. Everything seems to be okay! &#10003; <br />';
 } else {
-	echo 'It looks like you are in trouble! <br />';	
+	echo 'It looks like you are in trouble! <br />';
+	$error = TRUE; 	
 };
 
 //Debug Modus beendet das Script hier. Es werden keine Daten geschrieben.

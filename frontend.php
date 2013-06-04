@@ -1,9 +1,9 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 23.05.2013
+Datum: 02.06.2013
 Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
-Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
+Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 */
 
 #################
@@ -11,12 +11,12 @@ Setzt voraus, dass database.xml und scrape.txt mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.6';
-$build = '3a0dffc';
+$version = '1.6.1';
+$build = 'df35a69';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
-// Auch das Ändern in der Index.php nicht vergessen!
-$season_time = '2013-05-24 10:00:00';
+// Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
+$season_time = '2013-09-16 10:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -42,62 +42,75 @@ $db_selected = mysql_select_db('d011c151', $link);
 if(!$db_selected) {
     die ('Kann Datenbank nicht nutzen: ' .mysql_error());
 } else {
+		# Die Tage für die alten Daten. Minus ein Jahr, miuns 3,2,1 Tage. Es wird nicht mehr mit IDs zurückgerechnet, weil Fehleranfällig
+
+		$date_today = date('Y-m-d');
+
+		
+		$date_minus_one_year = strtotime(''.$date_today.' -1 year');
+		
+		$date_minus_one_day = strtotime(''.$date_today.' -1 day');
+		
+		$date_minus_two_day = strtotime(''.$date_today.' -2 day');
+		
+		$date_minus_three_day = strtotime(''.$date_today.' -3 day');
+		
+		
      
-        // Holt die aktuelle Wassertemperatur  
+        # Holt die aktuelle Wassertemperatur  
         $query = 'SELECT * FROM wasser ORDER BY id DESC';
         $result = mysql_query($query) or die(mysql_error());
     
         $data = mysql_fetch_array($result) or die(mysql_error());
         
-        $one_day_id = $data['id'] - 48; //Errechnet die Temperatur vom Vortag, also 48 mal die ID zurück
         
-    
-        // Holt die Temperatur vom Vortag, in dem die zurückgezählte ID als Marker benutzt wird. 
-        $one_day_query = 'SELECT * FROM wasser WHERE id = "'.$one_day_id.'" ORDER BY id DESC';
+        # GESTERN
+        
+        # Erzeugt den String für gestern
+        $one_day_ago_date = date('Y-m-d', $date_minus_one_day);
+  
+        $one_day_query = 'SELECT * FROM wasser WHERE cur_timestamp <= "'.$one_day_ago_date.'" ORDER BY id DESC';
 
         $one_day_data_result = mysql_query($one_day_query) or die(mysql_error());
     
         $one_day_data = mysql_fetch_array($one_day_data_result) or die(mysql_error());
         
-       // Holt die Temperatur von vorgestern (also ID 96 mal zurückrechnen)
+        
+        # VORGESTERN
        
-       
-       $two_day_id = $data['id'] - 96;
-       
-       
+       	# Erzeugt den String für vorgestern
+       	$two_day_ago_date = date('Y-m-d', $date_minus_two_day);     
 	        
-       $two_day_query = 'SELECT * FROM wasser WHERE ID = "'.$two_day_id.'" ORDER BY id DESC';
+       	$two_day_query = 'SELECT * FROM wasser WHERE cur_timestamp <= "'.$two_day_ago_date.'" ORDER BY id DESC';
        
-       $two_day_data_result = mysql_query($two_day_query) or die(mysql_error());
+       	$two_day_data_result = mysql_query($two_day_query) or die(mysql_error());
        
-       $two_day_data = mysql_fetch_array($two_day_data_result) or die(mysql_error());
-       
-       
-       
-       // Holt die Temperatur von vorvorgestern (also ID 144 mal zurück)
-       
-     
-     
-        $three_day_id = $data['id'] - 144;
+       	$two_day_data = mysql_fetch_array($two_day_data_result) or die(mysql_error());
        
        
-       $three_day_query = 'SELECT * FROM wasser WHERE ID = "'.$three_day_id.'" ORDER BY id DESC';
-       
-      $three_day_data_result = mysql_query($three_day_query) or die(mysql_error());
-       
-      $three_day_data = mysql_fetch_array($three_day_data_result) or die(mysql_error());
+       	# VORVORGESTERN
       
-        
-        
-        // Vor einem Jahr (ID 5546 mal zurückspulen)
-        
-        $year_ago_id = $data['id'] - 5545;
-        
-        $year_ago_query = 'SELECT * FROM wasser WHERE ID = "'.$year_ago_id.'" ORDER BY id DESC';
+	   	# Erzeugt den String für vorvorgestern
+		$three_day_ago_date = date('Y-m-d', $date_minus_three_day);       
        
-      $year_ago_data_result = mysql_query($year_ago_query) or die(mysql_error());
+		$three_day_query = 'SELECT * FROM wasser WHERE cur_timestamp <= "'.$three_day_ago_date.'" ORDER BY id DESC';
        
-      $year_ago_data = mysql_fetch_array($year_ago_data_result) or die(mysql_error());
+		$three_day_data_result = mysql_query($three_day_query) or die(mysql_error());
+       
+		$three_day_data = mysql_fetch_array($three_day_data_result) or die(mysql_error());
+      
+               
+        
+        # VOR EINEM JAHR
+        
+		# Erzeugt den String für vor einem Jahr
+		$year_ago_date = date('Y-m-d', $date_minus_one_year);
+        
+        $year_ago_query = 'SELECT * FROM wasser WHERE cur_timestamp <= "'.$year_ago_date.'" ORDER BY id DESC';
+          
+		$year_ago_data_result = mysql_query($year_ago_query) or die(mysql_error());
+       
+		$year_ago_data = mysql_fetch_array($year_ago_data_result) or die(mysql_error());
         
         
     // Query für die Darstellung als Graph mit der Google Graph API 
@@ -125,7 +138,7 @@ $cur_time = strtotime('now');
 $end_time = strtotime($season_time);
 
 // Script für den Countdown, von hier http://elouai.com/countdown-clock.php
-$the_countdown_date = $end_time -1;
+//$the_countdown_date = $end_time -1;
 
 // make a unix timestamp for the given date
  // $the_countdown_date = mktime(23, 23, 0, 5, 18, 2012, -1); brauch ich nicht weil ich meine eigene Zeit schon habe ($end_time).
@@ -161,23 +174,30 @@ require('texts.php');
 
 //$random_temp = rand(50,100);
 
-// PARSER DER DIE WEBSITE SCRAPED. KANN WEG
+// PARSER DER DIE WEBSITE SCRAPED. KANN WEG. Braucht nur Rechenzeit und wird nich verwendet. 
 
 require 'simple_html_dom.php';
 
 $html = file_get_html('http://www.naturfreibad-fischach.de/');
 
-foreach($html->find('div[id=oeffdat2]') as $element) 
+if(!$html) {
+	// Wenn Naturfreibad-Fischach.de down ist wird das Scrapen übersprungen und die Fehlermeldung angezeigt
+	echo '<div align="center">Naturfreibad Fischach ist gerade nicht erreichbar.</div>';
+	
+	
+} else {
+	// Wenn die Website verfügbar ist wird gescraped.
+	foreach($html->find('div[id=oeffdat2]') as $element) 
        #echo $element->plaintext . '<br>';
 
-// Das was angezeigt wird, wenn die Saison vorbei ist.
-$end_html = '
+	// Das was angezeigt wird, wenn die Saison vorbei ist.
+	$end_html = '
 <div id="wrap">
     
         
         <!-- Temperatur von heute -->
             <div style="width: 480px; margin-left: auto; margin-right: auto;">
-                <div class="layer">
+                <div id="layer">
                     <h1 class="today" style="color:#00c3ff;">--&deg;C</h1>
                     <h2>'.$element.'</h2>
                     <p><div id="defaultCountdown"></div></p>
@@ -191,5 +211,7 @@ $end_html = '
           
             
             <!-- core war zuletzt da: '.$data['cur_timestamp'].' -->
-            ';
+             ';
+
+}; // Da endet das If Statement welches nachsieht ob die Seite down ist
 ?>
