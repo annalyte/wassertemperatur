@@ -1,4 +1,7 @@
 <?php 
+setlocale (LC_TIME, 'de_DE');
+
+
 
 error_reporting(0); // Keine PHP Fehlermeldungen
 
@@ -34,6 +37,8 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- Computer Stylesheet -->
 <link rel="stylesheet" href="<?php echo $directory; ?>/standard2.css" type="text/css" />
 
+<!-- Auto Reload -->
+<meta http-equiv="refresh" content="300" >
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo $directory; ?>jquery.countdown.js"></script>
