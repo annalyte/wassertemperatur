@@ -56,7 +56,7 @@ print_r_html($arr1);
 
 $site_date = implode(array_slice($arr1, 0, 10));
 
-$site_time = trim(implode(array_slice($arr1, 11, 5)));
+$site_time = trim(implode(array_slice($arr1, 22, 5)));
        
 $temperatur_raw = implode(array_slice($arr1, -12, 3));
 
@@ -86,9 +86,9 @@ echo '<br />Time: '.$timestamp;
 echo '<br /><br />';
 
 if($temperatur and $site_date and $timestamp != '') {
-	echo 'Relax. Everything seems to be okay! &#10003; <br />';
+	echo '<font color="green"><b>Relax. Everything seems to be okay! &#10003; </b></font><br />';
 } else {
-	echo 'It looks like you are in trouble! <br />';
+	echo '<font color="red"><b>It looks like you are in trouble!</b></font> <br />';
 	$error = TRUE; 	
 };
 

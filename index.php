@@ -35,7 +35,7 @@ $end_time und $cur_time sind die Zeitstempel
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
 <!-- Computer Stylesheet -->
-<link rel="stylesheet" href="<?php echo $directory; ?>/standard2.css" type="text/css" />
+<!-- <link rel="stylesheet" href="<?php echo $directory; ?>/standard2.css" type="text/css" /> -->
 
 <!-- Auto Reload -->
 <meta http-equiv="refresh" content="300" >
@@ -52,64 +52,10 @@ $(function () {
 
 
 <style type="text/css">
-html, body {
-    font-family: Avenir, Futura, Helvetica Neue, Helvetica, Arial, sans-serif;
-  /*  background: url(bg_summer.png) center top no-repeat #231301;
-    background-size: 100%; */
-    color: #333;
-    padding:0;
-    margin:0;
-    background: <?php echo $color; ?>;
-      /* background: url(bg_summer.png) no-repeat center center fixed; */
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	height: 100%;
-	display: block;
-}
-
-
-
-h1.today {
-    font-size: 100pt;
-    padding:50px 0px 0px 0px;
-    font-weight: lighter;
-    text-shadow: 2px 2px 0px #333333;
-    
-    
-    margin:0;
-    color:<?php echo $color; ?>;
-    
-    -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7))); 
-}
-
-h1.yesterday {
-    font-size: 65pt;
-    padding:50px 0px 0px 0px;
-    opacity: 0.9;
-    margin:0;
-    color:<?php echo $previous_color; ?>;
-    -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,0.1)), to(rgba(0,0,0,1)));
-}
-
-h2 {
-    font-size: 30pt;
-    
-    text-shadow: 2px 2px 0px #333333;
-    font-weight: bold;
-    color: <?php echo $color; ?>;
-    
-}
-
-p.version {
-    font-size: 8pt;
-    margin-top: 110px;
-}
-
-
+<?php
+// Alles was mit dem Aussehen zu tun hat
+require('appearance.php');
+?>
 </style>
 
 </head>
@@ -125,7 +71,7 @@ if($end_time < $cur_time) {
 <div id="wrap">        
                 <div id="layer">
                 <div id="status_bar"> <p class="date"><?php echo $data['site_date']; ?></p> <p class="time"><?php echo $data['site_time']; ?></p> </div> 
-                    <h1 class="today"><?php echo $data['temperature']; ?>&deg;C</h1>
+                    <h1 class="today"><?php echo $data['temperature']; ?>&deg;</h1>
                     <h2><?php echo $description; ?></h2>
                     <div id="the_past">
                     	<div id="past_entry">
@@ -135,7 +81,7 @@ if($end_time < $cur_time) {
 	                    	?>  </div>
                     	
                     		<div class="past_temp">
-                    			<?php echo $one_day_data['temperature']; ?>&deg;C
+                    			<?php echo $one_day_data['temperature']; ?>&deg;
                     		</div>
                     	</div>
                     	<div style="clear:both;"></div>
@@ -145,7 +91,7 @@ if($end_time < $cur_time) {
 	                    		echo date_format($two_date, 'l')
 	                    	?>  </div>
 	                    	<div class="past_temp">
-                    		<?php echo $two_day_data['temperature']; ?>&deg;C
+                    		<?php echo $two_day_data['temperature']; ?>&deg;
                     		</div>
                     	</div>
                     	<div style="clear:both;"></div>
@@ -155,16 +101,16 @@ if($end_time < $cur_time) {
 	                    		echo date_format($three_date, 'l')
 	                    	?>  </div>
 	                    	<div class="past_temp">
-                    		<?php echo $three_day_data['temperature']; ?>&deg;C
+                    		<?php echo $three_day_data['temperature']; ?>&deg;
                     		</div>
                     	</div> 
                     	
                     	
  
                     </div>
-                    <?php echo '<p>Vor einem Jahr um '.$year_ago_data['site_time'].' hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                    <?php echo '<p class="year_ago">Vor einem Jahr um '.$year_ago_data['site_time'].' hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
-                    <p class="version"><?php echo $versioning; ?></p>
+                 <!--   <p class="version"><?php echo $versioning; ?></p> -->
                 </div>
                 
 </div>

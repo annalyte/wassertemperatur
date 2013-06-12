@@ -1,7 +1,7 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 02.06.2013
+Datum: 12.06.2013
 Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
 Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 */
@@ -11,8 +11,8 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.6.2';
-$build = 'XXXXXX';
+$version = '1.6.3';
+$build = 'xxxxxx';
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
@@ -140,11 +140,11 @@ require('texts.php');
 
 require 'simple_html_dom.php';
 
-$html = file_get_html('http://www.naturfreibad-fischach.de/');
+#$html = file_get_html('http://www.naturfreibad-fischach.de/');
 
 if(!$html) {
 	// Wenn Naturfreibad-Fischach.de down ist wird das Scrapen übersprungen und die Fehlermeldung angezeigt
-	echo '<div align="center">Naturfreibad Fischach ist gerade nicht erreichbar.</div>';
+	#echo '<div align="center">Naturfreibad Fischach ist gerade nicht erreichbar.</div>';
 	
 	
 } else {
