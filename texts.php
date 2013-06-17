@@ -30,11 +30,11 @@ if($data['temperature'] == '') {
         break;
     case 21:
         $description = 'Noch okay.';
-        $color = '#ffa061';
+        $color = '#82ff06';
         break;
     case 20:
-        $description = 'Etwas k&#252;hl.';
-        $color = '#ffbf99';
+        $description = 'Etwas kuehl.';
+        $color = '#05ff44';
         break;
     case 19:
         $description = 'Kalt.';
@@ -53,11 +53,11 @@ if($data['temperature'] == '') {
 		$color = '#00c3ff';
 		break;
 	case 15:
-		$description = 'Unm&#246;glich!';
+		$description = 'Unmoeglich!';
 		$color = '#00c3ff';
 		break;
 	case 14:
-		$description = 'Unm&#246;glich!';
+		$description = 'Unmoeglich!';
 		$color = '#31c9d5';
 		break;
 	case 13:
@@ -65,13 +65,16 @@ if($data['temperature'] == '') {
 		$color = '#238f98';
 		break;
 	case 12:
-		$description = 'L&#228;cherlich!';
+		$description = 'Laecherlich!';
 		$color = '#0073ff';
 		break;
 	case 11:
 		$description = 'Nicht mehr lustig.';
 		$color = '#0055bd';
-		break;    
-};
+		break;
+	default:
+		$description = 'Wassertemperatur';
+		$color = '#ff00aa';    
+};		
 };
 ?>

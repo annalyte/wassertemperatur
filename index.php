@@ -34,9 +34,6 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- RSS Database.xml integration (XML ist nicht valide, funktioniert deshalb nicht) -->
 <link rel="alternate" type="application/rss+xml" title="Wassertemperatur" href="<?php echo $directory; ?>/database.xml" />
 
-<!-- Computer Stylesheet -->
-<!-- <link rel="stylesheet" href="<?php echo $directory; ?>/standard2.css" type="text/css" /> -->
-
 <!-- Auto Reload -->
 <meta http-equiv="refresh" content="300" >
 
@@ -65,7 +62,7 @@ require('appearance.php');
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
 if($end_time < $cur_time) {
-    echo $end_html;
+    require('winter_time.php');
     exit();
 } else { ?>
 <div id="wrap">        

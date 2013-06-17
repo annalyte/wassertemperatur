@@ -1,7 +1,7 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 12.06.2013
+Datum: 13.06.2013
 Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
 Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 */
@@ -11,8 +11,11 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.6.3';
+$version = '1.6.4';
 $build = 'xxxxxx';
+
+// 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
+
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
@@ -60,9 +63,15 @@ if(!$db_selected) {
         # Holt die aktuelle Wassertemperatur  
         $query = 'SELECT * FROM wasser ORDER BY id DESC';
         $result = mysql_query($query) or die(mysql_error());
-    
+		
+		# Zum Manuellen setzen der Zahl (kann man besser die Farben testen)
+		if ($_GET['set_temp'] == '') {
         $data = mysql_fetch_array($result) or die(mysql_error());
-        
+        } else {
+	    $data['temperature'] = $_GET['set_temp']; 
+	    $data['site_time'] = '12:34 Uhr';
+	    $data['site_date'] = '12.34.5678';   	
+        };
         
         # GESTERN
         
@@ -136,15 +145,15 @@ require('texts.php');
 #echo 'Ende'.$end_time;
 
 
-// PARSER DER DIE WEBSITE SCRAPED. KANN WEG. Braucht nur Rechenzeit und wird nich verwendet. 
+// Die Website kann geparst werden, wenn man wissen will ob sie down ist. 
 
-require 'simple_html_dom.php';
+#require 'simple_html_dom.php';
 
 #$html = file_get_html('http://www.naturfreibad-fischach.de/');
-
+/*
 if(!$html) {
 	// Wenn Naturfreibad-Fischach.de down ist wird das Scrapen übersprungen und die Fehlermeldung angezeigt
-	#echo '<div align="center">Naturfreibad Fischach ist gerade nicht erreichbar.</div>';
+	echo '<div align="center">Naturfreibad Fischach ist gerade nicht erreichbar.</div>';
 	
 	
 } else {
@@ -153,27 +162,7 @@ if(!$html) {
        #echo $element->plaintext . '<br>';
 
 	// Das was angezeigt wird, wenn die Saison vorbei ist.
-	$end_html = '
-<div id="wrap">
-    
-        
-        <!-- Temperatur von heute -->
-            <div style="width: 480px; margin-left: auto; margin-right: auto;">
-                <div id="layer">
-                    <h1 class="today" style="color:#00c3ff;">--&deg;C</h1>
-                    <h2>'.$element.'</h2>
-                    <p><div id="defaultCountdown"></div></p>
-                    <br />
-                    <p class="version">'.$versioning.'</p>
-                </div>
-            </div>
-            </div>
-            
-            
-          
-            
-            <!-- core war zuletzt da: '.$data['cur_timestamp'].' -->
-             ';
+	#$off_season = include('winter_time.php');
 
-}; // Da endet das If Statement welches nachsieht ob die Seite down ist
+}; // Da endet das If Statement welches nachsieht ob die Seite down ist */
 ?>

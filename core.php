@@ -1,23 +1,25 @@
 <?php
 /*
-Core 1.3
-Build: 3a0dffc
+Core 1.4
+Build: 
 The heart and soul of this app.
 */
-$version = '1.3';
-$build = '3a0dffc';
+$version = '1.4';
+$build = 'xxxxxx';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 /*
 Core which fetches the temperature and the time from the website every hour and writes it into a database.
 */
 
+// Damit alles seine Ordnung hat
+header('Content-Type: text/html; charset=UTF-8');
+
 // Damit in der Titelzeile etwas drinsteht
 echo '<title>Core '.$version.'</title>';
 
 // $date wird für das Datum im XML verwendet
-$date = date('D, d M Y H:i:s T');
-
+$date = date('r');
 
 // Holt die Datenbank Benutzerinformationen
 require('mysql.php');
@@ -26,12 +28,6 @@ require('mysql.php');
 if(!$link) {
     die('Keine Verbindung: '.mysql_error());
 };
-
-/* 
-Wichtige Syntax
-INSERT INTO wasser (site_time, temperature) VALUES('18:00', '25');
-SELECT * FROM 'wasser'
-*/
 
 
 echo '<h1>Core - '.$versioning.'</h1>';
@@ -43,7 +39,11 @@ $html = file_get_html('http://www.naturfreibad-fischach.de/');
 foreach($html->find('div[id=oeffdat2]') as $element) 
        #echo $element->plaintext . '<br>';
        
-$arr1 = str_split(strip_tags($element));
+// Array wird gleich bereingt von allem unfung vs. ...       
+$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-,]/','',strip_tags($element)));
+      
+// Array wird kaum bereinigt. Mal sehen was besser hält. 
+#$arr1 = str_split(strip_tags($element));
 
 function print_r_html ($arr) {
         ?><pre><?
@@ -56,9 +56,9 @@ print_r_html($arr1);
 
 $site_date = implode(array_slice($arr1, 0, 10));
 
-$site_time = trim(implode(array_slice($arr1, 22, 5)));
+$site_time = trim(implode(array_slice($arr1, 10, 5)));
        
-$temperatur_raw = implode(array_slice($arr1, -12, 3));
+$temperatur_raw = implode(array_slice($arr1, -3, 2));
 
 $temperatur = (int)$temperatur_raw;
 
@@ -103,58 +103,62 @@ if($_GET['debug'] != '') {
 };
 
 
-
    
 // Auswählen der Datenbank
-
 $db_selected = mysql_select_db('d011c151', $link);
 
 if(!$db_selected) {
     die ('Kann Datenbank nicht nutzen: ' .mysql_error());
 } else {
-       
-    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'");';
-    $exec_write = mysql_query($write_query) or die(mysql_error());
-    echo 'Neue Temperatur geschrieben: ';
-    /*
-    $row = mysql_fetch_array($result) or die(mysql_error());
-    echo $row['temperature'];
-    echo $row['site_time'];
-    echo 'Executed';
-    */
-    
-    $read_query = 'SELECT * FROM wasser ORDER BY id DESC';
+
+	$read_query = 'SELECT * FROM wasser ORDER BY id DESC';
     $exec_read = mysql_query($read_query) or die(mysql_error());
     
     $data = mysql_fetch_array($exec_read) or die(mysql_error());   
     
-    echo 'Temperatur gelesen.';
-    
+    echo 'Temperatur gelesen. <br />';
+
+       
+    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'");';
+    $exec_write = mysql_query($write_query) or die(mysql_error());
+    echo 'Neue Temperatur geschrieben. <br /> ';
+       
     mysql_close($link);
 };
 
-/*
-Die xml Datei heißt database.xml. In sie werden alle Temperaturen bei jedem Aufruf gespeichert. Die xml Datei ist als RSS-Feed in die Website eingebunden.
-*/
 
+//Die xml Datei heißt database.xml. In sie werden alle Temperaturen bei jedem Aufruf gespeichert. Die xml Datei ist als RSS-Feed in die Website eingebunden.
+
+// Texts wird gebraucht für die Beschreibung im Feed.
 require('texts.php');
 
-echo '<br />Im XML steht: '.$temperatur.' Grad. '.$description;
+// Wenn sich nichts geändert hat, wird auch kein XML geschrieben.
+if ($temperatur == $data['temperature'] and $timestamp == $data['site_time'] and $site_date == $data['site_date']) {
+	echo 'Kein XML geschrieben, da keine Aenderungen. <br />';
+	echo 'Nichts getwittert, da keine Aenderungen. <br />';
+} else {
+	echo '<br />Im XML steht: '.$temperatur.' Grad. '.$description;
 
-$xml = simplexml_load_file("database.xml"); //This line will load the XML file. 
+	$xml = simplexml_load_file("database.xml"); //This line will load the XML file. 
 
-$sxe = new SimpleXMLElement($xml->asXML()); //In this line it create a SimpleXMLElement object with the source of the XML file. 
-//The following lines will add a new child and others child inside the previous child created. 
-$tmp_value = $sxe->addChild("item"); 
-$tmp_value->addChild("title", $temperatur.' Grad'); 
-$tmp_value->addChild("description", $temperatur.' Grad. '.$description);
-$tmp_value->addChild("pubDate", $date);
-//This next line will overwrite the original XML file with new data added 
-$sxe->asXML("database.xml"); 
+	$sxe = new SimpleXMLElement($xml->asXML()); //In this line it create a SimpleXMLElement object with the source of the XML file. 
+	//The following lines will add a new child and others child inside the previous child created. 
+	$inside = $sxe->channel;
+	$tmp_value = $inside->addChild("item"); 
+	$tmp_value->addChild("title", $temperatur.' Grad'); 
+	$tmp_value->addChild("description", $temperatur.' Grad. '.$description);
+	$tmp_value->addChild("guid", 'http://wasser.aaronbauer.org/index.php?set_temp='.$data['id']);
+	$tmp_value->addChild("link", 'http://wasser.aaronbauer.org/index.php?set_temp='.$temperatur);
+	$tmp_value->addChild("pubDate", $date);
+	//This next line will overwrite the original XML file with new data added 
+	$sxe->asXML("database.xml"); 
+	
+	// Wenn es was neues gibt, wird getwittert
+	include('twitter.php');
+	
+};
 
-//for debug: shows the absolute path of the script
 
-echo ' Script in: <b>' .$_SERVER['SCRIPT_FILENAME'].'</b>';
 echo '<br />'.$versioning;
 
 ?>
