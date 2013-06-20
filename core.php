@@ -5,9 +5,11 @@ Build:
 The heart and soul of this app.
 */
 $version = '1.4';
-$build = 'xxxxxx';
+$build = 'afc013';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
+
+$directory = 'http://wasser.aaronbauer.org/';
 /*
 Core which fetches the temperature and the time from the website every hour and writes it into a database.
 */
@@ -95,7 +97,7 @@ if($temperatur and $site_date and $timestamp != '') {
 //Debug Modus beendet das Script hier. Es werden keine Daten geschrieben.
 if($_GET['debug'] != '') {
 	echo 'Debug Off <br />';
-	echo '<a href="http://wasser.aaronbauer.org/core.php?debug=yes">Switch Debug On</a><br /><br />';	
+	echo '<a href="'.$directory.'core.php?debug=yes">Switch Debug On</a><br /><br />';	
 	
 } else {
 	echo '<br />Debug Mode';
@@ -147,8 +149,8 @@ if ($temperatur == $data['temperature'] and $timestamp == $data['site_time'] and
 	$tmp_value = $inside->addChild("item"); 
 	$tmp_value->addChild("title", $temperatur.' Grad'); 
 	$tmp_value->addChild("description", $temperatur.' Grad. '.$description);
-	$tmp_value->addChild("guid", 'http://wasser.aaronbauer.org/index.php?set_temp='.$data['id']);
-	$tmp_value->addChild("link", 'http://wasser.aaronbauer.org/index.php?set_temp='.$temperatur);
+	$tmp_value->addChild("guid", $directory.'index.php?set_temp='.$data['id']);
+	$tmp_value->addChild("link", $directory.'index.php?set_temp='.$temperatur);
 	$tmp_value->addChild("pubDate", $date);
 	//This next line will overwrite the original XML file with new data added 
 	$sxe->asXML("database.xml"); 

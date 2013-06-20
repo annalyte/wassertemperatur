@@ -146,7 +146,7 @@ div#the_past {
 	
 }
 
-div#past_entry {
+div.past_entry {
 	border-bottom: 0px solid #333;
     margin-bottom: 15px;
 	overflow: auto;
