@@ -1,11 +1,11 @@
 <?php
 /*
-Core 1.4
+Core 1.4.1
 Build: 
 The heart and soul of this app.
 */
-$version = '1.4';
-$build = 'afc013';
+$version = '1.4.1';
+$build = 'xxxxxx';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -42,7 +42,7 @@ foreach($html->find('div[id=oeffdat2]') as $element)
        #echo $element->plaintext . '<br>';
        
 // Array wird gleich bereingt von allem unfung vs. ...       
-$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-,]/','',strip_tags($element)));
+$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-]/','',strip_tags($element)));
       
 // Array wird kaum bereinigt. Mal sehen was besser hält. 
 #$arr1 = str_split(strip_tags($element));
@@ -60,10 +60,12 @@ $site_date = implode(array_slice($arr1, 0, 10));
 
 $site_time = trim(implode(array_slice($arr1, 10, 5)));
        
-$temperatur_raw = implode(array_slice($arr1, -3, 2));
+$temperatur_raw = implode(array_slice($arr1, -4, 4));
 
-$temperatur = (int)$temperatur_raw;
+//Ersetzt das Komma durch den Punkt, da ansonsten Round nicht funktioniert
+$temperatur_comma = str_replace(',', '.', $temperatur_raw);
 
+$temperatur = round($temperatur_comma, 0);
 
 $timestamp = $site_time.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
 
@@ -80,8 +82,9 @@ $timestamp = $site_time.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bade
 
 //Nur zur Ansicht
 echo '<h2>Submitted Data</h2>';
-    
-echo 'Temp: '.$temperatur;
+
+echo 'Temperatur (original): '.$temperatur_comma;    
+echo '<br />Temperatur (gerundet): '.$temperatur;
 echo '<br />Date: '.$site_date;
 echo '<br />Time: '.$timestamp;
 
