@@ -1,15 +1,16 @@
 <?php
 /*
-Core 1.4.1
+Core 1.4.2
 Build: 
 The heart and soul of this app.
+//1.4.2 Added unix timestamp of site time and date to improve handling of timeing 
 */
-$version = '1.4.1';
+$version = '1.4.2';
 $build = 'xxxxxx';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
-$directory = 'http://wasser.aaronbauer.org/';
+$directory = 'http://wasserwaer.me/';
 /*
 Core which fetches the temperature and the time from the website every hour and writes it into a database.
 */
@@ -67,7 +68,15 @@ $temperatur_comma = str_replace(',', '.', $temperatur_raw);
 
 $temperatur = round($temperatur_comma, 0);
 
-$timestamp = $site_time.' Uhr'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
+$timestamp = round($site_time, 0).':00'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
+
+$composed_date = $site_date.' '.$timestamp; //Hier wird die Zeit und das Datum zusammengebracht
+
+$unix_time = strtotime($composed_date); // Ein Unix Zeitstempel wird daraus
+
+echo date("d.m.Y H:i:s", $unix_time);
+
+//echo $composed_date;
 
 // Alter Code der die Filter beinhaltet und deshalb zum Nachschauen hier bleibt
 
@@ -124,7 +133,7 @@ if(!$db_selected) {
     echo 'Temperatur gelesen. <br />';
 
        
-    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'");';
+    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date, unix_timestamp) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'", "'.$unix_time.'");';
     $exec_write = mysql_query($write_query) or die(mysql_error());
     echo 'Neue Temperatur geschrieben. <br /> ';
        

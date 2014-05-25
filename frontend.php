@@ -11,22 +11,26 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.6.5';
+$version = '1.6.8';
 $build = 'xxxxxx';
 
 // 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
-// 1.6.5: Added Twitter Button, made directory option available everywhere for more flexibility, new app icon matches overall design 
+// 1.6.5: Added Twitter Button, made directory option available everywhere for more flexibility, new app icon matches overall design, valid HTML 5 
+// 1.6.6: Improved font readability. German Weekdays! 
+// 1.6.7: Tweaked iOS7 like design, season start timer fixed, maintenance
+// 1.6.8: Implemented Domain Change to wasserwaer.me
+// 1.6.9: Fix for issues with time
 
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
-$season_time = '2013-09-16 10:00:00';
+$season_time = '2014-05-24 08:30:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
 // Hier den Ort eintragen
-$directory = 'http://wasser.aaronbauer.org/';
+$directory = 'http://wasserwaer.me/';
 
 
 
@@ -137,6 +141,17 @@ if(!$db_selected) {
 $cur_time = strtotime('now');
 // Ein Unix-Zeitstemple wann die App ausgeht
 $end_time = strtotime($season_time);
+
+// Zeitdifferenz zwischen unix_timestamp und aktueller Zeit ausrechnen
+$time_diff_calc = round((($cur_time - $data['unix_timestamp']) / 60) / 60);
+
+// Wenn Zeitdifferenz nur eine Stunde ist muss es anders heißen
+if ($time_diff_calc == 1) {
+	$time_diff = 'vor einer Stunde';
+} else {
+	$time_diff = 'vor '.$time_diff_calc.' Stunden';
+};
+
 
 
 //Interpretiert die Temperaturen und ordnet Text und Farbe zu

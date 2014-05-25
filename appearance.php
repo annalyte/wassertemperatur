@@ -1,7 +1,7 @@
 
 
 html, body {
-    font-family: "HelveticaNeue-UltraLight", Avenir, Arial, sans-serif;
+    font-family: "HelveticaNeue-UltraLight", "AvenirNext-UltraLight", Arial, sans-serif;
   /*  background: url(bg_summer.png) center top no-repeat #231301;
     background-size: 100%; */
    
@@ -29,7 +29,7 @@ h1.today {
     
     
     margin:0;
-    color:<?php echo $color; ?>;
+    color:<?php //echo $color; ?> white;
     
     -webkit-mask-image: -webkit-gradient(linear, left top,
     left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7))); 
@@ -48,11 +48,16 @@ h1.yesterday {
 
 h2 {
     font-size: 32pt;
-    
+    font-family: "HelveticaNeue-Light";
+	font-weight: lighter;
     /* text-shadow: 2px 2px 0px #333333; */
-    font-weight: lighter;
-    color: <?php echo $color; ?>;
+
+    color: <?php //echo $color; ?> white;
     
+}
+
+h4 {
+	font-size: 18pt;
 }
 
 p.version {
@@ -69,11 +74,11 @@ p.year_ago {
 #status_bar {
 	font-family: "HelveticaNeue-Light";
 	font-weight: lighter;
-	background: rgba(255,255,255,0.5);
+	background: rgba(255,255,255,0.1);
 	
 	height: 65px;
 	font-size: 23pt;
-	color: <?php echo $color; ?>;
+	color: <?php //echo $color; ?> white;
 	/* text-shadow: 1px 1px 5px black; */
 	
 }
@@ -81,13 +86,13 @@ p.year_ago {
 #wrap {
     width: 100%;
     height: auto;
-	background: rgba(255,255,255,0.9);
-    -webkit-mask-image: -webkit-gradient(linear, left top,
-    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7)));
+/*	background: rgba(255,255,255,0.9); */
+ /*   -webkit-mask-image: -webkit-gradient(linear, left top,
+    left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7))); */
     text-align: center;
     min-height: 100%;
     
-    color: <?php echo $color; ?>;
+    color: <?php // echo $color; ?> white;
 }
 
 
@@ -105,6 +110,11 @@ p.time {
 	margin:0;
 }
 
+p.time_diff {
+	float:center;
+	padding: 10px 22px 0px 0px;
+	margin:0;
+}
 
 
 #layer {
@@ -216,5 +226,21 @@ div.past_temp {
 #defaultCountdown {
     margin-bottom: 25px;
     
+}
+
+div#the_countdown {
+	/* background: rgba(255,255,255,0.5); */
+	overflow: auto;
+	padding: 25px 10px 10px 10px;
+	width: 300px;
+	font-family: "HelveticaNeue-Light";
+	font-weight: lighter;
+	font-size: 12pt;
+	margin-left: auto;
+	margin-right: auto;
+	display:block;
+	border-top: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+	
 }
 
