@@ -1,7 +1,7 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 13.06.2013
+Datum: 01.06.2014
 Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
 Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 */
@@ -11,7 +11,7 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.6.8';
+$version = '1.7';
 $build = 'xxxxxx';
 
 // 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
@@ -20,6 +20,7 @@ $build = 'xxxxxx';
 // 1.6.7: Tweaked iOS7 like design, season start timer fixed, maintenance
 // 1.6.8: Implemented Domain Change to wasserwaer.me
 // 1.6.9: Fix for issues with time
+// 1.7: Updated visuals, background images, cleaned up, optimized for iphone 5 screen, transparent status bar, optimized fonts
 
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
@@ -148,6 +149,12 @@ $time_diff_calc = round((($cur_time - $data['unix_timestamp']) / 60) / 60);
 // Wenn Zeitdifferenz nur eine Stunde ist muss es anders heißen
 if ($time_diff_calc == 1) {
 	$time_diff = 'vor einer Stunde';
+} elseif($time_diff_calc < 1) {
+	$time_diff = 'von gerade eben';
+} elseif($time_diff_calc > 24) {
+	$time_diff = 'vor über einem Tag';
+} elseif($time_diff_calc > 48) {
+	$time_diff = 'vor über zwei Tagen';
 } else {
 	$time_diff = 'vor '.$time_diff_calc.' Stunden';
 };

@@ -6,7 +6,7 @@ The heart and soul of this app.
 //1.4.2 Added unix timestamp of site time and date to improve handling of timeing 
 */
 $version = '1.4.2';
-$build = 'xxxxxx';
+$build = 'ca683c';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -68,7 +68,7 @@ $temperatur_comma = str_replace(',', '.', $temperatur_raw);
 
 $temperatur = round($temperatur_comma, 0);
 
-$timestamp = round($site_time, 0).':00'; // Das Uhr wird wird hardgecoded, weils die Bademeister verbummeln
+$timestamp = round($site_time, 0).':00'; // Das 00 wird hardgecoded, daher leichte ungenaigkeit bei Zeitangabe, ist aber sicherer so
 
 $composed_date = $site_date.' '.$timestamp; //Hier wird die Zeit und das Datum zusammengebracht
 
