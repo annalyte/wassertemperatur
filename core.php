@@ -1,11 +1,12 @@
 <?php
 /*
-Core 1.4.2
+Core 1.4.3
 Build: 
 The heart and soul of this app.
 //1.4.2 Added unix timestamp of site time and date to improve handling of timeing 
+//1.4.3 Fetches decimals from the website
 */
-$version = '1.4.2';
+$version = '1.4.3';
 $build = 'ca683c';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -17,6 +18,8 @@ Core which fetches the temperature and the time from the website every hour and 
 
 // Damit alles seine Ordnung hat
 header('Content-Type: text/html; charset=UTF-8');
+
+include('cur_weather.php');
 
 // Damit in der Titelzeile etwas drinsteht
 echo '<title>Core '.$version.'</title>';
@@ -66,7 +69,7 @@ $temperatur_raw = implode(array_slice($arr1, -4, 4));
 //Ersetzt das Komma durch den Punkt, da ansonsten Round nicht funktioniert
 $temperatur_comma = str_replace(',', '.', $temperatur_raw);
 
-$temperatur = round($temperatur_comma, 0);
+$temperatur = round($temperatur_comma, 1);
 
 $timestamp = round($site_time, 0).':00'; // Das 00 wird hardgecoded, daher leichte ungenaigkeit bei Zeitangabe, ist aber sicherer so
 
@@ -166,6 +169,7 @@ if ($temperatur == $data['temperature'] and $timestamp == $data['site_time'] and
 	$tmp_value->addChild("pubDate", $date);
 	//This next line will overwrite the original XML file with new data added 
 	$sxe->asXML("database.xml"); 
+	
 	
 	// Wenn es was neues gibt, wird getwittert
 	include('twitter.php');

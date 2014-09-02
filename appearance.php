@@ -4,7 +4,6 @@ body {
     font-family: "HelveticaNeue-UltraLight", "AvenirNext-UltraLight", Arial, sans-serif;
   /*  background: url(bg_summer.png) center top no-repeat #231301;
     background-size: 100%; */
-   
     
     padding:0;
     margin:0;
@@ -33,18 +32,27 @@ video#videobcg {
 
 
 
-h1.today {
+div.today {
     font-size: 80pt;
     padding:30px 0px 0px 0px;
     font-weight: 100;
     /* text-shadow: 2px 2px 0px #333333; */
+    letter-spacing: -8px;
     
-    
-    margin:0;
+    margin:0px 0px 0px -25px;
     color:<?php //echo $color; ?> white;
     /*
     -webkit-mask-image: -webkit-gradient(linear, left top,
     left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0.7))); */
+}
+
+div.degree {
+	font-family: "HelveticaNeue-Light";
+	position: absolute;
+	font-size: 35px;
+	top: 45px;
+	left: 238px;
+	
 }
 
 h1.yesterday {
@@ -72,6 +80,27 @@ h4 {
 	font-size: 18pt;
 }
 
+/*
+div#timemachine{
+	height: 200px;
+	font-family: "HelveticaNeue-Light";
+	font-weight: lighter;
+	font-size: 16pt;
+	margin-top: 50px;
+	border-top: 1px solid #fff;
+
+}
+
+div#timemachine_icon {
+	float:left;
+}
+
+div#timemachine_temp_box {
+	float:right;
+}
+
+*/
+
 div#passed_time {
 	font-size: 13pt;
 	font-family: "HelveticaNeue-Medium";
@@ -87,6 +116,8 @@ p.year_ago {
 	font-size: 10pt;
 	font-family: "HelveticaNeue-Medium";
 	font-weight: lighter;
+	text-align: center;
+	line-height: 20px;
 }
 
 #status_bar {

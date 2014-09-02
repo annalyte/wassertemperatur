@@ -11,7 +11,7 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.7';
+$version = '1.7.1';
 $build = 'xxxxxx';
 
 // 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
@@ -20,12 +20,12 @@ $build = 'xxxxxx';
 // 1.6.7: Tweaked iOS7 like design, season start timer fixed, maintenance
 // 1.6.8: Implemented Domain Change to wasserwaer.me
 // 1.6.9: Fix for issues with time
-// 1.7: Updated visuals, background images, cleaned up, optimized for iphone 5 screen, transparent status bar, optimized fonts
+// 1.7: Updated visuals, background images, cleaned up, optimized for iphone 5 screen, transparent status bar, optimized fonts, time is now relative, degree symbol is back
 
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
-$season_time = '2014-05-24 08:30:00';
+$season_time = '2014-09-31 08:30:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 

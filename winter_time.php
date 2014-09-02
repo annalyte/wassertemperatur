@@ -19,34 +19,78 @@ $two_year_avg_result = mysql_query($two_year_avg) or die(mysql_error());
     
 $two_year_avg_data = mysql_fetch_array($two_year_avg_result) or die(mysql_error());
 
+
+# 2014 Average
+
+$three_year_avg = 'SELECT AVG(temperature) FROM wasser WHERE cur_timestamp >= "2014" AND cur_timestamp <= "2015"';
+
+$three_year_avg_result = mysql_query($three_year_avg) or die(mysql_error());
+    
+$three_year_avg_data = mysql_fetch_array($three_year_avg_result) or die(mysql_error());
+
 ?>
 
 
-<div id="wrap">        
-                <div id="layer">
-                <div id="status_bar"> <p class="date"><?php echo date('d.m.Y'); ?></p> <p class="time"><?php echo date('H:m:s').' Uhr'; ?></p> </div> 
-                    <h1 class="today"> 20&deg;</h1>
-                    <h2> Saisonbeginn </h2>
-                    <div id="the_countdown">
-                    <div id="defaultCountdown"></div>
-                   
-                    </div>
-                    
-                  
-    <p class="year_ago">Jahresdurchschnitt 2013: <?php echo $two_year_avg_data['AVG(temperature)']; ?> </p>
-    <p class="year_ago">Jahresdurchschnitt 2012: <?php echo $avg_data['AVG(temperature)']; ?></p>
 
+                   
+
+<div id="wrap">                   
+                    <div class="today"><?php echo $external_temperature; ?></div><div class="degree">&deg;</div>                 
+                    <div id="passed_time"><div id="defaultCountdown"></div></div>
+              <!--      
+                    <div id="timemachine">
+                    	<div id="timemachine_icon"><img src="image_store/timemachine.png" height="120" width="120" /></div>
+                    	<div id="timemachine_temp_box">
+	                    	<h2><?php echo $year_ago_data['temperature'] ?></h2>
+	                    	<p>2013</p>
+                    	</div>
+                    </div>
+               -->
+               
+                    <div id="the_past">
+                    	<div class="past_entry">
+                    		<div class="past_date">
+                    		2014 
+                    		</div>
+                    	
+                    		<div class="past_temp">
+                    			&oslash; <?php echo round($three_year_avg_data['AVG(temperature)'], 2); ?>
+                    		</div>
+                    	</div>
+                    	<div style="clear:both;"></div>
+                    	<div class="past_entry">
+                    		<div class="past_date">
+                    		2013  
+                    		</div>
+	                    	<div class="past_temp">
+                    		&oslash; <?php echo round($two_year_avg_data['AVG(temperature)'], 2); ?>
+                    		</div>
+                    	</div>
+                    	<div style="clear:both;"></div>
+                    	<div class="past_entry">
+                    		<div class="past_date">
+                    		2012 
+                    		</div>
+	                    	<div class="past_temp">
+                    		&oslash; <?php echo round($avg_data['AVG(temperature)'], 2); ?>
+                    		</div>
+                    	</div> 
+                    	
+                    	
+ 
+                    </div>
+                  
+                    <?php echo '<p class="year_ago">Die Au&szlig;entemperatur im Naturfreibad Fischach betr&aumlgt gerade '.$external_temperature.' Grad.</p>'; ?>
+                    
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
                  <!--   <p class="version"><?php echo $versioning; ?></p> -->
                  <!-- Twitter Integration -->
+                 <!--
                  <p>
-	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="false" data-lang="de" data-show-screen-name="true" data-size="large">Follow @twitterapi</a>
+	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="true" data-lang="de">Follow @wassertemp</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                 </p>
-                </div>
-       <!--       
-       <a href="graphics.php">Test</a> 
-       -->        
+                 </p> 
+                 <p><?php echo $ext_temp; ?></p>  -->   
 </div>
 
 

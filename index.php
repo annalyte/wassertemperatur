@@ -9,6 +9,9 @@ error_reporting(0); // Keine PHP Fehlermeldungen
 //Frontend mit den MSQL Abfragen und der Winteranzeige
 require('frontend.php'); 
 
+//Wetter Modul. Akteulle temperatur mit $ext_temp ausgeben
+include('cur_weather.php');
+
 /*
 $directory = Ort der im frontend angegeben wurde
 $data =  Array mit den Daten von heute
@@ -26,12 +29,13 @@ $end_time und $cur_time sind die Zeitstempel
 
 
 
-<title>Wasserw&auml;rme | Das Wasser hat <?php echo $data['temperature']; ?> Grad</title>
+<title>Wasserw&auml;rme im Naturfreibad Fischach</title>
 
 <meta charset="utf-8">
 
 <!-- Das hilft Google -->
-<meta name="keywords" content="wasserwaerme, wasserw&auml;rme, wassertemperatur, fischach, naturfreibad" />
+
+<meta name="keywords" content="wasserwaerme, wasserw&auml;rme, wassertemperatur, fischach, naturfreibad, freibad, baden, durchschnitt, 2014, 2013" />
 <meta name="description" content="Wasserwaer.me ist eine praktische App, die Ihnen die Wassertemperatur im Naturfreibad Fischach übersichtlich anzeigt." />
 
 <!-- iOS Dinge -->
@@ -64,7 +68,7 @@ $end_time und $cur_time sind die Zeitstempel
 <script src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2014, 5 - 1, 24, 8);
+    var openingDay = new Date(2014, 9 - 1, 31, 8);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
@@ -79,6 +83,22 @@ $(function () {
   ga('create', 'UA-51202326-1', 'wasserwaer.me');
   ga('require', 'displayfeatures');
   ga('send', 'pageview');
+
+</script>
+
+<!-- Script for step-by-step Counting up the Temperature -->
+<script>
+$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', $data['temperature']); ?>}, {
+  duration: 2000,
+  easing:'swing',
+  step: function() {
+    $('#counter').text(Math.floor(this.countNum));
+  },
+  complete: function() {
+    $('#counter').text(this.countNum);
+    
+  }
+});
 
 </script>
 
@@ -99,14 +119,24 @@ require('appearance.php');
 <div id="status_bar"></div>
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($end_time > $cur_time) {
+if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
     require('winter_time.php');
     exit();
 } else { ?>
 
 <div id="wrap">                   
-                    <h1 class="today"><?php echo $data['temperature']; ?></h1>                 
+                    <div class="today" id="counter"></div><div class="degree">&deg;</div>                 
                     <div id="passed_time"><?php echo $time_diff; ?></div>
+              <!--      
+                    <div id="timemachine">
+                    	<div id="timemachine_icon"><img src="image_store/timemachine.png" height="120" width="120" /></div>
+                    	<div id="timemachine_temp_box">
+	                    	<h2><?php echo $year_ago_data['temperature'] ?></h2>
+	                    	<p>2013</p>
+                    	</div>
+                    </div>
+               -->
+               
                     <div id="the_past">
                     	<div class="past_entry">
                     		<div class="past_date">
@@ -139,15 +169,18 @@ if($end_time > $cur_time) {
                     	
  
                     </div>
-                    <?php echo '<p class="year_ago">Vor einem Jahr hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                  
+                    <?php echo '<p class="year_ago">Die Au&szlig;entemperatur betr&aumlgt gerade '.$external_temperature.' Grad. Vor einem Jahr hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                    
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
                  <!--   <p class="version"><?php echo $versioning; ?></p> -->
                  <!-- Twitter Integration -->
                  <!--
                  <p>
-	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="false" data-lang="de" data-show-screen-name="true" data-size="large">Follow @twitterapi</a>
+	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="true" data-lang="de">Follow @wassertemp</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                 </p> -->      
+                 </p> 
+                 <p><?php echo $ext_temp; ?></p>  -->   
 </div>
 <!-- Core Process ran on <?php echo $data['cur_timestamp']; ?> -->
 
