@@ -36,13 +36,13 @@ $end_time und $cur_time sind die Zeitstempel
 <!-- Das hilft Google -->
 
 <meta name="keywords" content="wasserwaerme, wasserw&auml;rme, wassertemperatur, fischach, naturfreibad, freibad, baden, durchschnitt, 2014, 2013" />
-<meta name="description" content="Wasserwaer.me ist eine praktische App, die Ihnen die Wassertemperatur im Naturfreibad Fischach übersichtlich anzeigt." />
+<meta name="description" content="Wasserwaerme ist eine praktische App, die Ihnen die Wassertemperatur im Naturfreibad Fischach übersichtlich anzeigt." />
 
 <!-- iOS Dinge -->
 <meta name="apple-mobile-web-app-capable" content="yes" /> 
 <meta name="viewport" content="user-scalable=0, initial-scale=1.0" /> 
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<link rel="apple-touch-icon" href="<?php echo $directory; ?>apple-touch-icon.png"/>
+<link rel="apple-touch-icon" href="<?php echo $directory; ?>apple-touch-icon-precomposed.png"/>
 
 
 <!-- iPhone 4 (Retina) -->
@@ -68,7 +68,7 @@ $end_time und $cur_time sind die Zeitstempel
 <script src="<?php echo $directory; ?>jquery.countdown.js"></script>
 <script type="text/javascript">
 $(function () {
-    var openingDay = new Date(2014, 9 - 1, 31, 8);
+    var openingDay = new Date(2015, 05 - 1, 20, 8);
     $('#defaultCountdown').countdown({until: openingDay});
 });
 </script>
@@ -86,6 +86,9 @@ $(function () {
 
 </script>
 
+<!-- Schrift als Alternative zu San Francisco -->
+<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300' rel='stylesheet' type='text/css'>
+
 <!-- Script for step-by-step Counting up the Temperature -->
 <script>
 $({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', $data['temperature']); ?>}, {
@@ -99,6 +102,7 @@ $({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',
     
   }
 });
+
 
 </script>
 
@@ -136,7 +140,7 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	</div>
                     </div>
                -->
-               
+               		<div class="subheadline">R&uuml;ckblick</div>
                     <div id="the_past">
                     	<div class="past_entry">
                     		<div class="past_date">
@@ -169,8 +173,21 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	
  
                     </div>
-                  
-                    <?php echo '<p class="year_ago">Die Au&szlig;entemperatur betr&aumlgt gerade '.$external_temperature.' Grad. Vor einem Jahr hatte das Wasser '.$year_ago_data['temperature'].' Grad.</p>'; ?>
+                  <?php if($data['temperature'] < $year_ago_data['temperature']) {
+	                  $comparison_phrase = 'w&auml;rmer als heute'; } elseif($data['temperature'] > $year_ago_data['temperature']) {
+		               $comparison_phrase = 'k&auml;lter als heute';   
+	                  } elseif($data['temperature'] == $year_ago_data['temperature']) {
+		                  $comparison_phrase = 'genauso wie heute';
+	                  };
+	                  
+	                  if($data['opening'] == 1) {
+		                  $opening_phrase = ' scheint heute ge&ouml;ffnet zu sein';
+	                  } else {
+		                  $opening_phrase = ' ist heute wohl geschlossen';
+	                  };
+                  ?>
+                  <div class="subheadline">Zusammenfassung</div>
+                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Die Wassertemperatur betr&auml;gt gerade <strong> '.$data['temperature'].' Grad</strong> und die Au&szlig;entemperatur steht bei <strong>'.$external_temperature.' Grad</strong>. '.$description.' Vor einem Jahr hatte das Wasser <strong>'.$year_ago_data['temperature'].' Grad </strong> und war damit '.$comparison_phrase.'. Das Bad'.$opening_phrase.'!</p>'; ?>
                     
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
                  <!--   <p class="version"><?php echo $versioning; ?></p> -->

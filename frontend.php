@@ -1,7 +1,7 @@
 <?php
 /*
 Freibad Wassertemperatur
-Datum: 01.06.2014
+Datum: 27.05.2015
 Setzt voraus, dass das core.php?debug=no 30min ausgeführt wird.
 Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 */
@@ -11,7 +11,7 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.7.1';
+$version = '1.7.2';
 $build = 'xxxxxx';
 
 // 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
@@ -21,17 +21,18 @@ $build = 'xxxxxx';
 // 1.6.8: Implemented Domain Change to wasserwaer.me
 // 1.6.9: Fix for issues with time
 // 1.7: Updated visuals, background images, cleaned up, optimized for iphone 5 screen, transparent status bar, optimized fonts, time is now relative, degree symbol is back
+// 1.7.2: Core updated. Design updated. Now includes summary of more data. Bugfixes and back to old domain. New Font: San Francisco or Roboto
 
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
 // Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
-$season_time = '2014-09-31 08:30:00';
+$season_time = '2016-05-20 18:00:00';
 
 // Hier die Version eintragen
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
 // Hier den Ort eintragen
-$directory = 'http://wasserwaer.me/';
+$directory = 'http://wasser.aaronbauer.org/';
 
 
 
@@ -150,7 +151,7 @@ $time_diff_calc = round((($cur_time - $data['unix_timestamp']) / 60) / 60);
 if ($time_diff_calc == 1) {
 	$time_diff = 'vor einer Stunde';
 } elseif($time_diff_calc < 1) {
-	$time_diff = 'von gerade eben';
+	$time_diff = 'gerade eben';
 } elseif($time_diff_calc > 24) {
 	$time_diff = 'vor über einem Tag';
 } elseif($time_diff_calc > 48) {
@@ -163,6 +164,15 @@ if ($time_diff_calc == 1) {
 
 //Interpretiert die Temperaturen und ordnet Text und Farbe zu
 require('texts.php');
+
+//Bestimmt die Grußformel für den Fließtext
+if (date('H:m:i') < '11:00:00') {
+	$greeting = 'Guten Morgen! ';
+} elseif (date('H:m:i') > '16:00:00') {
+	$greeting = 'Guten Abend! ';
+} else {
+	$greeting = 'Hi! ';
+};
 
 #echo 'Jetzt'.$cur_time.'<br />';
 #echo 'Ende'.$end_time;

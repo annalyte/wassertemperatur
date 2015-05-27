@@ -1,10 +1,10 @@
 
 
 body {
-    font-family: "HelveticaNeue-UltraLight", "AvenirNext-UltraLight", Arial, sans-serif;
+    font-family: "SanFranciscoDisplay-Regular", "Roboto", "HelveticaNeue-UltraLight", "AvenirNext-UltraLight", Arial, sans-serif;
   /*  background: url(bg_summer.png) center top no-repeat #231301;
     background-size: 100%; */
-    
+    background-color: #000;
     padding:0;
     margin:0;
    /* background-color: <?php echo $color; ?>; */
@@ -12,18 +12,20 @@ body {
     -webkit-font-smoothing: antialiased;
 
 	
-	
-	text-shadow: -0px 2px 2px #868686;
+/*	
+	text-shadow: -0px 2px 2px #868686; */
 }
 
 div.background_image_container {
 	background: url(image_store/<?php echo $bg_image; ?>) no-repeat top center fixed;
 	background-size: cover;
+	background-color: #000;
 	min-height: 100%;
 	width: 100%;
 	z-index: -1;
 	position: absolute;
-	/* -webkit-filter: blur(10px); */
+	-webkit-filter: blur(10px);
+	opacity: 0.8;
 }
 
 video#videobcg {
@@ -47,10 +49,10 @@ div.today {
 }
 
 div.degree {
-	font-family: "HelveticaNeue-Light";
+	font-family: "San Francisco Display", "Roboto", "HelveticaNeue-Light";
 	position: absolute;
-	font-size: 35px;
-	top: 45px;
+	font-size: 60px;
+	top: 35px;
 	left: 238px;
 	
 }
@@ -68,7 +70,7 @@ h1.yesterday {
 
 h2 {
     font-size: 32pt;
-    font-family: "HelveticaNeue-Light";
+    font-family: "SanFranciscoDisplay-Regular", "Roboto", "HelveticaNeue-Light";
 	font-weight: lighter;
     /* text-shadow: 2px 2px 0px #333333; */
 
@@ -83,7 +85,7 @@ h4 {
 /*
 div#timemachine{
 	height: 200px;
-	font-family: "HelveticaNeue-Light";
+	font-family: "San Francisco Display", "HelveticaNeue-Light";
 	font-weight: lighter;
 	font-size: 16pt;
 	margin-top: 50px;
@@ -103,8 +105,8 @@ div#timemachine_temp_box {
 
 div#passed_time {
 	font-size: 13pt;
-	font-family: "HelveticaNeue-Medium";
-	font-weight: lighter;
+	font-family: "San Francisco Display", "Roboto", "HelveticaNeue-Medium";
+	
 }
 
 p.version {
@@ -113,15 +115,14 @@ p.version {
 }
 
 p.year_ago {
-	font-size: 10pt;
-	font-family: "HelveticaNeue-Medium";
-	font-weight: lighter;
-	text-align: center;
+	font-size: 11pt;
+	font-family: "San Francisco Display", "Roboto", "HelveticaNeue-Medium";
+	text-align: justify;
 	line-height: 20px;
 }
 
 #status_bar {
-	font-family: "HelveticaNeue-Light";
+	font-family: "San Francisco Display", "Roboto", "HelveticaNeue-Light";
 	font-weight: lighter;
 	background: rgba(255,255,255,0.1);
 	position: fixed;
@@ -186,20 +187,29 @@ p.time_diff {
 	left: 0;
 }
 
+div.subheadline {
+	font-size: 12pt;
+	text-align: left;
+	margin: 20px 0px 0px 0px;
+	background: #000;
+	opacity: 0.3;
+	padding: 3px;
+}
+
 div#the_past {
 	/* background: rgba(255,255,255,0.5); */
 	overflow: auto;
-	padding: 20px 0px 5px 0px;
+	padding: 0px 0px 5px 0px;
 	width: 280px;
-	font-family: "HelveticaNeue-Light";
-	font-weight: lighter;
+	font-family: "SanFranciscoDisplay-Regular", "Roboto", "HelveticaNeue-Light";
+
 	font-size: 16pt;
 	margin-left: auto;
 	margin-right: auto;
 	
 	margin-top: 40px;
 	display:block;
-	border-top: 1px solid #fff;
+	border-top: 0px solid #fff;
 	border-bottom: 0px solid #fff;
 	
 }
@@ -213,12 +223,20 @@ div.past_entry {
 
 div.past_date {
 	float: left;
+	text-transform: uppercase;
 	
 	
 }
 
 div.past_temp {
 	float: right;
+}
+
+h5 {
+	text-align: left;
+	font-size: 16pt;
+	font-weight: lighter;
+	
 }
 
 
@@ -281,7 +299,7 @@ div#the_countdown {
 	overflow: auto;
 	padding: 25px 10px 10px 10px;
 	width: 300px;
-	font-family: "HelveticaNeue-Light";
+	font-family: "San Francisco Display", "Roboto", "HelveticaNeue-Light";
 	font-weight: lighter;
 	font-size: 12pt;
 	margin-left: auto;
