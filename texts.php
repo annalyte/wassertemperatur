@@ -7,70 +7,70 @@ if($data['temperature'] == '') {
 	case 27:
 		$description = 'Es grillt dich!';
 		$color = '#ff0033';
-		$bg_image = '24grad.jpg';
+		$bg_image = '24grad_blur.jpg';
 		break;
     case 26:
         $description = 'Viel zu warm!';
         $color = '#ff0033';
-        $bg_image = '24grad.jpg';
+        $bg_image = '24grad_blur.jpg';
         break;
     case 25:
         $description = 'Sehr warm!';
         $color = '#ff3000';
-        $bg_image = '25grad.jpg';
+        $bg_image = '25grad_blur.jpg';
         break;
     case 24:
         $description = 'Warm!';
         $color = '#ff3000';
-        $bg_image = '24grad.jpg';
+        $bg_image = '24grad_blur.jpg';
         break;
     case 23:
         $description = 'Warm genug.';
         $color = '#ff5202';
-        $bg_image = '23grad.jpg';
+        $bg_image = '23grad_blur.jpg';
         break;
     case 22:
         $description = 'Angenehm.';
         $color = '#ffa600';
-        $bg_image = '22grad.jpg';
+        $bg_image = '22grad_blur.jpg';
         break;
     case 21:
-        $description = 'Noch okay.';
+        $description = 'Das geht so.';
         $color = '#82ff06';
-        $bg_image = '21grad.jpg';
+        $bg_image = '21grad_blur.jpg';
         break;
     case 20:
-        $description = 'Etwas kalt.';
+        $description = 'Etwas frisch.';
         $color = '#05ff44';
-        $bg_image = '20grad.jpg';
+        $bg_image = '20grad_blur.jpg';
         break;
     case 19:
-        $description = 'Kalt.';
+        $description = 'Naja.';
         $color = '#00c3ff';
-        $bg_image = '19grad.jpg';
+        $bg_image = '19grad_blur.jpg';
         break;
     case 18:
         $description = 'Zu Kalt!';
         $color = '#00c3ff';
-        $bg_image = '18grad.jpg';
+        $bg_image = '18grad_blur.jpg';
         break;       
 	case 17:
-		$description = 'Brrr!';
+		$description = 'Meh!';
 		$color = '#00c3ff';
-		$bg_image = '21grad.jpg';
+		$bg_image = '21grad_blur.jpg';
 		break;
 	case 16:
 		$description = 'Ihhh!';
 		$color = '#00c3ff';
-		$bg_image = '16grad.jpg';
+		$bg_image = '16grad_blur.jpg';
 		break;
 	case 15:
-		$description = 'Unmoeglich!';
+		$description = 'Brrr!';
 		$color = '#00c3ff';
-		$bg_image = '15grad.jpg';
+		$bg_image = '15grad_blur.jpg';
 		break;
 	case 14:
-		$description = 'Unmoeglich!';
+		$description = 'LOL!';
 		$color = '#31c9d5';
 		break;
 	case 13:
@@ -78,7 +78,7 @@ if($data['temperature'] == '') {
 		$color = '#238f98';
 		break;
 	case 12:
-		$description = 'Laecherlich!';
+		$description = 'Lustig!';
 		$color = '#0073ff';
 		break;
 	case 11:

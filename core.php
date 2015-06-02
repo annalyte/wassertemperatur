@@ -8,7 +8,7 @@ The heart and soul of this app.
 //1.4.4 Core now uses its own time and date to improve reliablity, works with new website, opening times included
 */
 $version = '1.4.4';
-$build = 'XXXXXX';
+$build = '9fc5eb3';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
@@ -47,7 +47,7 @@ foreach($html->find('div[class=big-text flippy]') as $element)
        #echo $element->plaintext . '<br>';
        
 
-// Array wird gleich bereingt von allem unfung vs. ...       
+// Array wird gleich bereingt von allem unfung vs. ...   $arr1 ist für Temperatur, Zeit, Datum, (Zahlen); $arr_opening nur für die Offen/Geschlossen (wegen den Buchstaben, die wir hier benötigen)    
 $arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-]/','',strip_tags($element)));
 
 $arr_opening = str_split(preg_replace('/[\]\;\(\)%&-]/','',strip_tags($element)));
@@ -65,7 +65,7 @@ print_r_html($arr1);
 
 print_r_html($arr_opening);
 
-$opening_word = implode(array_slice($arr_opening, 36, 9));
+$opening_word = implode(array_slice($arr_opening, 37, 9));
 
 if($opening_word == 'geöffnet') {
 	$open = 1;
@@ -95,7 +95,7 @@ if(!$db_selected) {
 #$site_time = trim(implode(array_slice($arr1, 10, 5)));
     
 //Die Temperatur muss jetzt in die richtige form gebracht werden, um später vergleichbar zu sein   
-$temperatur_raw = implode(array_slice($arr1, 6, 4));
+$temperatur_raw = implode(array_slice($arr1, 4, 4));
 
 //Ersetzt das Komma durch den Punkt, da ansonsten Round nicht funktioniert
 $temperatur_comma = str_replace(',', '.', $temperatur_raw);

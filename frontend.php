@@ -11,8 +11,8 @@ Setzt voraus, dass database.xml mit Schreibrechten versehen sind
 #################
 
 // Version und Build-Nummer
-$version = '1.7.2';
-$build = 'xxxxxx';
+$version = '1.7.3';
+$build = '9fc5eb3';
 
 // 1.6.4: Added manual Temperatur setting set_temp for debug reasons. Added default option in texts.php. Seperated off season display in new file. Core updated to 1.4 to support valid and standard encoded XML for support of external Services like IFTTT. Core is able to tweet current temperature by itself and doesn't rely on external services any more. 
 // 1.6.5: Added Twitter Button, made directory option available everywhere for more flexibility, new app icon matches overall design, valid HTML 5 
@@ -22,6 +22,7 @@ $build = 'xxxxxx';
 // 1.6.9: Fix for issues with time
 // 1.7: Updated visuals, background images, cleaned up, optimized for iphone 5 screen, transparent status bar, optimized fonts, time is now relative, degree symbol is back
 // 1.7.2: Core updated. Design updated. Now includes summary of more data. Bugfixes and back to old domain. New Font: San Francisco or Roboto
+// 1.7.3: Degree Symbol pulsates when information is new. Design is a little responsive, optimized for all phones. Other design tweaks and fixes, added Icons for each section. 
 
 
 // Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
@@ -147,17 +148,20 @@ $end_time = strtotime($season_time);
 // Zeitdifferenz zwischen unix_timestamp und aktueller Zeit ausrechnen
 $time_diff_calc = round((($cur_time - $data['unix_timestamp']) / 60) / 60);
 
-// Wenn Zeitdifferenz nur eine Stunde ist muss es anders heißen
+// Wenn Zeitdifferenz nur eine Stunde ist muss es anders heißen und das Gradzeichen pulsiert nicht immer ($pulsation)
 if ($time_diff_calc == 1) {
 	$time_diff = 'vor einer Stunde';
 } elseif($time_diff_calc < 1) {
 	$time_diff = 'gerade eben';
 } elseif($time_diff_calc > 24) {
 	$time_diff = 'vor über einem Tag';
+	$pulsation = 'No';
 } elseif($time_diff_calc > 48) {
 	$time_diff = 'vor über zwei Tagen';
+	$pulsation = 'No';
 } else {
-	$time_diff = 'vor '.$time_diff_calc.' Stunden';
+	$time_diff = 'vor '.$time_diff_calc.' Std.';
+	$pulsation = 'No';
 };
 
 
@@ -173,6 +177,22 @@ if (date('H:m:i') < '11:00:00') {
 } else {
 	$greeting = 'Hi! ';
 };
+
+
+if($data['temperature'] < $year_ago_data['temperature']) {
+	$comparison_phrase = 'w&auml;rmer als heute'; } 
+elseif($data['temperature'] > $year_ago_data['temperature']) {
+	$comparison_phrase = 'k&uuml;hler als heute'; } 
+elseif($data['temperature'] == $year_ago_data['temperature']) {
+	$comparison_phrase = 'genauso wie heute';
+};
+	                  
+if($data['opening'] == 1) {
+	$opening_phrase = ' scheint gerade <strong>ge&ouml;ffnet</strong> zu sein';
+} else {
+	$opening_phrase = ' ist momentan wohl <strong>geschlossen</strong>';
+};
+
 
 #echo 'Jetzt'.$cur_time.'<br />';
 #echo 'Ende'.$end_time;

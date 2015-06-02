@@ -86,8 +86,7 @@ $(function () {
 
 </script>
 
-<!-- Schrift als Alternative zu San Francisco -->
-<link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500,300' rel='stylesheet' type='text/css'>
+
 
 <!-- Script for step-by-step Counting up the Temperature -->
 <script>
@@ -115,12 +114,10 @@ $({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',
 require('appearance.php');
 ?>
 </style>
-
 </head>
 <body>
-
-<div class="background_image_container"></div>
-<div id="status_bar"></div>
+	
+<div id="status_bar"></div> 
 <?php
 // Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
 if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
@@ -140,7 +137,7 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	</div>
                     </div>
                -->
-               		<div class="subheadline">R&uuml;ckblick</div>
+               		<div class="subheadline"><img src="image_store/clock.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">R&uuml;ckblick</div>
                     <div id="the_past">
                     	<div class="past_entry">
                     		<div class="past_date">
@@ -173,31 +170,27 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	
  
                     </div>
-                  <?php if($data['temperature'] < $year_ago_data['temperature']) {
-	                  $comparison_phrase = 'w&auml;rmer als heute'; } elseif($data['temperature'] > $year_ago_data['temperature']) {
-		               $comparison_phrase = 'k&auml;lter als heute';   
-	                  } elseif($data['temperature'] == $year_ago_data['temperature']) {
-		                  $comparison_phrase = 'genauso wie heute';
-	                  };
-	                  
-	                  if($data['opening'] == 1) {
-		                  $opening_phrase = ' scheint heute ge&ouml;ffnet zu sein';
-	                  } else {
-		                  $opening_phrase = ' ist heute wohl geschlossen';
-	                  };
-                  ?>
-                  <div class="subheadline">Zusammenfassung</div>
-                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Die Wassertemperatur betr&auml;gt gerade <strong> '.$data['temperature'].' Grad</strong> und die Au&szlig;entemperatur steht bei <strong>'.$external_temperature.' Grad</strong>. '.$description.' Vor einem Jahr hatte das Wasser <strong>'.$year_ago_data['temperature'].' Grad </strong> und war damit '.$comparison_phrase.'. Das Bad'.$opening_phrase.'!</p>'; ?>
-                    
+                  <div class="subheadline"><img src="image_store/summary.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Zusammenfassung</div>
+                  	<div id="text_summary">
+                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade <strong> '.$data['temperature'].'&deg;</strong> Wassertemperatur und <strong>'.$external_temperature.'&deg;</strong> Au&szlig;entemperatur. '.$description.' Vor einem Jahr hatte das Wasser <strong>'.$year_ago_data['temperature'].'&deg; </strong> und war damit '.$comparison_phrase.'. Das Bad'.$opening_phrase.'!</p>'; ?>
+                  	</div>
+                    <!-- Icon Credit: Thomas Le Bas, Richard de Vos and Lucas Olaerts, Sergey Demushkin -->
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
                  <!--   <p class="version"><?php echo $versioning; ?></p> -->
                  <!-- Twitter Integration -->
-                 <!--
+                 <div class="subheadline"><img src="image_store/twitter.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Twitter</div>
                  <p>
 	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="true" data-lang="de">Follow @wassertemp</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
                  </p> 
-                 <p><?php echo $ext_temp; ?></p>  -->   
+                 <div class="subheadline"><img src="image_store/heart.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Credits</div>
+                 	<div id="text_summary">
+                 <p class="year_ago">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts and Sergey Demushkin</p>
+                 	</div>
+                 	<div id="version_information">
+                 <?php echo $versioning; ?>
+                 	</div>
+                <!-- <p><?php echo $ext_temp; ?></p>   -->
 </div>
 <!-- Core Process ran on <?php echo $data['cur_timestamp']; ?> -->
 
