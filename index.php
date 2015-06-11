@@ -7,7 +7,7 @@ error_reporting(0); // Keine PHP Fehlermeldungen
 
 
 //Frontend mit den MSQL Abfragen und der Winteranzeige
-require('frontend.php'); 
+require('script.php'); 
 
 //Wetter Modul. Akteulle temperatur mit $ext_temp ausgeben
 include('cur_weather.php');
@@ -43,6 +43,7 @@ $end_time und $cur_time sind die Zeitstempel
 <meta name="viewport" content="user-scalable=0, initial-scale=1.0" /> 
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="apple-touch-icon" href="<?php echo $directory; ?>apple-touch-icon-precomposed.png"/>
+<meta name="format-detection" content="telephone=no">
 
 
 <!-- iPhone 4 (Retina) -->
@@ -90,7 +91,7 @@ $(function () {
 
 <!-- Script for step-by-step Counting up the Temperature -->
 <script>
-$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', $data['temperature']); ?>}, {
+$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', timemachine(' ', 'temperature')); ?>}, {
   duration: 2000,
   easing:'swing',
   step: function() {
@@ -139,40 +140,94 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                -->
                		<div class="subheadline"><img src="image_store/clock.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">R&uuml;ckblick</div>
                     <div id="the_past">
-                    	<div class="past_entry">
+	                    <div class="past_entry">
                     		<div class="past_date">
-                    		<?php echo strftime("%A", strtotime($one_day_data['cur_timestamp'])); ?> 
+                    		 
                     		</div>
                     	
-                    		<div class="past_temp">
-                    			<?php echo $one_day_data['temperature']; ?>
+                    		<div class="min_temp">
+                    		 	min
+	                    	</div>
+	                    	<div class="max_temp">                    		 	
+                    		 	max
+                    		</div>
+                    	</div>
+                    	<div style="clear:both;"></div>
+                    	<hr />
+                    	<div class="past_entry">
+                    		<div class="past_date">
+                    		<?php e('vor einem Tag'); ?> 
+                    		</div>
+                    	
+                    		<div class="min_temp">
+                    		 	<?php e(timemachine_minimum('-1 day', 'temperature')); ?>
+	                    	</div>
+	                    	<div class="max_temp">                    		 	
+                    		 	<?php e(timemachine_maximum('-1 day', 'temperature')); ?>
                     		</div>
                     	</div>
                     	<div style="clear:both;"></div>
                     	<div class="past_entry">
                     		<div class="past_date">
-                    		<?php echo strftime("%A", strtotime($two_day_data['cur_timestamp'])); ?>  
+                    		<?php e('vor zwei Tagen'); ?>  
                     		</div>
-	                    	<div class="past_temp">
-                    		<?php echo $two_day_data['temperature']; ?>
+	                    	<div class="min_temp">
+                    		 	<?php e(timemachine_minimum('-2 day', 'temperature')); ?>
+	                    	</div>
+	                    	<div class="max_temp">                    		 	
+                    		 	<?php e(timemachine_maximum('-2 day', 'temperature')); ?>
                     		</div>
                     	</div>
+             
                     	<div style="clear:both;"></div>
                     	<div class="past_entry">
                     		<div class="past_date">
-                    		<?php echo strftime("%A", strtotime($three_day_data['cur_timestamp'])); ?> 
+                    		<?php e('vor einer Woche'); ?> 
                     		</div>
-	                    	<div class="past_temp">
-                    		<?php echo $three_day_data['temperature']; ?>
+	                    	<div class="min_temp">
+                    		 	<?php e(timemachine_minimum('-7 day', 'temperature')); ?>
+	                    	</div>
+	                    	<div class="max_temp">                    		 	
+                    		 	<?php e(timemachine_maximum('-7 day', 'temperature')); ?>
+                    		</div>
+                    	</div> 
+                    	<hr />
+                    	<div style="clear:both;"></div>
+                    	<div class="past_entry">
+                    		<div class="past_date">
+                    		<?php e('vor einem Jahr'); ?> 
+                    		</div>
+	                    	<div class="min_temp">
+                    		 	<?php e(timemachine_minimum('-1 year', 'temperature')); ?>
+	                    	</div>
+	                    	<div class="max_temp">                    		 	
+                    		 	<?php e(timemachine_maximum('-1 year', 'temperature')); ?>
                     		</div>
                     	</div> 
                     	
                     	
  
                     </div>
+                  <div class="subheadline"><img src="image_store/stats.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Statistik</div>
+                  	<div id="text_summary">
+	                  	<br />
+	                  	<div class="stat_date">jahr</div><div class="stat_min">min</div><div class="stat_max">max</div><div class="stat_data">mittel</div>
+	                  	<div style="clear:both;"></div>
+	                  	<hr />
+	                  	<div class="stat_date"><?php e(year('')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year(''));?></div><div class="stat_max"><?php e(timemachine_maximum_year(''));?></div><div class="stat_data"><?php e(avg(''));?></div>
+	                  	<div style="clear:both;"></div>
+	                  	<div class="stat_date"><?php e(year('-1 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-1 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-1 year'));?></div><div class="stat_data"><?php e(avg('-1 year'));?></div>
+	                  	<div style="clear:both;"></div>
+	                  	<div class="stat_date"><?php e(year('-2 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-2 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-2 year'));?></div><div class="stat_data"><?php e(avg('-2 year'));?></div>
+	                  	<div style="clear:both;"></div>
+	                  	<div class="stat_date"><?php e(year('-3 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-3 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-3 year'));?></div><div class="stat_data"><?php e(avg('-3 year'));?></div>
+	                  	<div style="clear:both;"></div>
+	                  	
+                  	</div>
+
                   <div class="subheadline"><img src="image_store/summary.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Zusammenfassung</div>
                   	<div id="text_summary">
-                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade <strong> '.$data['temperature'].'&deg;</strong> Wassertemperatur und <strong>'.$external_temperature.'&deg;</strong> Au&szlig;entemperatur. '.$description.' Vor einem Jahr hatte das Wasser <strong>'.$year_ago_data['temperature'].'&deg; </strong> und war damit '.$comparison_phrase.'. Das Bad'.$opening_phrase.'!</p>'; ?>
+                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade '.$data['temperature'].'&deg; Wassertemperatur und '.$external_temperature.'&deg; Au&szlig;entemperatur im Naturfreibad Fischach. '.$description.' Vor einem Jahr hatte das Wasser '.timemachine('-1 year', 'temperature').'&deg; und war damit '.$comparison_phrase.'. Vor zwei Jahren waren es '.timemachine('-2 year','temperature').'&deg;. <br /> Das Bad'.$opening_phrase.'!</p>'; ?>
                   	</div>
                     <!-- Icon Credit: Thomas Le Bas, Richard de Vos and Lucas Olaerts, Sergey Demushkin -->
                     <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
@@ -185,22 +240,19 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                  </p> 
                  <div class="subheadline"><img src="image_store/heart.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Credits</div>
                  	<div id="text_summary">
-                 <p class="year_ago">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts and Sergey Demushkin</p>
+                 <p class="year_ago">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts, Convoy and Sergey Demushkin</p>
                  	</div>
                  	<div id="version_information">
                  <?php echo $versioning; ?>
                  	</div>
-                <!-- <p><?php echo $ext_temp; ?></p>   -->
+             
 </div>
 <!-- Core Process ran on <?php echo $data['cur_timestamp']; ?> -->
 
-<!--
-<video id="videobcg" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
-     <source src="image_store/video.mp4" type="video/mp4">
-     
-          Sorry, your browser does not support HTML5 video.
-</video>
--->
 </body>
 </html>
-<?php }; ?>
+<?php }; 
+	
+	//Hier ist Schluss
+mysql_close($link);  
+?>

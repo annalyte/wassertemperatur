@@ -5,12 +5,12 @@ body {
 	background-size: cover;
 	background-color: #000;
     font-family: "SanFranciscoDisplay-Regular", "HelveticaNeue-Light", "AvenirNext-UltraLight", Arial, sans-serif;
-
     background-color: #000;
     padding:0;
     margin:0;
     
 
+	
     -webkit-font-smoothing: antialiased;
 }
 
@@ -114,13 +114,44 @@ div#text_summary {
 	width: 280px;
 	margin-left: auto;
 	margin-right: auto;
+	text-align: left;
+}
+
+div.stat_date {
+	float: left;
+	padding-top: 5px;
+	text-align: left;
+
+}
+
+div.stat_data {
+	float: right;
+	width: 40px;
+	padding-top: 5px;
+	text-align: right;
+}
+
+div.stat_max {
+	float: right;
+	width: 40px;
+	padding: 5px 0px 0px 0px;
+	text-align: right;	
+	font-weight: bold;
+}
+
+div.stat_min {
+	float: right;
+	width: 40px;
+	padding-top: 5px;
+	text-align: right;
+	color: #ccc;
 }
 
 p.year_ago {
-	font-size: 11pt;
-	font-family: "San Francisco Display", "HelveticaNeue-Light";
-	text-align: justify;
-	line-height: 20px;
+	font-size: 10.5pt;
+	font-family: "San Francisco Text", "HelveticaNeue-Light";
+	text-align: left;
+	line-height: 14pt;
 }
 
 #status_bar {
@@ -138,7 +169,7 @@ p.year_ago {
 }
 
 #wrap {
-   
+   	
  
     text-align: center;
     
@@ -156,15 +187,38 @@ p.year_ago {
     background: rgba(0,0,0,0.6);
     padding: 0px 0px 0px 0px;
     box-shadow: 0px 0px 5px black;
+    
+    -webkit-animation: fadein;
+    -webkit-animation-duration: 1s; 
+	-webkit-animation-timing-function: ease-in;
+	
 }
 
-@media (max-device-width: 800px) {
+@-webkit-keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* Für iPhone */
+@media (max-device-width: 700px) {
 	div#wrap {
 	width: 100%;
 	}
 	
 	div.degree {
 		visibility: hidden;
+	}
+	
+	div#passed_time {
+	<?php
+#Nur pulsieren, wenn es aktuell ist
+if ($pulsation != 'No') {
+	echo '-webkit-animation: pulsate 2s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    
+    opacity: 0.0;';
+};	
+	?>
 	}
 }
 
@@ -224,7 +278,7 @@ div#the_past {
 	width: 280px;
 	font-family: "SanFranciscoDisplay-Regular", "HelveticaNeue-Light";
 
-	font-size: 16pt;
+	font-size: 14pt;
 	margin-left: auto;
 	margin-right: auto;
 	
@@ -240,6 +294,7 @@ div.past_entry {
     margin-bottom: 15px;
 	overflow: auto;
 	display: block;
+	font-size: 13pt;
 }
 
 div.past_date {
@@ -249,17 +304,31 @@ div.past_date {
 	
 }
 
-div.past_temp {
+div.max_temp {
 	float: right;
+	width: 50px;
+	font-weight: bold;
+	text-align: right;
+}
+
+div.min_temp {
+	float: right;
+	width: 50px;
+	color: #ccc;
+	text-align: right;
 }
 
 h5 {
 	text-align: left;
-	font-size: 14pt;
+	font-size: 13pt;
 	font-weight: lighter;
 	margin: 20px 0px 0px 0px;
 	padding:0;
 	
+}
+
+hr {
+	opacity: 0.3;
 }
 
 div#version_information {

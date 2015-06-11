@@ -12,7 +12,7 @@ $build = '9fc5eb3';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
 
-$directory = 'http://wasserwaer.me/';
+$directory = 'http://wasser.aaronbauer.org/';
 /*
 Core which fetches the temperature and the time from the website every hour and writes it into a database.
 */
