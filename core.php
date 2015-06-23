@@ -20,7 +20,7 @@ Core which fetches the temperature and the time from the website every hour and 
 // Damit alles seine Ordnung hat
 header('Content-Type: text/html; charset=UTF-8');
 
-include('cur_weather.php');
+include('forecast.php');
 
 // Damit in der Titelzeile etwas drinsteht
 echo '<title>Core '.$version.'</title>';
@@ -67,7 +67,7 @@ print_r_html($arr_opening);
 
 $opening_word = implode(array_slice($arr_opening, 37, 9));
 
-if($opening_word == 'geöffnet') {
+if($opening_word == 'Geöffnet' or $opening_word == 'geöffnet') {
 	$open = 1;
 	echo 'Offen <br />';
 } else {
@@ -141,6 +141,7 @@ echo 'Temperatur (original): '.$temperatur_comma;
 echo '<br />Temperatur (gerundet): '.$temperatur;
 echo '<br />Date: '.$site_date;
 echo '<br />Time: '.$timestamp;
+echo '<br />Original Weather Temperature: '.$cur_weather_temp;
 
 echo '<br /><br />';
 
@@ -178,7 +179,7 @@ if(!$db_selected) {
     echo 'Temperatur gelesen. <br />';
 */
        
-    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date, unix_timestamp, opening) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'", "'.$unix_time.'", "'.$open.'");';
+    $write_query = 'INSERT INTO wasser (temperature, site_time, site_date, unix_timestamp, opening, weather_temp) VALUES ('.$temperatur.', "'.$timestamp.'", "'.$site_date.'", "'.$unix_time.'", "'.$open.'", "'.$cur_weather_temp.'");';
     $exec_write = mysql_query($write_query) or die(mysql_error());
     echo 'Neue Temperatur geschrieben. <br /> ';
 

@@ -1,10 +1,10 @@
 
 
 body {
-	background: url(image_store/<?php echo $bg_image; ?>) no-repeat top center fixed;
+	background: url(weather_img/<?php echo $cur_weather_icon.'.jpg'; ?>) no-repeat top center fixed;
 	background-size: cover;
 	background-color: #000;
-    font-family: "SanFranciscoDisplay-Regular", "HelveticaNeue-Light", "AvenirNext-UltraLight", Arial, sans-serif;
+    font-family: "HelveticaNeue-Regular", Arial, sans-serif;
     background-color: #000;
     padding:0;
     margin:0;
@@ -14,23 +14,37 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+div.outside_temp {
+	opacity: 0.5;
+	margin: 40px 0px 0px 0px;
+	font-size: 12pt;
+	vertical-align: center;
+}
+
+div.outside_temp img {
+	vertical-align: middle;
+}
+
 div.today {
-    font-size: 80pt;
-    padding:30px 0px 0px 0px;
+    font-size: 85pt;
+    padding:0px 0px 0px 0px;
     /* text-shadow: 2px 2px 0px #333333; */
-    letter-spacing: -8px;
- font-family: "SanFranciscoDisplay-UltraLight", "HelveticaNeue-UltraLight";
-    margin:0px 0px 0px 0px;
-    color:<?php //echo $color; ?> white;
+    letter-spacing: -12px;
+ font-family: "HelveticaNeue-UltraLight", Arial, sans-serif;
+    margin:15px 0px 15px 0px;
+    color: #fff;
+    position: relative;
+    left: -12px;
+    
 
 }
 
 div.degree {
-	font-family: "SanFranciscoDisplay-UltraLight", "HelveticaNeue-UltraLight";
+	font-family: "HelveticaNeue-UltraLight", Arial, sans-serif;
 	position: absolute;
-	font-size: 60px;
-	top: 35px;
-	left: 250px;
+	font-size: 30pt;
+	top: 90px;
+	left: 265px;
 <?php
 #Nur pulsieren, wenn es aktuell ist
 if ($pulsation != 'No') {
@@ -52,7 +66,7 @@ if ($pulsation != 'No') {
 }
 
 
-
+/*
 h1.yesterday {
     font-size: 65pt;
     padding:50px 0px 0px 0px;
@@ -63,16 +77,22 @@ h1.yesterday {
     -webkit-mask-image: -webkit-gradient(linear, left top,
     left bottom, from(rgba(0,0,0,0.1)), to(rgba(0,0,0,1)));
 }
+*/
 
+/*
 h2 {
     font-size: 32pt;
-    font-family: "SanFranciscoDisplay-Regular", "HelveticaNeue-Light";
+    font-family: "SFUIDisplay-Regular", "HelveticaNeue-Light";
 	font-weight: lighter;
     /* text-shadow: 2px 2px 0px #333333; */
 
     color: <?php //echo $color; ?> white;
     
 }
+
+*/
+
+
 
 h4 {
 	font-size: 18pt;
@@ -100,8 +120,9 @@ div#timemachine_temp_box {
 */
 
 div#passed_time {
-	font-size: 13pt;
-	font-family: "San Francisco Display", "HelveticaNeue-Medium";
+	font-size: 12pt;
+	margin: 0px 0px 0px 0px;
+	opacity: 0.5;
 	
 }
 
@@ -148,14 +169,22 @@ div.stat_min {
 }
 
 p.year_ago {
-	font-size: 10.5pt;
-	font-family: "San Francisco Text", "HelveticaNeue-Light";
+	font-size: 9.5pt;
+	font-family: "HelveticaNeue-Medium", Arial, sans-serif;
 	text-align: left;
-	line-height: 14pt;
+	line-height: 150%;
 }
 
+p.credits {
+	font-size: 8pt;
+font-family: "HelveticaNeue-Medium", Arial, sans-serif;
+	text-align: left;
+	line-height: 150%;
+}
+	
+
 #status_bar {
-	font-family: "San Francisco Display", "HelveticaNeue-Light";
+
 	font-weight: lighter;
 	background: rgba(255,255,255,0.1);
 	position: fixed;
@@ -242,13 +271,6 @@ p.time_diff {
 }
 
 
-
-
-
-
-
-
-
 #img.source-image {
 	
 	position: absolute;
@@ -258,6 +280,7 @@ p.time_diff {
 
 div.subheadline {
 	font-size: 12pt;
+	font-family: "HelveticaNeue-Medium", Arial, sans-serif;
 	text-align: left;
 	margin: 20px 0px 0px 0px;
 	background: #000;
@@ -276,7 +299,7 @@ div#the_past {
 	overflow: auto;
 	padding: 0px 0px 5px 0px;
 	width: 280px;
-	font-family: "SanFranciscoDisplay-Regular", "HelveticaNeue-Light";
+
 
 	font-size: 14pt;
 	margin-left: auto;
@@ -399,7 +422,6 @@ div#the_countdown {
 	overflow: auto;
 	padding: 25px 10px 10px 10px;
 	width: 300px;
-	font-family: "San Francisco Display", "HelveticaNeue-Light";
 	font-weight: lighter;
 	font-size: 12pt;
 	margin-left: auto;

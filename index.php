@@ -10,21 +10,11 @@ error_reporting(0); // Keine PHP Fehlermeldungen
 require('script.php'); 
 
 //Wetter Modul. Akteulle temperatur mit $ext_temp ausgeben
-include('cur_weather.php');
+//include('cur_weather.php');
 
-/*
-$directory = Ort der im frontend angegeben wurde
-$data =  Array mit den Daten von heute
-$previous_data = Array mit den Daten von gestern
-$description = Beschreibung der Temperatur
-$color = Farbe die zur Temperatur passt
-$comparison = Vergleichstext zwischen gestern und heute
-$versioning = Versionierungsschema fŸr ganz unten
-$end_time und $cur_time sind die Zeitstempel
-*/
 ?>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="de">
 <head>
 
 
@@ -91,7 +81,7 @@ $(function () {
 
 <!-- Script for step-by-step Counting up the Temperature -->
 <script>
-$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', timemachine(' ', 'temperature')); ?>}, {
+$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', $fasttrack_data['fasttrack_temp']); ?>}, {
   duration: 2000,
   easing:'swing',
   step: function() {
@@ -126,18 +116,11 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
     exit();
 } else { ?>
 
-<div id="wrap">                   
+<div id="wrap"> 
+	<div class="outside_temp"><img src="weather_icon/<?php echo $cur_weather_icon; ?>.png" height="35" width="35" style="padding: 0px 5px 0px 0px;"><?php echo $cur_weather_summary ?> bei <?php echo $cur_weather_temp ?>&deg;</div>
+					                 
                     <div class="today" id="counter"></div><div class="degree">&deg;</div>                 
                     <div id="passed_time"><?php echo $time_diff; ?></div>
-              <!--      
-                    <div id="timemachine">
-                    	<div id="timemachine_icon"><img src="image_store/timemachine.png" height="120" width="120" /></div>
-                    	<div id="timemachine_temp_box">
-	                    	<h2><?php echo $year_ago_data['temperature'] ?></h2>
-	                    	<p>2013</p>
-                    	</div>
-                    </div>
-               -->
                		<div class="subheadline"><img src="image_store/clock.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">R&uuml;ckblick</div>
                     <div id="the_past">
 	                    <div class="past_entry">
@@ -208,7 +191,7 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	
  
                     </div>
-                  <div class="subheadline"><img src="image_store/stats.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Statistik</div>
+                    <div class="subheadline"><img src="image_store/stats.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Statistik</div>
                   	<div id="text_summary">
 	                  	<br />
 	                  	<div class="stat_date">jahr</div><div class="stat_min">min</div><div class="stat_max">max</div><div class="stat_data">mittel</div>
@@ -227,20 +210,12 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
 
                   <div class="subheadline"><img src="image_store/summary.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Zusammenfassung</div>
                   	<div id="text_summary">
-                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade '.$data['temperature'].'&deg; Wassertemperatur und '.$external_temperature.'&deg; Au&szlig;entemperatur im Naturfreibad Fischach. '.$description.' Vor einem Jahr hatte das Wasser '.timemachine('-1 year', 'temperature').'&deg; und war damit '.$comparison_phrase.'. Vor zwei Jahren waren es '.timemachine('-2 year','temperature').'&deg;. <br /> Das Bad'.$opening_phrase.'!</p>'; ?>
+                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade '.$data['temperature'].'&deg; Wassertemperatur; '.$cur_weather_summary.' bei '.$cur_weather_temp.'&deg; Au&szlig;entemperatur im Naturfreibad Fischach. '.$description.' Vor einem Jahr hatte das Wasser '.timemachine('-1 year', 'temperature').'&deg; und war damit '.$comparison_phrase.'. Vor zwei Jahren waren es '.timemachine('-2 year','temperature').'&deg;.</p>'; ?>
                   	</div>
-                    <!-- Icon Credit: Thomas Le Bas, Richard de Vos and Lucas Olaerts, Sergey Demushkin -->
-                    <!-- Das exakte  Datum war: <?php echo $year_ago_data['cur_timestamp']; ?> -->
-                 <!--   <p class="version"><?php echo $versioning; ?></p> -->
-                 <!-- Twitter Integration -->
-                 <div class="subheadline"><img src="image_store/twitter.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Twitter</div>
-                 <p>
-	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="true" data-lang="de">Follow @wassertemp</a>
-<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-                 </p> 
                  <div class="subheadline"><img src="image_store/heart.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Credits</div>
                  	<div id="text_summary">
-                 <p class="year_ago">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts, Convoy and Sergey Demushkin</p>
+                 <p class="credits">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts, Convoy, 8ties and Sergey Demushkin</p>
+                 <p class="credits">Fotos by Franz Bauer</p>
                  	</div>
                  	<div id="version_information">
                  <?php echo $versioning; ?>

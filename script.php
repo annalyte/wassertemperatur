@@ -1,9 +1,10 @@
 <?php
 // Script.php is successor of frontend.php
+// 1.9 Embedded new weather service forecast.io, optical enhancements, background now according to weather conditions, implented fasttrack.php for faster recognition of changes, new icon, icons and background match weather conditions, weather conditions on top
 setlocale (LC_ALL, 'de_DE');
 date_default_timezone_set('Europe/Berlin');
 // Version Information from GitHub
-$version = '1.8';
+$version = '1.9';
 $build = 'XXXXXX';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -27,6 +28,8 @@ $midnight_date = date('Y-m-d');
 // Brauchen wir für Jahresdurchschnitte
 $year_date = date('Y');
 
+
+include('forecast.php');
 
 // Verbindungsdaten zur MySQL Datenbank stehen in mysql.php in der Variable $link
 require('mysql.php');
@@ -115,6 +118,11 @@ if(!$db_selected) {
     $query = 'SELECT * FROM wasser ORDER BY id DESC';
     $result = mysql_query($query) or die(mysql_error());
     $data = mysql_fetch_array($result) or die(mysql_error());
+    
+    //Die Überholspur, damit die App aktuellere Daten anzeigt
+    $fasttrack_query = 'SELECT * FROM fasttrack';
+    $fasttrack_result = mysql_query($fasttrack_query) or die(mysql_error());
+    $fasttrack_data = mysql_fetch_array($fasttrack_result) or die(mysql_error());
     	
 };
 
@@ -130,7 +138,7 @@ $time_diff_calc = round((($cur_time - $data['unix_timestamp']) / 60) / 60);
 if ($time_diff_calc == 1) {
 	$time_diff = 'vor einer Stunde';
 } elseif($time_diff_calc < 1) {
-	$time_diff = 'gerade eben';
+	$time_diff = 'aktuell';
 } elseif($time_diff_calc > 24) {
 	$time_diff = 'vor über einem Tag';
 	$pulsation = 'No';
