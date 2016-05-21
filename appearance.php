@@ -15,7 +15,7 @@ body {
 }
 
 div.outside_temp {
-	opacity: 0.5;
+	opacity: 1;
 	margin: 40px 0px 0px 0px;
 	font-size: 12pt;
 	vertical-align: center;
@@ -29,12 +29,12 @@ div.today {
     font-size: 85pt;
     padding:0px 0px 0px 0px;
     /* text-shadow: 2px 2px 0px #333333; */
-    letter-spacing: -12px;
+    letter-spacing: -8px;
  font-family: "HelveticaNeue-UltraLight", Arial, sans-serif;
     margin:15px 0px 15px 0px;
     color: #fff;
     position: relative;
-    left: -12px;
+    left: -8px;
     
 
 }
@@ -43,19 +43,8 @@ div.degree {
 	font-family: "HelveticaNeue-UltraLight", Arial, sans-serif;
 	position: absolute;
 	font-size: 30pt;
-	top: 90px;
-	left: 265px;
-<?php
-#Nur pulsieren, wenn es aktuell ist
-if ($pulsation != 'No') {
-	echo '-webkit-animation: pulsate 2s ease-out;
-    -webkit-animation-iteration-count: infinite; 
-    
-    opacity: 0.0;';
-};	
-?>
-	
-	
+	top: 100px;
+	left: 265px;	
 }
 
 
@@ -123,7 +112,23 @@ div#passed_time {
 	font-size: 12pt;
 	margin: 0px 0px 0px 0px;
 	opacity: 0.5;
+	vertical-align: center;
+	height: 25px;
 	
+}
+
+div#passed_time img {
+	vertical-align: middle;
+	margin: 2px 2px 2px 2px;
+	<?php
+#Nur pulsieren, wenn es aktuell ist
+if ($pulsation != 'No') {
+	echo '-webkit-animation: pulsate 2s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    
+    opacity: 0.0;';
+};	
+	?>
 }
 
 p.version {
@@ -136,6 +141,7 @@ div#text_summary {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
+	font-family: "HelveticaNeue-Medium", Arial, sans-serif;
 }
 
 div.stat_date {
@@ -238,7 +244,7 @@ font-family: "HelveticaNeue-Medium", Arial, sans-serif;
 		visibility: hidden;
 	}
 	
-	div#passed_time {
+	div#passed_time img {
 	<?php
 #Nur pulsieren, wenn es aktuell ist
 if ($pulsation != 'No') {
@@ -284,7 +290,7 @@ div.subheadline {
 	text-align: left;
 	margin: 20px 0px 0px 0px;
 	background: #000;
-	opacity: 0.3;
+	opacity: 0.5;
 	padding: 5px 3px 3px 3px;
 	vertical-align: center;
 }
@@ -352,6 +358,9 @@ h5 {
 
 hr {
 	opacity: 0.3;
+	background-color: #fff;
+	border: none;
+	border-top: 1px solid #fff;	
 }
 
 div#version_information {
@@ -361,6 +370,24 @@ div#version_information {
 	opacity: 0.3; 
 	font-size: 10pt;
 }
+
+div.twitter_section {
+	text-align: left;
+	width: 280px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 15px 0px 0px 0px;
+	vertical-align: middle;
+	height: 60px;
+	}
+	
+div.twitter_section img {
+	border: 2px solid #fff;
+	}
+
+iframe#twitter-widget-0 {
+	padding: 0px 0px 17px 10px;
+	}
 
 
 

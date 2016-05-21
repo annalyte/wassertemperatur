@@ -1,13 +1,14 @@
 <?php
 /*
-Core 1.4.4
+Core 1.4.5
 Build: 
 The heart and soul of this app.
 //1.4.2 Added unix timestamp of site time and date to improve handling of timing 
 //1.4.3 Fetches decimals from the website
 //1.4.4 Core now uses its own time and date to improve reliablity, works with new website, opening times included
+//1.4.5 Opening Position now more reliable, replacement filter even more restrictive
 */
-$version = '1.4.4';
+$version = '1.4.5';
 $build = '9fc5eb3';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -18,7 +19,7 @@ Core which fetches the temperature and the time from the website every hour and 
 */
 
 // Damit alles seine Ordnung hat
-header('Content-Type: text/html; charset=UTF-8');
+header('Content-Type: text/html; charset=ISO-8859-1');
 
 include('forecast.php');
 
@@ -48,7 +49,7 @@ foreach($html->find('div[class=big-text flippy]') as $element)
        
 
 // Array wird gleich bereingt von allem unfung vs. ...   $arr1 ist für Temperatur, Zeit, Datum, (Zahlen); $arr_opening nur für die Offen/Geschlossen (wegen den Buchstaben, die wir hier benötigen)    
-$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-]/','',strip_tags($element)));
+$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\¶\s+\Ã\(\)%&-]/','',strip_tags($element)));
 
 $arr_opening = str_split(preg_replace('/[\]\;\(\)%&-]/','',strip_tags($element)));
       
@@ -65,9 +66,9 @@ print_r_html($arr1);
 
 print_r_html($arr_opening);
 
-$opening_word = implode(array_slice($arr_opening, 37, 9));
+$opening_word = strpos(implode($arr_opening), 'ffnet');
 
-if($opening_word == 'Geöffnet' or $opening_word == 'geöffnet') {
+if($opening_word == true) {
 	$open = 1;
 	echo 'Offen <br />';
 } else {
@@ -95,7 +96,7 @@ if(!$db_selected) {
 #$site_time = trim(implode(array_slice($arr1, 10, 5)));
     
 //Die Temperatur muss jetzt in die richtige form gebracht werden, um später vergleichbar zu sein   
-$temperatur_raw = implode(array_slice($arr1, 4, 4));
+$temperatur_raw = implode(array_slice($arr1, 12, 4));
 
 //Ersetzt das Komma durch den Punkt, da ansonsten Round nicht funktioniert
 $temperatur_comma = str_replace(',', '.', $temperatur_raw);

@@ -1,10 +1,12 @@
 <?php
 // Script.php is successor of frontend.php
 // 1.9 Embedded new weather service forecast.io, optical enhancements, background now according to weather conditions, implented fasttrack.php for faster recognition of changes, new icon, icons and background match weather conditions, weather conditions on top
+// 1.9.1 Changed view of weather forecast on top, added small clock icon to indicate the passed time, re-implemented twitter, little brighter text, fixed hr
+// 1.9.2 Fixed Bug with year count, added fourth year to statistics / Deprecated Season Time Feature  
 setlocale (LC_ALL, 'de_DE');
 date_default_timezone_set('Europe/Berlin');
 // Version Information from GitHub
-$version = '1.9';
+$version = '1.9.2';
 $build = 'XXXXXX';
 
 $versioning = 'Version: '.$version.' ('.$build.')'; 
@@ -14,10 +16,6 @@ $versioning = 'Version: '.$version.' ('.$build.')';
 ###########
 
 $directory = 'http://wasser.aaronbauer.org/';
-
-// Hier Datum des Saison-Beginns/Ende eintragen (jeweils die Paramenter im Frontend ändern!)
-// Auch das Ändern des Operators in der Index.php nicht vergessen! Am Ende der Saison auch den Timer einschalten
-$season_time = '2016-05-20 18:00:00';
 
 // Das Datum muss dieses Format haben, damit wir rechnen können
 $date_today = date('Y-m-d H:i:s');
@@ -94,7 +92,7 @@ if(!$db_selected) {
 	}
 	
 	function year($intervalstring) {
-		$year = strftime("%Y", strtotime(timemachine($intervalstring, 'cur_timestamp')));
+		$year = strftime("%Y", strtotime("$date_today $intervalstring"));
 		return $year; 
 	}
 	
@@ -123,6 +121,11 @@ if(!$db_selected) {
     $fasttrack_query = 'SELECT * FROM fasttrack';
     $fasttrack_result = mysql_query($fasttrack_query) or die(mysql_error());
     $fasttrack_data = mysql_fetch_array($fasttrack_result) or die(mysql_error());
+    
+    //Nur zu Testzwecken 
+    $test_query = 'SELECT * FROM wasser WHERE cur_timestamp >= "2015-06-17" ORDER BY id ASC';
+    $test_result = mysql_query($test_query) or die(mysql_error());
+    $test_data = mysql_fetch_array($test_result) or die(mysql_error());
     	
 };
 

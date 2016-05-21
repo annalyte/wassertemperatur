@@ -3,7 +3,7 @@
 setlocale (LC_ALL, 'de_DE');
 
 
-error_reporting(0); // Keine PHP Fehlermeldungen
+#error_reporting(0); // Keine PHP Fehlermeldungen
 
 
 //Frontend mit den MSQL Abfragen und der Winteranzeige
@@ -51,6 +51,11 @@ require('script.php');
 <!-- Auto Reload -->
 <meta http-equiv="refresh" content="300" >
 
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Rubik:400,300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:700,500|Alegreya+Sans+SC:400,700' rel='stylesheet' type='text/css'>
+
+
 <!-- Fav Icon -->
 <link rel="icon" type="image/png" href="apple-touch-icon-precomposed.png" />
 
@@ -81,17 +86,64 @@ $(function () {
 
 <!-- Script for step-by-step Counting up the Temperature -->
 <script>
-$({countNum: $('#counter').text()}).animate({countNum: <?php echo str_replace(',', '.', $fasttrack_data['fasttrack_temp']); ?>}, {
-  duration: 2000,
-  easing:'swing',
-  step: function() {
-    $('#counter').text(Math.floor(this.countNum));
-  },
-  complete: function() {
-    $('#counter').text(this.countNum);
-    
-  }
-});
+(function($) {
+    $.fn.countTo = function(options) {
+        // merge the default plugin settings with the custom options
+        options = $.extend({}, $.fn.countTo.defaults, options || {});
+
+        // how many times to update the value, and how much to increment the value on each update
+        var loops = Math.ceil(options.speed / options.refreshInterval),
+            increment = (options.to - options.from) / loops;
+
+        return $(this).each(function() {
+            var _this = this,
+                loopCount = 0,
+                value = options.from,
+                interval = setInterval(updateTimer, options.refreshInterval);
+
+            function updateTimer() {
+                value += increment;
+                loopCount++;
+                $(_this).html(value.toFixed(options.decimals));
+
+                if (typeof(options.onUpdate) == 'function') {
+                    options.onUpdate.call(_this, value);
+                }
+
+                if (loopCount >= loops) {
+                    clearInterval(interval);
+                    value = options.to;
+
+                    if (typeof(options.onComplete) == 'function') {
+                        options.onComplete.call(_this, value);
+                    }
+                }
+            }
+        });
+    };
+
+    $.fn.countTo.defaults = {
+        from: 0,  // the number the element should start at
+        to: 100,  // the number the element should end at
+        speed: 1000,  // how long it should take to count between the target numbers
+        refreshInterval: 100,  // how often the element should be updated
+        decimals: 1,  // the number of decimal places to show
+        onUpdate: null,  // callback method for every time the element is updated,
+        onComplete: null,  // callback method for when the element finishes updating
+    };
+})(jQuery);
+
+jQuery(function($) {
+        $('.today').countTo({
+            from: 0,
+            to: <?php echo str_replace(',', '.', $fasttrack_data['fasttrack_temp']); ?>,
+            speed: 500,
+            refreshInterval: 1,
+            onComplete: function(value) {
+                console.debug(this);
+            }
+        });
+    });
 
 
 </script>
@@ -109,18 +161,13 @@ require('appearance.php');
 <body>
 	
 <div id="status_bar"></div> 
-<?php
-// Sieht nach ob wir uns in der Saison befinden oder nicht. Wenn nicht wird das Script per exit beendet. (das Ende des Scripts ganz unten beachten!)
-if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
-    require('winter_time.php');
-    exit();
-} else { ?>
 
 <div id="wrap"> 
-	<div class="outside_temp"><img src="weather_icon/<?php echo $cur_weather_icon; ?>.png" height="35" width="35" style="padding: 0px 5px 0px 0px;"><?php echo $cur_weather_summary ?> bei <?php echo $cur_weather_temp ?>&deg;</div>
+	<div class="outside_temp"><img src="weather_icon/<?php echo $cur_weather_icon; ?>.png" height="45" width="45" style="padding: 0px 5px 0px 0px;"></div>
 					                 
                     <div class="today" id="counter"></div><div class="degree">&deg;</div>                 
-                    <div id="passed_time"><?php echo $time_diff; ?></div>
+                    <div id="passed_time"><img src="image_store/time.png" height="15" width="15" style="padding: 0px 5px 0px 0px;"><?php echo $time_diff; ?></div>
+               		<!--
                		<div class="subheadline"><img src="image_store/clock.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">R&uuml;ckblick</div>
                     <div id="the_past">
 	                    <div class="past_entry">
@@ -191,6 +238,7 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
                     	
  
                     </div>
+                    -->
                     <div class="subheadline"><img src="image_store/stats.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Statistik</div>
                   	<div id="text_summary">
 	                  	<br />
@@ -199,19 +247,32 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
 	                  	<hr />
 	                  	<div class="stat_date"><?php e(year('')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year(''));?></div><div class="stat_max"><?php e(timemachine_maximum_year(''));?></div><div class="stat_data"><?php e(avg(''));?></div>
 	                  	<div style="clear:both;"></div>
+	                  	<hr />
 	                  	<div class="stat_date"><?php e(year('-1 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-1 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-1 year'));?></div><div class="stat_data"><?php e(avg('-1 year'));?></div>
 	                  	<div style="clear:both;"></div>
 	                  	<div class="stat_date"><?php e(year('-2 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-2 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-2 year'));?></div><div class="stat_data"><?php e(avg('-2 year'));?></div>
 	                  	<div style="clear:both;"></div>
 	                  	<div class="stat_date"><?php e(year('-3 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-3 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-3 year'));?></div><div class="stat_data"><?php e(avg('-3 year'));?></div>
 	                  	<div style="clear:both;"></div>
+	                  	<div class="stat_date"><?php e(year('-4 year')); ?></div><div class="stat_min"><?php e(timemachine_minimum_year('-4 year'));?></div><div class="stat_max"><?php e(timemachine_maximum_year('-4 year'));?></div><div class="stat_data"><?php e(avg('-4 year'));?></div>
+	                  	<div style="clear:both;"></div>
 	                  	
                   	</div>
-
+<!--
                   <div class="subheadline"><img src="image_store/summary.png" height="17" width="18" style="padding: 0px 5px 0px 0px;">Zusammenfassung</div>
                   	<div id="text_summary">
-                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade '.$data['temperature'].'&deg; Wassertemperatur; '.$cur_weather_summary.' bei '.$cur_weather_temp.'&deg; Au&szlig;entemperatur im Naturfreibad Fischach. '.$description.' Vor einem Jahr hatte das Wasser '.timemachine('-1 year', 'temperature').'&deg; und war damit '.$comparison_phrase.'. Vor zwei Jahren waren es '.timemachine('-2 year','temperature').'&deg;.</p>'; ?>
+                    <?php echo '<h5>'.$greeting.'</h5><p class="year_ago">Aktuell gerade '.$data['temperature'].'&deg; Wassertemperatur. '.$cur_weather_summary.' bei '.$cur_weather_temp.'&deg; Au&szlig;entemperatur im Naturfreibad Fischach. '.$description.' <br /> Vor einem Jahr hatte das Wasser '.timemachine('-1 year', 'temperature').'&deg; und war damit '.$comparison_phrase.'.</p>'; ?>
                   	</div>
+-->
+                  	<!-- Twitter Integration -->
+                 
+                 <div class="subheadline"><img src="image_store/twitter.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Twitter</div>
+                 <div class="twitter_section">
+	                 <img src="<?php echo $directory; ?>apple-touch-icon-precomposed.png" alt="App Symbol" width="50" height="50" />
+	                 <a href="https://twitter.com/wassertemp" class="twitter-follow-button" data-show-count="true" data-lang="de">Follow @wassertemp</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+                 </div> 
+                 
                  <div class="subheadline"><img src="image_store/heart.png" height="17" width="19" style="padding: 0px 5px 0px 0px;">Credits</div>
                  	<div id="text_summary">
                  <p class="credits">Icons by Thomas Le Bas, Richard de Vos, Lucas Olaerts, Convoy, 8ties and Sergey Demushkin</p>
@@ -226,8 +287,7 @@ if($end_time < $cur_time or $_GET['set_winter'] == 'yes') {
 
 </body>
 </html>
-<?php }; 
-	
+<?php 
 	//Hier ist Schluss
 mysql_close($link);  
 ?>

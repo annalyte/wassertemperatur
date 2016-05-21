@@ -35,7 +35,7 @@ foreach($html->find('div[class=big-text flippy]') as $element)
        
 
 // Array wird gleich bereingt von allem unfung vs. ...   $arr1 ist für Temperatur, Zeit, Datum, (Zahlen); $arr_opening nur für die Offen/Geschlossen (wegen den Buchstaben, die wir hier benötigen)    
-$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\(\)%&-]/','',strip_tags($element)));
+$arr1 = str_split(preg_replace('/[a-zA-Z_ %\[\]\;\¶\s+\Ã\(\)%&-]/','',strip_tags($element)));
 
 $arr_opening = str_split(preg_replace('/[\]\;\(\)%&-]/','',strip_tags($element)));
       
@@ -52,7 +52,7 @@ $db_selected = mysql_select_db('d011c151', $link);
 #$site_time = trim(implode(array_slice($arr1, 10, 5)));
     
 //Die Temperatur muss jetzt in die richtige form gebracht werden, um später vergleichbar zu sein   
-$temperatur_raw = implode(array_slice($arr1, 4, 4));
+$temperatur_raw = implode(array_slice($arr1, 12, 4));
 
 //Ersetzt das Komma durch den Punkt, da ansonsten Round nicht funktioniert
 $temperatur_comma = str_replace(',', '.', $temperatur_raw);
